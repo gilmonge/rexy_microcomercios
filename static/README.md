@@ -1,0 +1,1 @@
+Aquí se cargarán los statics de las aplicaciones
