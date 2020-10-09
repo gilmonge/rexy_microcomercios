@@ -10,6 +10,9 @@ class Comercio(models.Model):
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     redessociales   = models.TextField(verbose_name="Redes Sociales")
     contacto        = models.TextField(verbose_name="Contácto")
+    
+    def __str__(self):
+        return self.nombre
 
 class Producto(models.Model):
     comercio        = models.ForeignKey(Comercio, verbose_name="Comercio", on_delete=models.CASCADE)
@@ -19,3 +22,5 @@ class Producto(models.Model):
     moneda          = models.IntegerField(verbose_name="Moneda", default=0)
     precio          = models.DecimalField(verbose_name="Precio", max_digits=8, decimal_places=2)
     
+    def __str__(self):
+        return self.nombre

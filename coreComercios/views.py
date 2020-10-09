@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Comercio
+from .models import Comercio, Producto
 import json
 
 # Create your views here.
@@ -14,8 +14,11 @@ def comercio (request, comercio_slug):
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
 
+    producto = Producto.objects.filter(comercio=comercio.id)
+
     datos = {
         'comercio':comercio,
+        'producto':producto,
     }
     return render(request, "coreComercios/comercio.html", datos)
 
