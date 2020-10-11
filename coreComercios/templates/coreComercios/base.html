@@ -151,18 +151,19 @@
                             </div>
                         
                             <div class="col-md-5 ml-auto product-title-wrap">
-                                <h3 class="text-black mb-4 font-weight-bold">About This Product</h3>
-                                <p class="mb-4">Et tempora id nostrum saepe amet doloribus deserunt totam officiis cupiditate asperiores quasi accusantium voluptatum dolorem quae sapiente voluptatem ratione odio iure blanditiis earum fuga molestiae alias dicta perferendis inventore!</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus soluta assumenda sed optio, error at?</p>
+                                <h3 class="text-black mb-4 font-weight-bold" id="VR_nombre"></h3>
+                                <div class="mb-4" id="VR_descripcion"></div>
                                 
                                 <div class="mb-4"> 
-                                    <h3 class="text-black font-weight-bold h5">Price:</h3>
-                                    <div class="price"><del class="mr-2">$269.00</del> $69.00</div>
+                                    <h3 class="text-black font-weight-bold h5">Precio:</h3>
+                                    <div class="price" id="VR_precio"></div>
+
+                                    {% comment %} <div class="price"><del class="mr-2">$269.00</del> $69.00</div> {% endcomment %}
                                 </div>
-                                <p>
+                                {% comment %} <p>
                                     <a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}" class="btn btn-black btn-outline-black rounded-0 d-block mb-2 mb-lg-0 d-lg-inline-block">Ver detalles</a>
-                                    {% comment %} <a href="#" class="btn btn-black rounded-0 d-block d-lg-inline-block">Add To Cart</a> {% endcomment %}
-                                </p>
+                                    <a href="#" class="btn btn-black rounded-0 d-block d-lg-inline-block">Add To Cart</a> 
+                                </p>{% endcomment %}
                             </div>
                         </div>
                     </div>

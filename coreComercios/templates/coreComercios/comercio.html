@@ -58,176 +58,89 @@
     </style>
 {% endblock %}
 
-{% block customjs %}{% endblock %}
-
 {% block customContent %}
-            <div class="site-blocks-cover overlay" style="background-image: url(http://localhost/rexy/tiendasinnombre/selling/images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-md-12" data-aos="fade-up" data-aos-delay="400">
-                            <div class="row mb-4">
-                                <div class="col-md-12">
-                                    <h1>{{comercio.eslogan}}</h1>
-                                    <div>
-                                        <a href="#products-section" class="btn btn-white btn-outline-white py-3 px-5 rounded-0 mb-lg-0 mb-2 d-block d-sm-inline-block">Ver productos</a>
-                                    </div>
-                                </div>
+    <div class="site-blocks-cover overlay" style="background-image: url(https://colorlib.com/preview/theme/selling/images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-12" data-aos="fade-up" data-aos-delay="400">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h1>{{comercio.eslogan}}</h1>
+                            <div>
+                                <a href="#products-section" class="btn btn-white btn-outline-white py-3 px-5 rounded-0 mb-lg-0 mb-2 d-block d-sm-inline-block">Ver productos</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="site-section" id="about-section">
-                <div class="container">
-                    <div class="row align-items-lg-center">
-                        <div class="col-md-6 mb-5 mb-lg-0 position-relative">
-                            <img src="http://localhost/rexy/tiendasinnombre/selling/images/about_1.jpg" class="img-fluid" alt="Image">
-                            <div class="experience">
-                            <span class="year">Acerca de nosotros</span>
-                            <span class="caption"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6 ml-auto">
-                            {% comment %} <h3 class="section-sub-title">Merchant Company</h3>
-                            <h2 class="section-title mb-3">About Us</h2> {% endcomment %}
-                            <p class="mb-4">{{comercio.descripcion}}</p>
-                        </div>
+    <div class="site-section" id="about-section">
+        <div class="container">
+            <div class="row align-items-lg-center">
+                <div class="col-md-6 mb-5 mb-lg-0 position-relative">
+                    <img src="https://colorlib.com/preview/theme/selling/images/about_1.jpg" class="img-fluid" alt="Image">
+                    <div class="experience">
+                    <span class="year">Acerca de nosotros</span>
+                    <span class="caption"></span>
                     </div>
                 </div>
-            </div>
-
-            <div class="site-section" id="products-section">
-                {{producto}}
-                <div class="container">
-                    <div class="row mb-5 justify-content-center">
-                        <div class="col-md-6 text-center">
-                            <h3 class="section-sub-title">Listado productos</h3>
-                            <h2 class="section-title mb-3">Nuestros productos</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-5">
-                            <div class="product-item">
-                                <figure>
-                                    <img src="http://localhost/rexy/tiendasinnombre/selling/images/model_1_bg.jpg" alt="Image" class="img-fluid">
-                                </figure>
-                                <div class="px-4">
-                                    <h3><a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}">Wild West Hoodie</a></h3>
-                                    {% comment %} <div class="mb-3">
-                                        <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
-                                        <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
-                                    </div> {% endcomment %}
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                                    <div>
-                                        {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
-                                        <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop">Vista rápida</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-5">
-                            <div class="product-item">
-                                <figure>
-                                    <img src="http://localhost/rexy/tiendasinnombre/selling/images/model_2_bg.jpg" alt="Image" class="img-fluid">
-                                </figure>
-                                <div class="px-4">
-                                    <h3><a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}">Wild West Hoodie</a></h3>
-                                    {% comment %} <div class="mb-3">
-                                        <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
-                                        <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
-                                    </div> {% endcomment %}
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                                    <div>
-                                        {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
-                                        <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop">Vista rápida</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-5">
-                            <div class="product-item">
-                                <figure>
-                                    <img src="http://localhost/rexy/tiendasinnombre/selling/images/model_3_bg.jpg" alt="Image" class="img-fluid">
-                                </figure>
-                                <div class="px-4">
-                                    <h3><a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}">Wild West Hoodie</a></h3>
-                                    {% comment %} <div class="mb-3">
-                                        <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
-                                        <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
-                                    </div> {% endcomment %}
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                                    <div>
-                                        {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
-                                        <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop">Vista rápida</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-5">
-                            <div class="product-item">
-                                <figure>
-                                    <img src="http://localhost/rexy/tiendasinnombre/selling/images/model_4_bg.jpg" alt="Image" class="img-fluid">
-                                </figure>
-                                <div class="px-4">
-                                    <h3><a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}">Wild West Hoodie</a></h3>
-                                    {% comment %} <div class="mb-3">
-                                        <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
-                                        <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
-                                    </div> {% endcomment %}
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                                    <div>
-                                        {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
-                                        <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop">Vista rápida</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-4 col-md-6 mb-5">
-                            <div class="product-item">
-                                <figure>
-                                    <img src="http://localhost/rexy/tiendasinnombre/selling/images/model_5_bg.jpg" alt="Image" class="img-fluid">
-                                </figure>
-                                <div class="px-4">
-                                    <h3><a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}">Wild West Hoodie</a></h3>
-                                    {% comment %} <div class="mb-3">
-                                        <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
-                                        <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
-                                    </div> {% endcomment %}
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                                    <div>
-                                        {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
-                                        <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop">Vista rápida</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-5">
-                            <div class="product-item">
-                                <figure>
-                                    <img src="http://localhost/rexy/tiendasinnombre/selling/images/product_1_bg.jpg" alt="Image" class="img-fluid">
-                                </figure>
-                                <div class="px-4">
-                                    <h3><a href="{% url 'comercio:producto' pk='1' prod_slug='prueba producto'|slugify  %}">Wild West Hoodie</a></h3>
-                                    {% comment %} <div class="mb-3">
-                                        <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
-                                        <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
-                                    </div> {% endcomment %}
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                                    <div>
-                                        {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
-                                        <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop">Vista rápida</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                <div class="col-md-6 ml-auto">
+                    {% comment %} <h3 class="section-sub-title">Merchant Company</h3>
+                    <h2 class="section-title mb-3">About Us</h2> {% endcomment %}
+                    <p class="mb-4">{{comercio.descripcion}}</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="site-section" id="products-section">
+        {{producto}}
+        <div class="container">
+            <div class="row mb-5 justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h3 class="section-sub-title">Listado productos</h3>
+                    <h2 class="section-title mb-3">Nuestros productos</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% for producto in productos %}
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="product-item">
+                            <figure>
+                                <img src="https://colorlib.com/preview/theme/selling/images/model_1_bg.jpg" alt="Image" class="img-fluid">
+                            </figure>
+                            <div class="px-4">
+                                <h3><a href="{% url 'comercio:producto' pk=producto.id prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>
+                                {% comment %} <div class="mb-3">
+                                    <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
+                                    <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
+                                </div> {% endcomment %}
+                                <p class="mb-4">{{producto.descripcion|slice:"0:60"}}...</p>
+                                <div>
+                                    {% comment %} <a href="#" class="btn btn-black mr-1 rounded-0">Cart</a> {% endcomment %}
+                                    <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop" onclick="datosVistaRap({{producto.id}})">Vista rápida</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="{{producto.id}}_nombre" value="{{producto.nombre}}">
+                        <input type="hidden" id="{{producto.id}}_precio" value="{{producto.precio}}">
+                        <textarea style="display:none;" id="{{producto.id}}_descripcion" >{{producto.descripcion}}</textarea>
+                    </div>
+                {% endfor%}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customjs %}
+    <script>
+        function datosVistaRap(id){
+            $("#VR_nombre").html($(`#${id}_nombre`).val())
+            $("#VR_descripcion").html("<p>"+$(`#${id}_descripcion`).val()+"</p>")
+            $("#VR_precio").html("₡"+$(`#${id}_precio`).val())
+        }
+    </script>
 {% endblock %}
