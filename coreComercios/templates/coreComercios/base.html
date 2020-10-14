@@ -139,15 +139,8 @@
                     <div class="bg-white py-4 mb-4">
                         <div class="row mx-4 my-4 product-item-2 align-items-start">
                             <div class="col-md-6 mb-5 mb-md-0">
-                                <div class="owl-carousel owl-theme">
-                                    <img class="owl-lazy" data-src="images/model_1_bg.jpg" alt="">
-                                    <img class="owl-lazy" data-src="images/model_2_bg.jpg" alt="">
-                                    <img class="owl-lazy" data-src="images/model_3_bg.jpg" alt="">
-                                    <img class="owl-lazy" data-src="images/model_4_bg.jpg" alt="">
-                                    <img class="owl-lazy" data-src="images/model_5_bg.jpg" alt="">
-                                    <img class="owl-lazy" data-src="images/product_1_bg.jpg" alt="">
+                                <div id="VR_imagenes" class="owl-carousel owl-theme">
                                 </div>
-
                             </div>
                         
                             <div class="col-md-5 ml-auto product-title-wrap">
@@ -213,12 +206,22 @@
         <script src="{% static 'coreComercios/assets/libs/selling/main.js' %}"></script>
         
         <script>
-            $('.owl-carousel').owlCarousel({
+            $('#VR_imagenes').owlCarousel({
                 items:1,
                 lazyLoad:true,
                 loop:true,
                 margin:10
             });
+
+            function reiniciarOwlCarrousel(){
+                $('#VR_imagenes').owlCarousel('destroy'); 
+                $('#VR_imagenes').owlCarousel({
+                    items:1,
+                    lazyLoad:true,
+                    loop:true,
+                    margin:10
+                });
+            }
         </script>
         {% block customjs %}{% endblock %}
     </body>

@@ -21,7 +21,7 @@ from coreComercios.urls import coreComercios_patterns
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('comerciosAdmin/', admin.site.urls),
     # Paths del coreComercios
     path('', include(coreComercios_patterns)),
 ]

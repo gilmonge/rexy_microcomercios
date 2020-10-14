@@ -109,7 +109,11 @@
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="product-item">
                             <figure>
-                                <img src="https://colorlib.com/preview/theme/selling/images/model_1_bg.jpg" alt="Image" class="img-fluid">
+                                {% for img in imagenes %}
+                                    {% if img.principal is True and img.producto_id is producto.id %}
+                                        <img src="{{img.imagen.url}}" alt="Image" class="img-fluid">
+                                    {% endif %}
+                                {% endfor%}
                             </figure>
                             <div class="px-4">
                                 <h3><a href="{% url 'comercio:producto' pk=producto.id prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>
@@ -127,6 +131,16 @@
                         <input type="hidden" id="{{producto.id}}_nombre" value="{{producto.nombre}}">
                         <input type="hidden" id="{{producto.id}}_precio" value="{{producto.precio}}">
                         <textarea style="display:none;" id="{{producto.id}}_descripcion" >{{producto.descripcion}}</textarea>
+                        <textarea style="display:none;" id="{{producto.id}}_imagenes" >
+                            [
+                                ""
+                                {% for img in imagenes %}
+                                    {% if img.producto_id is producto.id %}
+                                       , "{{img.imagen.url}}"
+                                    {% endif %}
+                                {% endfor%}
+                            ]
+                        </textarea>
                     </div>
                 {% endfor%}
 
@@ -141,6 +155,19 @@
             $("#VR_nombre").html($(`#${id}_nombre`).val())
             $("#VR_descripcion").html("<p>"+$(`#${id}_descripcion`).val()+"</p>")
             $("#VR_precio").html("₡"+$(`#${id}_precio`).val())
+            var imagenes = JSON.parse($(`#${id}_imagenes`).val())
+
+            var VR_imagenes = ''
+            imagenes.forEach(function (img, index) {
+                if(img != ''){
+                    console.log(img)
+                    VR_imagenes = `${VR_imagenes}
+                        <img class="owl-lazy" data-src="${img}" alt="">
+                    `
+                }
+            })
+            $("#VR_imagenes").html(VR_imagenes)
+            reiniciarOwlCarrousel()
         }
     </script>
 {% endblock %}
