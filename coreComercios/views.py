@@ -17,7 +17,6 @@ def comercio (request, comercio_slug):
 
     # trae los productos relacionados al comercio
     productos = Producto.objects.filter(comercio=comercio.id, estado=True)
-
     imagenes = ImagenesProducto.objects.select_related('producto').filter(producto__in=productos, estado=True)
 
     datos = {
@@ -30,6 +29,7 @@ def comercio (request, comercio_slug):
 def producto(request, pk, prod_slug):
     # trae el producto si existe
     producto = get_object_or_404(Producto, id=pk)
+    imagenes_producto = ImagenesProducto.objects.select_related('producto').filter(producto=producto.id, estado=True)
 
     # trae el comercio respectivo al producto
     comercio = Comercio.objects.filter(id=producto.comercio.id)[0]
@@ -40,11 +40,14 @@ def producto(request, pk, prod_slug):
 
     # trae los productos relacionados al comercio
     productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = pk)
+    imagenes = ImagenesProducto.objects.select_related('producto').filter(producto__in=productos, estado=True)
 
     datos = {
         'producto':producto,
+        'imagenes_producto':imagenes_producto,
         'comercio':comercio,
         'productos':productos,
+        'imagenes':imagenes,
     }
     
     return render(request, "coreComercios/producto.html", datos)
