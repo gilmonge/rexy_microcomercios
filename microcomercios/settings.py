@@ -35,6 +35,7 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 # Application definition
 
 INSTALLED_APPS = [
+    'coreAdmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,3 +139,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# redirecciones auth
+LOGIN_REDIRECT_URL = 'coreAdmin:dashboard'
+LOGOUT_REDIRECT_URL = 'login'

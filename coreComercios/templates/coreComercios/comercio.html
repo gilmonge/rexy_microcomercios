@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block title %}{{ comercio.nombre }}{% endblock %}
+{% block customHead %}
+    <meta name="description" content="{{comercio.eslogan}}"/>
+{% endblock %}
 {% block nombreEmpresa %}<h1 class="mb-0 site-logo"><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class="text-black mb-0">{{ comercio.nombre }}</a></h1>{% endblock %}
 
 {% block Social1Empresa %}
