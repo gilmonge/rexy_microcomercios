@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@ox%@ar_#m@gy@ew9t5q-szhc0v*!$31lr$ws*5cu7fdwu$h0y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['microcomercios.com', 'localhost', '127.0.0.1', '206.189.228.176']
 
 #django-resized
 DJANGORESIZED_DEFAULT_QUALITY = 75
