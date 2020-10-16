@@ -47,23 +47,18 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {% for comercio in comercios %}
-                                                            <tr>
-                                                                <td>{{ comercio.nombre }}</td>
-                                                                <td>{{ comercio.slug }} <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
-                                                                <td>{{ comercio.eslogan }}</td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:comercio' pk=comercio.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i></a></td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:productos' pk=comercio.id %}" class="btn btn-info" title="Ver productos"><i class="fas fa-boxes fa-lg"></i></a></td>
-                                                            </tr>
-                                                        {% endfor%}
+                                                        
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             
+                                <div class="col-md-12">
+                                    <a href="{% url 'coreAdmin:comercios'  %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 {% endblock %}

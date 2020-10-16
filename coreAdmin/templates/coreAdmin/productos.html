@@ -10,6 +10,11 @@
     <style>
         tbody tr td{ color: #ffffff; }
         tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem 1rem;
+        }
     </style>
 {% endblock %}
 
@@ -18,7 +23,7 @@
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
-                                    <h2 class="text-white pb-2 fw-bold">Mis comercios</h2>
+                                    <h2 class="text-white pb-2 fw-bold">Productos del comercio {{ comercio.nombre }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -36,24 +41,31 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Nombre</th>
-                                                            <th>Nombre corto</th>
-                                                            <th>Eslogan</th>
+                                                            <th>Precio</th>
+                                                            <th>Estado</th>
                                                             <th style="text-align: center;">
                                                                 <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
-                                                            </th> 
-                                                            <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para editar los productos."><i class='fa fa-info'></i></a>
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {% for comercio in comercios %}
+                                                        {% for producto in productos %}
                                                             <tr>
-                                                                <td>{{ comercio.nombre }}</td>
-                                                                <td>{{ comercio.slug }} <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
-                                                                <td>{{ comercio.eslogan }}</td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:comercio' pk=comercio.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i></a></td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:productos' pk=comercio.id %}" class="btn btn-info" title="Ver productos"><i class="fas fa-boxes fa-lg"></i></a></td>
+                                                                <td>{{ producto.nombre }} <a href="{% url 'comercio:producto' pk=producto.id prod_slug=producto.nombre|slugify  %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
+                                                                <td>{{ producto.precio }}</td>
+                                                                <td class="estado">
+                                                                    {% if producto.estado is True %}
+                                                                        <div class="alert alert-success" role="alert">
+                                                                            <span>Activo</span>
+                                                                        </div>
+                                                                    {% else %}
+                                                                        
+                                                                        <div class="alert alert-danger" role="alert">
+                                                                            <span>inactivo</span>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:producto' pk=producto.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i></a></td>
                                                             </tr>
                                                         {% endfor%}
                                                     </tbody>
@@ -61,6 +73,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <a href="{% url 'coreAdmin:comercios'  %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
                                 </div>
                             </div>
                             
