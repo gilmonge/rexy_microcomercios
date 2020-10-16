@@ -3,7 +3,7 @@ from coreComercios.models import Comercio
 
 class ComercioForm(forms.ModelForm):
     class Meta:
-        model = Page
+        model = Comercio
         fields = ['nombre', 'slug', 'eslogan', 'descripcion', 'redessociales', 'contacto', 'img_superior', 'img_acercade',]
         
         widgets = {
@@ -13,6 +13,6 @@ class ComercioForm(forms.ModelForm):
             'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción'}),
             'redessociales' : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': ''}),
             'contacto'      : forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
-            'img_superior'  : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Imagen superior'}),
-            'img_acercade'  : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Imagen de acerca'}),
+            'img_superior'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Imagen superior'}),
+            'img_acercade'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Imagen de acerca'}),
         }

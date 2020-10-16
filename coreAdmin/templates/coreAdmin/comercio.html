@@ -18,7 +18,7 @@
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
-                                    <h2 class="text-white pb-2 fw-bold">Mis comercios</h2>
+                                    <h2 class="text-white pb-2 fw-bold">Editar comercio</h2>
                                 </div>
                             </div>
                         </div>
@@ -31,26 +31,62 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="display table table-striped table-hover" id="dataTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nombre</th>
-                                                            <th>Nombre corto</th>
-                                                            <th>Eslogan</th>
-                                                            <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
-                                                            </th> 
-                                                            <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para editar los productos."><i class='fa fa-info'></i></a>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                            <form action="" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                <div class="form-group">
+                                                    {{ form.nombre.label_tag }}
+                                                    {{ form.nombre }}
+                                                    {{ form.nombre.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.slug.label_tag }}
+                                                    {{ form.slug }}
+                                                    {{ form.slug.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.eslogan.label_tag }}
+                                                    {{ form.eslogan }}
+                                                    {{ form.eslogan.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.descripcion.label_tag }}
+                                                    {{ form.descripcion }}
+                                                    {{ form.descripcion.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.redessociales.label_tag }}
+                                                    {{ form.redessociales }}
+                                                    {{ form.redessociales.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.contacto.label_tag }}
+                                                    {{ form.contacto }}
+                                                    {{ form.contacto.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.img_superior.label_tag }}
+                                                    {{ form.img_superior }}
+                                                    {{ form.img_superior.errors }}
+                                                </div>
+
+                                                <div class="form-group">
+                                                    {{ form.img_acercade.label_tag }}
+                                                    {{ form.img_acercade }}
+                                                    {{ form.img_acercade.errors }}
+                                                </div>
+
+                                                    
+                                                <div class="text-center">
+                                                    <input type="submit" class="btn btn-success btn-block" value="Actualizar comercio" />
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -88,5 +124,12 @@
                     "fixedHeader"       : true
                 });
             });
+
+            {% if 'ok' in request.GET %}
+                $("#msgInfo").html(`
+                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+                `)
+                $("#Modal_informacion").modal("show")
+            {% endif %}
         </script>
 {% endblock %}
