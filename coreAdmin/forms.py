@@ -12,7 +12,12 @@ class ComercioForm(forms.ModelForm):
             'eslogan'       : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Eslogan'}),
             'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción'}),
             'redessociales' : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': ''}),
-            'contacto'      : forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
-            'img_superior'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Imagen superior'}),
-            'img_acercade'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Imagen de acerca'}),
+            'contacto'      : forms.Textarea(attrs={'class': 'form-control', 'placeholder': ''}),
+            'img_superior'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
+            'img_acercade'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
+        }
+        
+        labels = {
+            'img_superior': 'Imagen superior ',
+            'img_acercade': 'Imagen "Acerca de" '
         }

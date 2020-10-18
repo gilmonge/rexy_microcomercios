@@ -92,7 +92,7 @@
                 <div class="col-md-6 ml-auto">
                     {% comment %} <h3 class="section-sub-title">Merchant Company</h3>
                     <h2 class="section-title mb-3">About Us</h2> {% endcomment %}
-                    <p class="mb-4">{{comercio.descripcion}}</p>
+                    <p class="mb-4">{{ comercio.descripcion|safe }}</p>
                 </div>
             </div>
         </div>

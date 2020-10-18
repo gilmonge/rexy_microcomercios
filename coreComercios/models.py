@@ -64,7 +64,7 @@ def custom_upload_Producto(instance, filename):
 class Comercio(models.Model):
     owner           = models.ForeignKey(User, verbose_name="Dueño", on_delete=models.CASCADE)
     nombre          = models.CharField(max_length=100, verbose_name="Nombre")
-    slug            = models.CharField(max_length=100, verbose_name="Nombre corto")
+    slug            = models.CharField(max_length=100, verbose_name="Nombre corto", unique=True)
     eslogan         = models.CharField(max_length=200, verbose_name="Eslogan del comercio", default="")
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     redessociales   = models.TextField(verbose_name="Redes Sociales")
