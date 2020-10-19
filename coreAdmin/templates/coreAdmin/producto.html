@@ -23,7 +23,7 @@
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
-                                    <h2 class="text-white pb-2 fw-bold">Productos del comercio {{ comercio.nombre }}</h2>
+                                    <h2 class="text-white pb-2 fw-bold">Productos del comercio {{ producto.comercio.nombre }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -33,32 +33,65 @@
                         <div class="row mt--2">
 
                             <div class="col-md-12 row">
+                                
                                 <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="display table table-striped table-hover" id="dataTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nombre</th>
-                                                            <th>Precio</th>
-                                                            <th>Estado</th>
-                                                            <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                    <div class="card col-md-12">
+                                        <div class="card-body col-md-12 ">
+                                            <form action="" method="post" enctype="multipart/form-data" class="row ">
+                                                {% csrf_token %}
+
+                                                <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
+                                                    {{ form.nombre.label_tag }}
+                                                    {{ form.nombre }}
+                                                    {{ form.nombre.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+                                                    {{ form.descripcion.label_tag }}
+                                                    {{ form.descripcion }}
+                                                    {{ form.descripcion.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Precio {% endcomment %}
+                                                    {{ form.precio.label_tag }}
+                                                    {{ form.precio }}
+                                                    {{ form.precio.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Estado {% endcomment %}
+                                                    <label class="form-label">Estado</label>
+                                                    <div class="selectgroup w-100">
+                                                        <label class="selectgroup-item">
+                                                            <input type="radio" name="estado" value="1" class="selectgroup-input" 
+                                                                {% if producto.estado is True %}
+                                                                    checked=""
+                                                                {% endif %}
+                                                            >
+                                                            <span class="selectgroup-button">Activo</span>
+                                                        </label>
+                                                        <label class="selectgroup-item">
+                                                            <input type="radio" name="estado" value="0" class="selectgroup-input" 
+                                                                {% if producto.estado is False %}
+                                                                    checked=""
+                                                                {% endif %}
+                                                            >
+                                                            <span class="selectgroup-button">Inactivo</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" name="comercio" value="{{producto.comercio.id}}" />
+
+                                                <div class="text-center col-md-12">
+                                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar producto" />
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
-                                    <a href="{% url 'coreAdmin:productos' pk=comercio.id %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                                    <a href="{% url 'coreAdmin:productos' pk=producto.comercio.id %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
                                 </div>
                             </div>
                             
@@ -70,26 +103,29 @@
         <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
         <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
         <script>
-            $(document).ready(function () {
-                $('#dataTable').dataTable( {
-                    "language": {
-                        "lengthMenu"    : "Mostrando  _MENU_ ",
-                        "zeroRecords"   : "Nada que mostrar - disculpe!",
-                        "info"          : "Mostrando la página _PAGE_ de _PAGES_",
-                        "infoEmpty"     : "No se encontrarán registros",
-                        "infoFiltered"  : "(Filtrando _MAX_ del total de registros)",
-                        "search"        : "Buscar ",
-                        "paginate": {
-                            "previous"  : " Anterior ",
-                            "next"      : " Siguiente "
-                        }
-                    },
-                    "paging"            : true,
-                    "ordering"          : true,
-                    "order"             : [[0, 'desc']],
-                    "info"              : true,
-                    "fixedHeader"       : true
-                });
+            {% if 'ok' in request.GET %}
+                $("#msgInfo").html(`
+                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+                `)
+                $("#Modal_informacion").modal("show")
+            {% endif %}
+
+            tinymce.init({
+                selector: '#id_descripcion',
+                height: 300,
+                language: 'es',
+                theme: 'modern',
+                relative_urls: false,
+                remove_script_host : false,
+                plugins: [
+                    'advlist charmap preview hr anchor pagebreak', 
+                    'searchreplace', 
+                    'insertdatetime nonbreaking contextmenu directionality', 
+                    'emoticons paste textcolor colorpicker textpattern '
+                ],
+                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+                toolbar2: '',
+                image_advtab: true,
             });
         </script>
 {% endblock %}

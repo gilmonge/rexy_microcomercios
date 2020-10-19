@@ -1,5 +1,5 @@
 from django import forms
-from coreComercios.models import Comercio
+from coreComercios.models import Comercio, Producto
 
 class ComercioForm(forms.ModelForm):
     class Meta:
@@ -20,4 +20,16 @@ class ComercioForm(forms.ModelForm):
         labels = {
             'img_superior': 'Imagen superior ',
             'img_acercade': 'Imagen "Acerca de" '
+        }
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = [ 'comercio', 'nombre', 'descripcion', 'estado', 'precio' ]
+
+        widgets = {
+            'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+            'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción'}),
+            'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
+            'precio'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Precio'}),
         }

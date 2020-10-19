@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from coreComercios.models import Comercio, Producto, ImagenesProducto
-from .forms import ComercioForm
+from .forms import ComercioForm, ProductoForm
 
 # Create your views here.
 
@@ -22,17 +22,9 @@ def comercios(request):
     else:
         return redirect('login')
 
-def comercio(request, pk):
-    comercio = Comercio.objects.filter(id=pk)
-    datos = {
-        'comercio':comercio,
-    }
-    return render(request, "coreAdmin/comercio.html", datos)
-
 class comercioUpdateView(UpdateView):
     model = Comercio
     form_class = ComercioForm
-    #template_name_suffix = '_update_form'
     template_name = 'coreAdmin/comercio.html'
     
     def get_success_url(self):
@@ -50,14 +42,18 @@ def productos(request, pk):
     else:
         return redirect('login')
 
-def producto(request, pk):
-    if request.user.is_authenticated:
-        producto = Producto.objects.filter(id=pk)[0]
-        comercio = Comercio.objects.filter(id=producto.comercio.id)[0]
-        datos = {
-            'producto':producto,
-            'comercio':comercio,
-        }
-        return render(request, "coreAdmin/producto.html", datos)
-    else:
-        return redirect('login')
+class productoCreateView(CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'coreAdmin/productoAdd.html'
+
+    def get_success_url(self):
+        success_url = reverse_lazy('coreAdmin:productos', args=[self.object.comercio.id]) + '?ok'
+
+class productoUpdateView(UpdateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'coreAdmin/producto.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('coreAdmin:producto', args=[self.object.id]) + '?ok'

@@ -148,27 +148,6 @@
         <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
         <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
         <script>
-            $(document).ready(function () {
-                $('#dataTable').dataTable( {
-                    "language": {
-                        "lengthMenu"    : "Mostrando  _MENU_ ",
-                        "zeroRecords"   : "Nada que mostrar - disculpe!",
-                        "info"          : "Mostrando la página _PAGE_ de _PAGES_",
-                        "infoEmpty"     : "No se encontrarán registros",
-                        "infoFiltered"  : "(Filtrando _MAX_ del total de registros)",
-                        "search"        : "Buscar ",
-                        "paginate": {
-                            "previous"  : " Anterior ",
-                            "next"      : " Siguiente "
-                        }
-                    },
-                    "paging"            : true,
-                    "ordering"          : true,
-                    "order"             : [[0, 'desc']],
-                    "info"              : true,
-                    "fixedHeader"       : true
-                });
-            });
 
             {% if 'ok' in request.GET %}
                 $("#msgInfo").html(`

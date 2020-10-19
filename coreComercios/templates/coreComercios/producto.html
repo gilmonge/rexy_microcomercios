@@ -1,4 +1,5 @@
 {% extends 'coreComercios/base.html' %}
+{% load humanize %}
 {% load static %}
 
 {% block title %}{{producto.nombre}} | {{ comercio.nombre }}{% endblock %}
@@ -65,11 +66,11 @@
                         
                             <div class="col-md-5 ml-auto product-title-wrap order-2 order-md-1">
                                 <h3 class="text-black mb-4 font-weight-bold">{{producto.nombre}}</h3>
-                                <div class="mb-4"><p>{{producto.descripcion}}</p></div>
+                                <div class="mb-4"><p>{{producto.descripcion|safe}}</p></div>
                                 
                                 <div class="mb-4"> 
                                     <h3 class="text-black font-weight-bold h5">Precio:</h3>
-                                    <div class="price">₡{{producto.precio}}</div>
+                                    <div class="price">₡{{producto.precio|intcomma}}</div>
                                 </div>
                                 {% comment %} <p>
                                     <a href="#" class="btn btn-black rounded-0 d-block d-lg-inline-block">Add To Cart</a>
@@ -107,15 +108,15 @@
                                             <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
                                             <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
                                         </div> {% endcomment %}
-                                        <p class="mb-4">{{producto.descripcion|slice:"0:60"}}...</p>
+                                        <p class="mb-4">{{producto.descripcion|slice:"0:60"|safe}}...</p>
                                         <div>
-                                            <span class="btn btn-black mr-1 rounded-0" style="cursor: default; font-weight: 100;">₡{{producto.precio}}</span>
+                                            <span class="btn btn-black mr-1 rounded-0" style="cursor: default; font-weight: 100;">₡{{producto.precio|intcomma}}</span>
                                             <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop" onclick="datosVistaRap({{producto.id}})">Vista rápida</button>
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" id="{{producto.id}}_nombre" value="{{producto.nombre}}">
-                                <input type="hidden" id="{{producto.id}}_precio" value="{{producto.precio}}">
+                                <input type="hidden" id="{{producto.id}}_precio" value="{{producto.precio|intcomma}}">
                                 <textarea style="display:none;" id="{{producto.id}}_descripcion" >{{producto.descripcion}}</textarea>
                                 <textarea style="display:none;" id="{{producto.id}}_imagenes" >
                                     [

@@ -42,7 +42,7 @@
                                                                 <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
                                                             </th> 
                                                             <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para editar los productos."><i class='fa fa-info'></i></a>
+                                                                <a href="#" title="Haga clic sobre el icono para ver los productos."><i class='fa fa-info'></i></a>
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -52,8 +52,8 @@
                                                                 <td>{{ comercio.nombre }}</td>
                                                                 <td>{{ comercio.slug }} <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
                                                                 <td>{{ comercio.eslogan }}</td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:comercio' pk=comercio.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i></a></td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:productos' pk=comercio.id %}" class="btn btn-info" title="Ver productos"><i class="fas fa-boxes fa-lg"></i></a></td>
+                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:comercio' pk=comercio.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
+                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:productos' pk=comercio.id %}" class="btn btn-info" title="Ver productos"><i class="fas fa-boxes fa-lg"></i> Productos</a></td>
                                                             </tr>
                                                         {% endfor%}
                                                     </tbody>
