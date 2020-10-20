@@ -81,7 +81,7 @@ class Producto(models.Model):
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     estado          = models.BooleanField(verbose_name="Estado", default=False)
     moneda          = models.IntegerField(verbose_name="Moneda", default=0)
-    precio          = models.DecimalField(verbose_name="Precio", max_digits=8, decimal_places=2)
+    precio          = models.DecimalField(verbose_name="Precio", max_digits=12, decimal_places=2)
     
     def __str__(self):
         return self.nombre

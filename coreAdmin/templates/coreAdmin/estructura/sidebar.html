@@ -11,6 +11,11 @@
                             <div class="info">
                                 <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                     <span>
+                                        {% if request.session.comercioId is not None %}
+                                            <span class="user-level text-white">
+                                                {{ comercio.nombre }}
+                                            </span>
+                                        {% endif %}
                                         <span class="user-level">
                                             {{request.user.first_name}} {{request.user.last_name}}
                                         </span>
@@ -38,6 +43,7 @@
                             </div>
                         </div>
                         <ul class="nav nav-primary">
+
                             <li class="nav-item active">
                                 <a href="{% url 'coreAdmin:dashboard' %}">
                                     <i class="fas fa-home"></i>
@@ -52,12 +58,22 @@
                                 <h4 class="text-section">Funcionalidades</h4>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="{% url 'coreAdmin:comercios' %}">
-                                    <i class="far fa-building"></i>
-                                    <p>Comercios</p>
-                                </a>
-                            </li>
+                            {% if request.session.comercioId is not None %}
+                                <li class="nav-item">
+                                    <a href="{% url 'coreAdmin:comercio' pk=request.session.comercioId %}">
+                                        <i class="far fa-building"></i>
+                                        <p>Comercio</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{% url 'coreAdmin:productos' %}">
+                                        <i class="fas fa-boxes"></i>
+                                        <p>Productos</p>
+                                    </a>
+                                </li>
+                            
+                            {% endif %}
 
                             {% comment %} <li class="nav-item">
                                 <a data-toggle="collapse" href="#sidebarLayouts">

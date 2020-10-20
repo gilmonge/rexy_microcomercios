@@ -8,7 +8,26 @@ from .forms import ComercioForm, ProductoForm
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request, "coreAdmin/dashboard.html")
+        
+        datos = {}
+        if request.session.get('comercioId', None) == "dummy":
+            comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            datos["comercio"] = comercio
+        
+        return render(request, "coreAdmin/dashboard.html", datos)
+    else:
+        return redirect('login')
+
+def dashboardSeleccion(request, pk):
+    if request.user.is_authenticated:
+        request.session["comercioId"] = pk
+        
+        datos = {}
+        if request.session.get('comercioId', None) == "dummy":
+            comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            datos["comercio"] = comercio
+        
+        return render(request, "coreAdmin/dashboard.html", datos)
     else:
         return redirect('login')
 
@@ -30,10 +49,10 @@ class comercioUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('coreAdmin:comercio', args=[self.object.id]) + '?ok'
 
-def productos(request, pk):
+def productos(request):
     if request.user.is_authenticated:
-        comercio = Comercio.objects.filter(id=pk)[0]
-        productos = Producto.objects.filter(comercio=pk)
+        comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+        productos = Producto.objects.filter(comercio=request.session["comercioId"])
         datos = {
             'productos':productos,
             'comercio':comercio,
@@ -46,9 +65,7 @@ class productoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'coreAdmin/productoAdd.html'
-
-    def get_success_url(self):
-        success_url = reverse_lazy('coreAdmin:productos', args=[self.object.comercio.id]) + '?ok'
+    success_url = reverse_lazy('coreAdmin:productos' )
 
 class productoUpdateView(UpdateView):
     model = Producto
@@ -57,3 +74,8 @@ class productoUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse_lazy('coreAdmin:producto', args=[self.object.id]) + '?ok'
+
+class productoDeleteView(DeleteView):
+    model = Producto
+    template_name = 'coreAdmin/producto_confirm_delete.html'
+    success_url = reverse_lazy('coreAdmin:productos')

@@ -29,7 +29,7 @@ class ProductoForm(forms.ModelForm):
 
         widgets = {
             'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
-            'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción'}),
+            'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción', 'required': 'true'}),
             'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
             'precio'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Precio'}),
         }

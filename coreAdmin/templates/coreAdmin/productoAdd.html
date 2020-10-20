@@ -1,6 +1,6 @@
 {% extends 'coreAdmin/base.html' %}
 {% load static %}
-{% block title %}Mis Comercios{% endblock %}
+{% block title %}Agregar producto{% endblock %}
 
 {% block customHead %}
         <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
@@ -23,7 +23,7 @@
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
-                                    <h2 class="text-white pb-2 fw-bold">Productos del comercio {{ producto.comercio.nombre }}</h2>
+                                    <h2 class="text-white pb-2 fw-bold">Nuevo producto</h2>
                                 </div>
                             </div>
                         </div>
@@ -37,16 +37,55 @@
                                 <div class="col-md-12">
                                     <div class="card col-md-12">
                                         <div class="card-body col-md-12 ">
-                                            {%for key, values in request.GET.lists%}
-                                                {%for value in values%}
-                                                    {{value}}  
-                                                {%endfor%}
-                                            {%endfor%}
+                                            <form action="" method="post" enctype="multipart/form-data" class="row ">
+                                                {% csrf_token %}
+
+                                                <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
+                                                    {{ form.nombre.label_tag }}
+                                                    {{ form.nombre }}
+                                                    {{ form.nombre.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+                                                    <label for="id_descripcion">Descripción:</label>
+                                                    <textarea name="descripcion" cols="40" rows="10" class="form-control" placeholder="Descripción" id="id_descripcion"></textarea>
+                                                    
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Precio {% endcomment %}
+                                                    {{ form.precio.label_tag }}
+                                                    {{ form.precio }}
+                                                    {{ form.precio.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Estado {% endcomment %}
+                                                    <label class="form-label">Estado</label>
+                                                    <div class="selectgroup w-100">
+                                                        <label class="selectgroup-item">
+                                                            <input type="radio" name="estado" value="1" class="selectgroup-input" checked="" >
+                                                            <span class="selectgroup-button">Activo</span>
+                                                        </label>
+                                                        <label class="selectgroup-item">
+                                                            <input type="radio" name="estado" value="0" class="selectgroup-input" >
+                                                            <span class="selectgroup-button">Inactivo</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" name="comercio" value="{{request.session.comercioId}}" />
+
+                                                <div class="text-center col-md-12">
+                                                    <input type="submit" class="btn btn-info btn-block" value="Agregar producto" />
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             
+                                <div class="col-md-12">
+                                    <a href="{% url 'coreAdmin:productos' pk=request.session.comercioId %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 {% endblock %}

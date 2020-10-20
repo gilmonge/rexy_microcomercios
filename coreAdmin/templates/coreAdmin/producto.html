@@ -1,6 +1,6 @@
 {% extends 'coreAdmin/base.html' %}
 {% load static %}
-{% block title %}Mis Comercios{% endblock %}
+{% block title %}{{ producto.nombre }} | Editar producto{% endblock %}
 
 {% block customHead %}
         <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
@@ -23,7 +23,7 @@
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
-                                    <h2 class="text-white pb-2 fw-bold">Productos del comercio {{ producto.comercio.nombre }}</h2>
+                                    <h2 class="text-white pb-2 fw-bold">Editar producto</h2>
                                 </div>
                             </div>
                         </div>

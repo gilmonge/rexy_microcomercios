@@ -7,7 +7,11 @@
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
-                                    <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
+                                    {% if request.session.comercioId is not None %}
+                                        <h2 class="text-white pb-2 fw-bold">Escritorio comercio {{ comercio }}</h2>
+                                    {% else %}
+                                        <h2 class="text-white pb-2 fw-bold">Seleccione un comercio para empezar</h2>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -116,8 +120,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> {% endcomment %}
-                            </div>
+                                </div> 
+                            </div>{% endcomment %}
                             
                             {% comment %} <div class="col-md-12 row row-card-no-pd">
                                 <div class="col-sm-6 col-md-3">

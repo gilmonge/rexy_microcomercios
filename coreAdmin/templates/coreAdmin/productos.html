@@ -1,7 +1,7 @@
 {% extends 'coreAdmin/base.html' %}
 {% load humanize %}
 {% load static %}
-{% block title %}Mis Comercios{% endblock %}
+{% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
 
 {% block customHead %}
         <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
@@ -38,10 +38,10 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
+                                            <div class="col-md-12">
+                                                <a href="{% url 'coreAdmin:productosAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar producto</a>
+                                            </div>
                                             <div class="table-responsive">
-                                                <div class="col-md-12">
-                                                    <a href="{% url 'coreAdmin:productosAdd' pk=comercio.id %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar producto</a>
-                                                </div>
                                                 <table class="display table table-striped table-hover" id="dataTable">
                                                     <thead>
                                                         <tr>
@@ -50,6 +50,9 @@
                                                             <th>Estado</th>
                                                             <th style="text-align: center;">
                                                                 <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
+                                                            </th>
+                                                            <th style="text-align: center;">
+                                                                <a href="#" title="Haga clic sobre el icono para eliminar la fila."><i class='fa fa-info'></i></a>
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -71,6 +74,7 @@
                                                                     {% endif %}
                                                                 </td>
                                                                 <td style="text-align: center;"><a href="{% url 'coreAdmin:producto' pk=producto.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
+                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:productoDelete' pk=producto.id %}" class="btn btn-danger"><i class="fas fa-eraser fa-lg"></i> Eliminar</a></td>
                                                             </tr>
                                                         {% endfor%}
                                                     </tbody>
@@ -78,10 +82,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <a href="{% url 'coreAdmin:comercios'  %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
                                 </div>
                             </div>
                             
