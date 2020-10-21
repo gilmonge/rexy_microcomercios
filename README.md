@@ -46,6 +46,6 @@ Realizar deploy del proyecto en el servidor
     ```
  4. Se realiza la carga al servidor
     ```sh
-     $ git push ubuntu produccion
+     $ git push centos produccion
     ```
 ---
