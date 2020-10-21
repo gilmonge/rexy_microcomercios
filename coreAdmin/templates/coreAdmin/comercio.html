@@ -1,0 +1,274 @@
+{% extends 'coreAdmin/base.html' %}
+{% load static %}
+{% block title %}Mis Comercios{% endblock %}
+
+{% block customHead %}
+        <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        div.file-caption.form-control.kv-fileinput-caption.icon-visible > input {
+            color: #fff !important;
+        }
+        .kv-file-remove, .img-block>a{ display: none !important; }
+    </style>
+{% endblock %}
+
+{% block content %}
+                    <div class="panel-header bg-primary-gradient">
+                        <div class="page-inner py-5">
+                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                                <div>
+                                    <h2 class="text-white pb-2 fw-bold">Editar comercio</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page-inner mt--5">
+                        <div class="row mt--2">
+
+                            <div class="col-md-12 row">
+
+                                <div class="col-md-12">
+                                    <div class="card col-md-12">
+                                        <div class="card-body col-md-12 ">
+                                            <form action="" method="post" enctype="multipart/form-data" class="row ">
+                                                {% csrf_token %}
+
+                                                <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
+                                                    {{ form.nombre.label_tag }}
+                                                    {{ form.nombre }}
+                                                    {{ form.nombre.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Nombre corto {% endcomment %}
+                                                    {{ form.slug.label_tag }}
+                                                    {{ form.slug }}
+                                                    {{ form.slug.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12"> {% comment %} eslogan {% endcomment %}
+                                                    {{ form.eslogan.label_tag }}
+                                                    {{ form.eslogan }}
+                                                    {{ form.eslogan.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+                                                    {{ form.descripcion.label_tag }}
+                                                    {{ form.descripcion }}
+                                                    {{ form.descripcion.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <label for="socialFacebook">Redes Sociales</label>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="socialFacebook">URL Facebook:</label>
+                                                    <input type="text" id="socialFacebook" value="" class="form-control" placeholder="URL Facebook:" maxlength="200">
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="socialTwitter">URL Twitter:</label>
+                                                    <input type="text" id="socialTwitter" value="" class="form-control" placeholder="URL Twitter:" maxlength="200">
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="socialTiktok">URL Tiktok:</label>
+                                                    <input type="text" id="socialTiktok" value="" class="form-control" placeholder="URL Tiktok:" maxlength="200">
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="socialInstagram">URL Instagram:</label>
+                                                    <input type="text" id="socialInstagram" value="" class="form-control" placeholder="URL Instagram:" maxlength="200">
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="socialTwitch">URL Twitch:</label>
+                                                    <input type="text" id="socialTwitch" value="" class="form-control" placeholder="URL Twitch:" maxlength="200">
+                                                </div>
+                                                
+                                                <div class="form-group" style="display: none;"> {% comment %} Redes sociales {% endcomment %}
+                                                    {{ form.redessociales.label_tag }}
+                                                    {{ form.redessociales }}
+                                                    {{ form.redessociales.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <label for="socialFacebook">Información de contácto</label>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="contactoTel">Teléfono:</label>
+                                                    <input type="text" id="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="contactoEmail">Correo electrónico:</label>
+                                                    <input type="email" id="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
+                                                </div>
+
+                                                <div class="form-group" style="display: none;"> {% comment %} Contacto {% endcomment %}
+                                                    {{ form.contacto.label_tag }}
+                                                    {{ form.contacto }}
+                                                    {{ form.contacto.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="id_img_superior">Imagen superior:</label>
+                                                    <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="id_img_acercade">Imagen "Acerca de":</label>
+                                                    <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
+                                                </div>
+                                                    
+                                                <div class="text-center col-md-12">
+                                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar comercio" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}
+
+{% block customJs %}
+        <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+
+        <script>
+            {% if 'ok' in request.GET %}
+                $("#msgInfo").html(`
+                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+                `)
+                $("#Modal_informacion").modal("show")
+            {% endif %}
+
+            function cargarSocial(){
+                var id_redessociales = $('#id_redessociales').val()
+                var redessociales = JSON.parse(id_redessociales)
+                
+                $('#socialFacebook').val(redessociales.facebook)
+                $('#socialTwitter').val(redessociales.twitter)
+                $('#socialTiktok').val(redessociales.tiktok)
+                $('#socialInstagram').val(redessociales.instagram)
+                $('#socialTwitch').val(redessociales.twitch)
+            }
+            cargarSocial()
+
+            function cargarContacto(){
+                var id_contacto = $('#id_contacto').val()
+                var contacto = JSON.parse(id_contacto)
+                
+                $('#contactoTel').val(contacto.telefono)
+                $('#contactoEmail').val(contacto.email)
+            }
+            cargarContacto()
+
+            $( "#socialFacebook" ).keyup(function() { CambiarResdSocial('facebook', $('#socialFacebook').val() ) })
+            $( "#socialTwitter" ).keyup(function() { CambiarResdSocial('twitter', $('#socialTwitter').val() ) })
+            $( "#socialTiktok" ).keyup(function() { CambiarResdSocial('tiktok', $('#socialTiktok').val() ) })
+            $( "#socialInstagram" ).keyup(function() { CambiarResdSocial('instagram', $('#socialInstagram').val() ) })
+            $( "#socialTwitch" ).keyup(function() { CambiarResdSocial('twitch', $('#socialTwitch').val() ) })
+
+            $( "#contactoTel" ).keyup(function() { CambiarContacto('telefono', $('#contactoTel').val() ) })
+            $( "#contactoEmail" ).keyup(function() { CambiarContacto('email', $('#contactoEmail').val() ) })
+
+            function CambiarResdSocial(id, url){
+                var id_redessociales = $('#id_redessociales').val()
+                var redessociales = JSON.parse(id_redessociales)
+
+                redessociales[id] = url
+                $('#id_redessociales').val(JSON.stringify(redessociales))
+            }
+
+            function CambiarContacto(id, url){
+                var id_contacto = $('#id_contacto').val()
+                var contacto = JSON.parse(id_contacto)
+
+                contacto[id] = url
+                $('#id_contacto').val(JSON.stringify(contacto))
+            }
+
+            tinymce.init({
+                selector: '#id_descripcion',
+                height: 300,
+                language: 'es',
+                theme: 'modern',
+                relative_urls: false,
+                remove_script_host : false,
+                plugins: [
+                    'advlist charmap preview hr anchor pagebreak', 
+                    'searchreplace', 
+                    'insertdatetime nonbreaking contextmenu directionality', 
+                    'emoticons paste textcolor colorpicker textpattern '
+                ],
+                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+                toolbar2: '',
+                image_advtab: true,
+            });
+
+            $("#id_img_superior").fileinput({
+                theme: "fas",
+                language: 'es',
+                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+                overwriteInitial: false,
+                initialPreviewAsData: true,
+                maxFilesNum: 1,
+                showUpload: false,
+                showRemove: false,
+                initialPreview: [
+                    "/media/{{ comercio.img_superior }}",
+                ],
+            });
+            $("#id_img_acercade").fileinput({
+                theme: "fas",
+                language: 'es',
+                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+                overwriteInitial: false,
+                initialPreviewAsData: true,
+                maxFilesNum: 1,
+                showUpload: false,
+                showRemove: false,
+                initialPreview: [
+                    "/media/{{ comercio.img_acercade }}",
+                ],
+            });
+        </script>
+        {% comment %} <!-- AUTO IMAGE ORIENTATION -->
+        <div class="file-loading">
+            <input id="input-file-1" name="input-file-1[]" multiple type="file" accept="image/*">
+        </div>
+        <div class="checkbox">
+            <label>
+            <input id="toggleOrient" name="tog" type="checkbox" checked>
+            Toggle Auto Orientation
+            </label>
+        </div>
+        <div id="togStatus" class="hint-block">
+        </div>
+        <script>
+        $("#input-file-1").fileinput({
+            uploadUrl: "/file-upload-batch/2",
+            autoOrientImage: true
+        });
+        $("#toggleOrient").on('change', function() {
+            var val = $(this).prop('checked');
+            $("#input-file-1").fileinput('refresh', {
+                uploadUrl: "/file-upload-batch/2",
+                autoOrientImage: val
+            });
+            $('#togStatus').html('Fileinput is reset and <samp>autoOrientImage</samp> is set to <em>' + (val ? 'true' : 'false') + '</em>. Retry by selecting images again.');
+        });
+        </script> {% endcomment %}
+
+{% endblock %}

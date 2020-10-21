@@ -64,7 +64,7 @@ def custom_upload_Producto(instance, filename):
 class Comercio(models.Model):
     owner           = models.ForeignKey(User, verbose_name="Dueño", on_delete=models.CASCADE)
     nombre          = models.CharField(max_length=100, verbose_name="Nombre")
-    slug            = models.CharField(max_length=100, verbose_name="Nombre corto")
+    slug            = models.CharField(max_length=100, verbose_name="Nombre corto", unique=True)
     eslogan         = models.CharField(max_length=200, verbose_name="Eslogan del comercio", default="")
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     redessociales   = models.TextField(verbose_name="Redes Sociales")
@@ -81,7 +81,7 @@ class Producto(models.Model):
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     estado          = models.BooleanField(verbose_name="Estado", default=False)
     moneda          = models.IntegerField(verbose_name="Moneda", default=0)
-    precio          = models.DecimalField(verbose_name="Precio", max_digits=8, decimal_places=2)
+    precio          = models.DecimalField(verbose_name="Precio", max_digits=12, decimal_places=2)
     
     def __str__(self):
         return self.nombre

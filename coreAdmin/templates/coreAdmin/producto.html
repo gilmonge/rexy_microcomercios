@@ -1,0 +1,221 @@
+{% extends 'coreAdmin/base.html' %}
+{% load static %}
+{% block title %}{{ producto.nombre }} | Editar producto{% endblock %}
+
+{% block customHead %}
+        <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+                    <div class="panel-header bg-primary-gradient">
+                        <div class="page-inner py-5">
+                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                                <div>
+                                    <h2 class="text-white pb-2 fw-bold">Editar producto</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page-inner mt--5">
+                        <div class="row mt--2">
+
+                            <div class="col-md-12 row">
+                                
+                                <div class="col-md-12">
+                                    <div class="card col-md-12">
+                                        <div class="card-body col-md-12 ">
+                                            <form action="" method="post" class="row ">
+                                                {% csrf_token %}
+
+                                                <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
+                                                    {{ form.nombre.label_tag }}
+                                                    {{ form.nombre }}
+                                                    {{ form.nombre.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+                                                    {{ form.descripcion.label_tag }}
+                                                    {{ form.descripcion }}
+                                                    {{ form.descripcion.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Precio {% endcomment %}
+                                                    {{ form.precio.label_tag }}
+                                                    {{ form.precio }}
+                                                    {{ form.precio.errors }}
+                                                </div>
+
+                                                <div class="form-group col-md-6"> {% comment %} Estado {% endcomment %}
+                                                    <label class="form-label">Estado</label>
+                                                    <div class="selectgroup w-100">
+                                                        <label class="selectgroup-item">
+                                                            <input type="radio" name="estado" value="1" class="selectgroup-input" 
+                                                                {% if producto.estado is True %}
+                                                                    checked=""
+                                                                {% endif %}
+                                                            >
+                                                            <span class="selectgroup-button">Activo</span>
+                                                        </label>
+                                                        <label class="selectgroup-item">
+                                                            <input type="radio" name="estado" value="0" class="selectgroup-input" 
+                                                                {% if producto.estado is False %}
+                                                                    checked=""
+                                                                {% endif %}
+                                                            >
+                                                            <span class="selectgroup-button">Inactivo</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" name="comercio" value="{{producto.comercio.id}}" />
+
+                                                <div class="text-center col-md-12">
+                                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar producto" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="card col-md-12">
+                                        <div class="col-md-12 ">
+                                            <div class="col-md-12 row pt-2">
+                                                <div class="col-md-6 mt-2">
+                                                    <h2 class="text-white pb-2 fw-bold">Imagenes del producto</h2>
+                                                </div>
+
+                                                <div class="col-md-6 d-flex justify-content-end">
+                                                    <button href="" type="button" class="btn btn-light mb-3"data-toggle="modal" data-target="#Modal_Add_Img"><i class="fas fa-plus"></i> Agregar producto</button>
+                                                </div>
+
+                                                {% load coreAdmin_extras %}
+                                                {% get_Imagenes_Producto producto.id as ImagenesProductos %}
+                                                {% for ImagenProducto in ImagenesProductos %}
+                                                    <div class="card-body col-md-4 ">
+                                                        <div class="card">
+                                                            {% if ImagenProducto.principal is True %}
+                                                                <div class="alert alert-success" role="alert" style="background-color: rgba(255,255,255,0.15);">
+                                                                    <span>Es imagen principal</span>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            <img class="card-img-top" src="{{ ImagenProducto.imagen.url }}" alt="Card image cap">
+                                                            <div class="row col-md-12 p-0 m-0">
+                                                                <div class="col-xs-6 col-md-6 p-0 m-0">
+                                                                    <form action="{% url 'coreAdmin:productoImagenDef' %}" method="post">
+                                                                        {% csrf_token %}
+                                                                        <button type="submit" class="btn btn-info btn-block" style="border-radius:0px;"><i class="fas fa-check fa-lg"></i> Principal</button>
+                                                                        
+                                                                        <input type="hidden" name="pk" value="{{producto.id}}" />
+                                                                        <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-6 p-0 m-0">
+                                                                    <form action="{% url 'coreAdmin:productoImagenDel' %}" method="post">
+                                                                        {% csrf_token %}
+                                                                        <button type="submit" class="btn btn-danger btn-block" style="border-radius:0px;"><i class="fas fa-eraser fa-lg"></i> Eliminar</button>
+                                                                        
+                                                                        <input type="hidden" name="pk" value="{{producto.id}}" />
+                                                                        <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor%}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <a href="{% url 'coreAdmin:productos' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    
+                    <form action="{% url 'coreAdmin:productoImagenAdd' %}" method="post" enctype="multipart/form-data">
+                        <div class="modal fade" id="Modal_Add_Img" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="Modal_Add_Img" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content" style="background: #202940;">
+                                    <div class="modal-body">
+                                            {% csrf_token %}
+
+                                            <div class="form-group col-md-12">
+                                                <label for="">Imagen:</label>
+                                                <input type="file" name="imagen" class="form-control" placeholder="" accept="image/*" id="id_imagen">
+                                            </div>
+                                            <input type="hidden" name="producto" value="{{producto.id}}" />
+                                            <input type="hidden" name="principal" value="False" />
+                                            <input type="hidden" name="estado" value="True" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-info">Agregar imagen</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+{% endblock %}
+
+{% block customJs %}
+        <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+        <script>
+            {% if 'ok' in request.GET %}
+                $("#msgInfo").html(`
+                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+                `)
+                $("#Modal_informacion").modal("show")
+            {% endif %}
+
+            tinymce.init({
+                selector: '#id_descripcion',
+                height: 300,
+                language: 'es',
+                theme: 'modern',
+                relative_urls: false,
+                remove_script_host : false,
+                plugins: [
+                    'advlist charmap preview hr anchor pagebreak', 
+                    'searchreplace', 
+                    'insertdatetime nonbreaking contextmenu directionality', 
+                    'emoticons paste textcolor colorpicker textpattern '
+                ],
+                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+                toolbar2: '',
+                image_advtab: true,
+            });
+
+            $("#id_imagen").fileinput({
+                theme: "fas",
+                language: 'es',
+                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+                overwriteInitial: false,
+                initialPreviewAsData: false,
+                maxFilesNum: 1,
+                showUpload: false,
+                showRemove: false
+            });
+        </script>
+{% endblock %}

@@ -35,12 +35,14 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 # Application definition
 
 INSTALLED_APPS = [
+    'coreAdmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'coreComercios'
 ]
 
@@ -53,6 +55,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS =(
+    "django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    'django.core.context_processors.request'
+)
 
 ROOT_URLCONF = 'microcomercios.urls'
 
@@ -138,3 +148,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# redirecciones auth
+LOGIN_REDIRECT_URL = 'coreAdmin:dashboard'
+LOGOUT_REDIRECT_URL = 'login'

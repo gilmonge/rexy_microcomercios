@@ -20,8 +20,18 @@ from coreComercios.urls import coreComercios_patterns
 
 from django.conf import settings
 
+from coreAdmin.urls import coreAdmin_patterns
+
 urlpatterns = [
-    path('comerciosAdmin/', admin.site.urls),
+    path('DJAdmin/', admin.site.urls),
+
+    # Paths de coreAdmin
+    path('comerciosAdmin/', include(coreAdmin_patterns)),
+    
+    # Paths del auth
+    path('comerciosAdmin/', include('django.contrib.auth.urls')),
+
+
     # Paths del coreComercios
     path('', include(coreComercios_patterns)),
 ]
