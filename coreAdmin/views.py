@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.http import Http404, JsonResponse
 from coreComercios.models import Comercio, Producto, ImagenesProducto
-from .forms import ComercioForm, ProductoForm
+from .forms import ComercioForm, ProductoForm, ImagenProductoForm
 
 # Create your views here.
 
@@ -79,3 +80,37 @@ class productoDeleteView(DeleteView):
     model = Producto
     template_name = 'coreAdmin/producto_confirm_delete.html'
     success_url = reverse_lazy('coreAdmin:productos')
+
+def add_image(request):
+    if request.method == 'POST':
+        pk = request.POST['producto']
+        form = ImagenProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            producto = get_object_or_404(Producto, id=pk)
+    return redirect('coreAdmin:producto', pk = producto.id)
+
+def del_image(request):
+    if request.method == 'POST':
+        pk = request.POST['pk']
+        pkImagen = request.POST['pkImagen']
+        ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
+        ImagenesProducto.objects.filter(id=pkImagen).delete()
+    return redirect('coreAdmin:producto', pk = pk)
+
+def default_image(request):
+    if request.method == 'POST':
+        pk = request.POST['pk']
+        pkImagen = request.POST['pkImagen']
+
+        imagenes = ImagenesProducto.objects.filter(producto=pk)
+        for imgProd in imagenes:
+            imgProd.principal = 0
+            imgProd.save()
+
+        imagen = ImagenesProducto.objects.filter(id=pkImagen)[0]
+        imagen.principal = 1
+        imagen.save()
+        #ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
+        #ImagenesProducto.objects.filter(id=pkImagen).delete()
+    return redirect('coreAdmin:producto', pk = pk)

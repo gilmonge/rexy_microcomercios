@@ -112,11 +112,9 @@
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="product-item">
                             <figure>
-                                {% for img in imagenes %}
-                                    {% if img.principal is True and img.producto_id is producto.id %}
-                                        <img src="{{img.imagen.url}}" alt="Image" class="img-fluid">
-                                    {% endif %}
-                                {% endfor%}
+                                {% load coreComercios_extras %}
+                                {% get_ImagenPrincipal imagenes producto.id as ImagenPrincipal %}
+                                <img src="{{ImagenPrincipal}}" alt="Image" class="img-fluid">
                             </figure>
                             <div class="px-4">
                                 <h3><a href="{% url 'comercio:producto' pk=producto.id prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>

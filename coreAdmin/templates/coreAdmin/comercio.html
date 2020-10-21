@@ -119,12 +119,12 @@
                                                 </div>
 
                                                 <div class="form-group col-md-6">
-                                                    <label for="contactoTel">Imagen superior:</label>
+                                                    <label for="id_img_superior">Imagen superior:</label>
                                                     <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
                                                 </div>
 
                                                 <div class="form-group col-md-6">
-                                                    <label for="contactoEmail">Imagen "Acerca de":</label>
+                                                    <label for="id_img_acercade">Imagen "Acerca de":</label>
                                                     <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
                                                 </div>
                                                     
@@ -144,8 +144,8 @@
 {% block customJs %}
         <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
         <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
-        <script>
 
+        <script>
             {% if 'ok' in request.GET %}
                 $("#msgInfo").html(`
                     <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>

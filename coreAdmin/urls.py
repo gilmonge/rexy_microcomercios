@@ -12,4 +12,7 @@ coreAdmin_patterns = ([
     path('producto/<int:pk>', productoUpdateView.as_view(), name="producto"),
     path('productoAdd', productoCreateView.as_view(), name="productosAdd"),
     path('productoDel/<int:pk>', productoDeleteView.as_view(), name="productoDelete"),
+    path('productoImagenAdd', views.add_image, name="productoImagenAdd"),
+    path('productoImagenDel', views.del_image, name="productoImagenDel"),
+    path('productoImagenDef', views.default_image, name="productoImagenDef"),
 ], "coreAdmin")

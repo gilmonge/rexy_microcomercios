@@ -1,5 +1,5 @@
 from django import forms
-from coreComercios.models import Comercio, Producto
+from coreComercios.models import Comercio, Producto, ImagenesProducto
 
 class ComercioForm(forms.ModelForm):
     class Meta:
@@ -33,3 +33,9 @@ class ProductoForm(forms.ModelForm):
             'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
             'precio'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Precio'}),
         }
+
+class ImagenProductoForm(forms.ModelForm):
+    class Meta:
+        model = ImagenesProducto
+        fields = [ 'producto', 'imagen', 'principal', 'estado' ]
+        
