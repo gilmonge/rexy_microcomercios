@@ -52,14 +52,16 @@
 {% endblock %}
 
 {% block customContent %}
-            <div class="site-section bg-light">
+            <div class="site-section bg-light bg-light-custom">
                 <div class="container">
                     <div class="bg-white pt-6">
-                        <div class="row mx-4 my-4 product-item-2 align-items-start">
+                        <div class="row mx-4 my-4 product-item-2 align-items-start pt-3">
                             <div class="col-md-6 mb-5 mb-md-0 order-1 order-md-2">
                                 <div class="owl-carousel owl-theme">
-                                    {% for img in imagenes_producto %}
-                                        <img class="owl-lazy" data-src="{{img.imagen.url}}" alt="">
+                                    {% load coreComercios_extras %}
+                                    {% get_Imagenes imagenes_producto as ImagenesProducto %}
+                                    {% for img in ImagenesProducto %}
+                                        <img class="owl-lazy" data-src="{{img}}" alt="">
                                     {% endfor%}
                                 </div>
                             </div>

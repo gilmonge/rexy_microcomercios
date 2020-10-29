@@ -1,4 +1,31 @@
 
 .icon-phone, .icon-envelope{
-    color: #000;
+    color: #000 !important;
+}
+
+@media(max-width: 767px){
+    .site-logo{
+        font-size: 1.8rem !important;
+    }
+}
+
+@media(max-width: 1199px){
+    .bg-light-custom{
+        padding: 7rem 0px 1rem 0px !important;
+    }
+}
+
+.experience .year {
+    font-weight: 800 !important;
+    font-size: 2rem !important;
+}
+
+@media(max-width: 991px){
+    .experience .year {
+        font-weight: 800 !important;
+        font-size: 1.5rem !important;
+    }
+    .slogan{
+        font-size: 2.5rem !important;
+    }
 }

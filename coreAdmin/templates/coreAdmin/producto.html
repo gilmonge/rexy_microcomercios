@@ -4,6 +4,12 @@
 
 {% block customHead %}
         <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+
+        {% if request.session.comercioId != producto.comercio.id %}
+            <script>
+                window.location.href = "{% url 'coreAdmin:productos' %}";
+            </script>
+        {% endif %}
 {% endblock %}
 
 {% block customCss %}
@@ -96,10 +102,11 @@
                                             <div class="col-md-12 row pt-2">
                                                 <div class="col-md-6 mt-2">
                                                     <h2 class="text-white pb-2 fw-bold">Imagenes del producto</h2>
+                                                    <span class="badge badge-light" style="font-size: 0.8rem;">La imagen principal es la que se muestra en el listado de productos</span>
                                                 </div>
 
                                                 <div class="col-md-6 d-flex justify-content-end">
-                                                    <button href="" type="button" class="btn btn-light mb-3"data-toggle="modal" data-target="#Modal_Add_Img"><i class="fas fa-plus"></i> Agregar producto</button>
+                                                    <button href="" type="button" class="btn btn-light mb-3"data-toggle="modal" data-target="#Modal_Add_Img"><i class="fas fa-plus"></i> Agregar imagen al producto</button>
                                                 </div>
 
                                                 {% load coreAdmin_extras %}
