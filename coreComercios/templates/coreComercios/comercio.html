@@ -69,7 +69,7 @@
                 <div class="col-md-12" data-aos="fade-up" data-aos-delay="400">
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h1>{{comercio.eslogan}}</h1>
+                            <h1 class="slogan">{{comercio.eslogan}}</h1>
                             <div>
                                 <a href="#products-section" class="btn btn-white btn-outline-white py-3 px-5 rounded-0 mb-lg-0 mb-2 d-block d-sm-inline-block">Ver productos</a>
                             </div>
@@ -124,8 +124,8 @@
                                 </div> {% endcomment %}
                                 <p class="mb-4">{{producto.descripcion|slice:"0:60"|safe}}...</p>
                                 <div>
-                                    <span class="btn btn-black mr-1 rounded-0" style="cursor: default; font-weight: 100;">₡{{producto.precio|intcomma}}</span>
-                                    <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" data-toggle="modal" data-target="#staticBackdrop" onclick="datosVistaRap({{producto.id}})">Vista rápida</button>
+                                    <span class="btn btn-black mr-1 rounded-0" style="cursor: default; font-weight: 100; font-size: .95rem;">₡{{producto.precio|intcomma}}</span>
+                                    <button type="button" class="btn btn-black btn-outline-black ml-1 rounded-0" style="font-size: .95rem;" data-toggle="modal" data-target="#staticBackdrop" onclick="datosVistaRap({{producto.id}})">Vista rápida</button>
                                 </div>
                             </div>
                         </div>

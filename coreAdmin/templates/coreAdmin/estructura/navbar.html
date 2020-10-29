@@ -28,7 +28,7 @@
                                 {% load coreAdmin_extras %}
                                 {% get_Comercio request.session.comercioId as Comercio_info %}
                                 {% for ComercioInfo in Comercio_info %}
-                                    <h1 style="color: #fff;">{{ ComercioInfo.nombre }}</h1>
+                                    <h1 style="color: #fff;">{{ ComercioInfo.nombre }} <a href="{% url 'comercio:comercio' comercio_slug=ComercioInfo.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></h1>
                                 {% endfor%}
                             {% endif %}
                         </div>

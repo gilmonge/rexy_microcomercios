@@ -12,3 +12,16 @@ def get_ImagenPrincipal(imagenes, pkProducto):
             imagen = img.imagen.url
 
     return imagen
+
+@register.simple_tag
+def get_Imagenes(imagenes):
+    imagenesArray = []
+    imagen = '/media/productos/noimageProd.jpg'
+    
+    for img in imagenes:
+            imagenesArray.append(img.imagen.url)
+
+    if not imagenesArray:
+        imagenesArray.append(imagen)
+
+    return imagenesArray
