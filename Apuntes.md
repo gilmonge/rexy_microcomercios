@@ -58,6 +58,7 @@ Comandos DJango
 
     Hacer migrates falsos 
         python manage.py migrate --fake appName
+        python manage.py migrate --fake coreComercios  0029_remove_comercio_idplan
 
     Mostrar migrates pendientes 
         python manage.py showmigrations
