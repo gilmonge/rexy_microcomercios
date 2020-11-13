@@ -14,14 +14,29 @@ def get_ImagenPrincipal(imagenes, pkProducto):
     return imagen
 
 @register.simple_tag
-def get_Imagenes(imagenes):
+def get_Imagenes(imagenes, pkProducto):
     imagenesArray = []
     imagen = '/media/productos/noimageProd.jpg'
     
     for img in imagenes:
+        if img.producto_id is pkProducto:
             imagenesArray.append(img.imagen.url)
 
     if not imagenesArray:
         imagenesArray.append(imagen)
 
     return imagenesArray
+
+@register.simple_tag
+def Def_theme(idTheme):
+    theme = ''
+
+    if(idTheme == 1):
+        theme = 'base'
+    elif(idTheme == 2):
+        theme = 'dark'
+    else:
+        pass
+
+    print(theme)
+    return theme
