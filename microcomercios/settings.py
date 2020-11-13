@@ -103,6 +103,9 @@ DATABASES = {
         'PASSWORD': 'jnbhTCXL59fAqVJl5CpR',
         'HOST': '127.0.0.1',
         'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 
@@ -153,3 +156,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # redirecciones auth
 LOGIN_REDIRECT_URL = 'coreAdmin:dashboard'
 LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'noreply.microcomercios@gmail.com'
+EMAIL_HOST_PASSWORD = 'wNxS5i1erbotIbnOtsuz'
+EMAIL_PORT = 587

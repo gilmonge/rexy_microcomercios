@@ -55,3 +55,9 @@ Comandos DJango
         python manage.py check --deploy
 
         python manage.py collectstatic
+
+    Hacer migrates falsos 
+        python manage.py migrate --fake appName
+
+    Mostrar migrates pendientes 
+        python manage.py showmigrations

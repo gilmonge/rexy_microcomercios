@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
-from .views import comercioUpdateView, productoUpdateView, productoCreateView, productoDeleteView
+from .views import comercioUpdateView, productoUpdateView, productoCreateView, productoDeleteView, SingUpView
 from django.views.generic import RedirectView
 
 coreAdmin_patterns = ([
     path('', views.dashboard, name="dashboard"),
+    path('registro/', SingUpView.as_view(), name="signup"),
     path('<int:pk>', views.dashboardSeleccion, name="dashboardSeleccion"),
     path('comercios/', views.comercios, name="comercios"),
     path('comercio/<int:pk>', comercioUpdateView.as_view(), name="comercio"),
