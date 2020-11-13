@@ -103,7 +103,7 @@
                                         <img src="{{ImagenPrincipal}}" alt="Image" class="img-fluid">
                                     </figure>
                                     <div class="px-4">
-                                        <h3><a href="{% url 'comercio:producto' pk=producto.id prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>
+                                        <h3><a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=producto.id prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>
                                         {% comment %} <div class="mb-3">
                                             <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
                                             <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>

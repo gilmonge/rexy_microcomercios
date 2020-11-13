@@ -26,7 +26,7 @@ def comercio (request, comercio_slug):
     }
     return render(request, "coreComercios/comercio.html", datos)
 
-def producto(request, pk, prod_slug):
+def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
     producto = get_object_or_404(Producto, id=pk)
     imagenes_producto = ImagenesProducto.objects.select_related('producto').filter(producto=producto.id, estado=True)
