@@ -16,25 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from coreComercios.urls import coreComercios_patterns
+from codeFrontEnd.urls import codeFrontEnd_patterns
 
 from django.conf import settings
 
-from coreAdmin.urls import coreAdmin_patterns
+from codeBackEnd.urls import codeBackEnd_patterns
 
 urlpatterns = [
     path('DJAdmin/', admin.site.urls),
     path('DJAdmin/clearcache', include('clearcache.urls')),
 
     # Paths de coreAdmin
-    path('comerciosAdmin/', include(coreAdmin_patterns)),
+    path('comerciosAdmin/', include(codeBackEnd_patterns)),
     
     # Paths del auth
     path('comerciosAdmin/', include('django.contrib.auth.urls')),
 
 
     # Paths del coreComercios
-    path('', include(coreComercios_patterns)),
+    path('', include(codeFrontEnd_patterns)),
 ]
 
 if settings.DEBUG:

@@ -25,7 +25,7 @@ SECRET_KEY = '@ox%@ar_#m@gy@ew9t5q-szhc0v*!$31lr$ws*5cu7fdwu$h0y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['microcomercios.com', 'localhost', '127.0.0.1', '206.189.228.176']
 
 #django-resized
 DJANGORESIZED_DEFAULT_QUALITY = 75
@@ -35,6 +35,8 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 # Application definition
 
 INSTALLED_APPS = [
+    'codeBackEnd',
+    'codeFrontEnd',
     'coreAdmin',
     'clearcache',
     'django.contrib.admin',

@@ -5,7 +5,7 @@ import json
 # Create your views here.
 
 def home(request):
-    return render(request, "coreComercios/home.html")
+    return render(request, "codeFrontEnd/home.html")
 
 def comercio (request, comercio_slug):
     #trae el comercio si existe
@@ -17,14 +17,12 @@ def comercio (request, comercio_slug):
 
     # trae los productos relacionados al comercio
     productos = Producto.objects.filter(comercio=comercio.id, estado=True)
-    imagenes = ImagenesProducto.objects.select_related('producto').filter(producto__in=productos, estado=True)
 
     datos = {
         'comercio':comercio,
         'productos':productos,
-        'imagenes':imagenes,
     }
-    return render(request, "coreComercios/comercio.html", datos)
+    return render(request, "codeFrontEnd/comercio.html", datos)
 
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
@@ -40,14 +38,12 @@ def producto(request, comercio_slug, pk, prod_slug):
 
     # trae los productos relacionados al comercio
     productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = pk)
-    imagenes = ImagenesProducto.objects.select_related('producto').filter(producto__in=productos, estado=True)
 
     datos = {
         'producto':producto,
         'imagenes_producto':imagenes_producto,
         'comercio':comercio,
         'productos':productos,
-        'imagenes':imagenes,
     }
     
-    return render(request, "coreComercios/producto.html", datos)
+    return render(request, "codeFrontEnd/producto.html", datos)

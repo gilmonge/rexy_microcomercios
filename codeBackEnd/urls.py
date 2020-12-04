@@ -1,0 +1,20 @@
+from django.urls import path
+from coreAdmin import views
+from coreAdmin.views import comercioUpdateView, productoUpdateView, productoCreateView, productoDeleteView, SingUpView
+from django.views.generic import RedirectView
+
+codeBackEnd_patterns = ([
+    path('', views.dashboard, name="dashboard"),
+    path('registro/', SingUpView.as_view(), name="signup"),
+    path('<int:pk>', views.dashboardSeleccion, name="dashboardSeleccion"),
+    path('comercios/', views.comercios, name="comercios"),
+    path('comercio/<int:pk>', comercioUpdateView.as_view(), name="comercio"),
+    path('catalogo', views.catalogo, name="catalogo"),
+    path('productos', views.productos, name="productos"),
+    path('producto/<int:pk>', productoUpdateView.as_view(), name="producto"),
+    path('productoAdd', productoCreateView.as_view(), name="productosAdd"),
+    path('productoDel/<int:pk>', productoDeleteView.as_view(), name="productoDelete"),
+    path('productoImagenAdd', views.add_image, name="productoImagenAdd"),
+    path('productoImagenDel', views.del_image, name="productoImagenDel"),
+    path('productoImagenDef', views.default_image, name="productoImagenDef"),
+], "coreAdmin")

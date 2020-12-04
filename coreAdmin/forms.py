@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from coreComercios.models import Comercio, Producto, ImagenesProducto
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 from coreAdmin.models import Perfil
 
 class ComercioForm(forms.ModelForm):
@@ -28,7 +28,7 @@ class ComercioForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = [ 'comercio', 'nombre', 'descripcion', 'estado', 'precio' ]
+        fields = [ 'comercio', 'nombre', 'descripcion', 'estado', 'precio', 'colecciones']
 
         widgets = {
             'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),

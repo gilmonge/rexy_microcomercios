@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
 from django.http import Http404, JsonResponse
-from coreComercios.models import Comercio, Producto, ImagenesProducto
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 from .forms import ComercioForm, ProductoForm, ImagenProductoForm, UserCreationFormWithEmail
 from django import forms
 
@@ -17,7 +17,7 @@ def dashboard(request):
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
             datos["comercio"] = comercio
         
-        return render(request, "coreAdmin/dashboard.html", datos)
+        return render(request, "codeBackEnd/dashboard.html", datos)
     else:
         return redirect('login')
 
@@ -30,7 +30,7 @@ def dashboardSeleccion(request, pk):
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
             datos["comercio"] = comercio
         
-        return render(request, "coreAdmin/dashboard.html", datos)
+        return render(request, "codeBackEnd/dashboard.html", datos)
     else:
         return redirect('login')
 
@@ -40,17 +40,29 @@ def comercios(request):
         datos = {
             'comercios':comercios,
         }
-        return render(request, "coreAdmin/comercios.html", datos)
+        return render(request, "codeBackEnd/comercios.html", datos)
     else:
         return redirect('login')
 
 class comercioUpdateView(UpdateView):
     model = Comercio
     form_class = ComercioForm
-    template_name = 'coreAdmin/comercio.html'
+    template_name = 'codeBackEnd/comercio.html'
     
     def get_success_url(self):
         return reverse_lazy('coreAdmin:comercio', args=[self.object.id]) + '?ok'
+
+def catalogo(request):
+    if request.user.is_authenticated:
+        comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+        colecciones = Coleccion.objects.filter(comercio=request.session["comercioId"])
+        datos = {
+            'colecciones':colecciones,
+            'comercio':comercio,
+        }
+        return render(request, "codeBackEnd/catalogo.html", datos)
+    else:
+        return redirect('login')
 
 def productos(request):
     if request.user.is_authenticated:
@@ -60,28 +72,28 @@ def productos(request):
             'productos':productos,
             'comercio':comercio,
         }
-        return render(request, "coreAdmin/productos.html", datos)
+        return render(request, "codeBackEnd/productos.html", datos)
     else:
         return redirect('login')
 
 class productoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
-    template_name = 'coreAdmin/productoAdd.html'
-    success_url = reverse_lazy('coreAdmin:productos' )
+    template_name = 'codeBackEnd/productoAdd.html'
+    success_url = reverse_lazy('coreAdmin:catalogo' )
 
 class productoUpdateView(UpdateView):
     model = Producto
     form_class = ProductoForm
-    template_name = 'coreAdmin/producto.html'
+    template_name = 'codeBackEnd/producto.html'
     
     def get_success_url(self):
         return reverse_lazy('coreAdmin:producto', args=[self.object.id]) + '?ok'
 
 class productoDeleteView(DeleteView):
     model = Producto
-    template_name = 'coreAdmin/producto_confirm_delete.html'
-    success_url = reverse_lazy('coreAdmin:productos')
+    template_name = 'codeBackEnd/producto_confirm_delete.html'
+    success_url = reverse_lazy('coreAdmin:catalogo')
 
 def add_image(request):
     if request.method == 'POST':

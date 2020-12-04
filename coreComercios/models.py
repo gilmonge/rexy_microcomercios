@@ -77,6 +77,14 @@ class Comercio(models.Model):
     def __str__(self):
         return self.nombre
 
+class Coleccion(models.Model):
+    comercio        = models.ForeignKey(Comercio, verbose_name="Comercio", on_delete=models.CASCADE)
+    nombre          = models.CharField(max_length=100, verbose_name="Nombre")
+    estado          = models.BooleanField(verbose_name="Estado", default=False)
+    
+    def __str__(self):
+        return self.nombre
+
 class Producto(models.Model):
     comercio        = models.ForeignKey(Comercio, verbose_name="Comercio", on_delete=models.CASCADE)
     nombre          = models.CharField(max_length=100, verbose_name="Nombre")
@@ -84,6 +92,7 @@ class Producto(models.Model):
     estado          = models.BooleanField(verbose_name="Estado", default=False)
     moneda          = models.IntegerField(verbose_name="Moneda", default=0)
     precio          = models.DecimalField(verbose_name="Precio", max_digits=12, decimal_places=2)
+    colecciones     = models.ManyToManyField(Coleccion, verbose_name="Colecciones", blank=True, null=True)
     
     def __str__(self):
         return self.nombre
