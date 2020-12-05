@@ -39,7 +39,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="col-md-12">
-                                                <a href="{% url 'coreAdmin:productosAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar producto</a>
+                                                <a href="{% url 'comercioAdmin:productosAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar producto</a>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="display table table-striped table-hover" id="dataTable">
@@ -73,8 +73,8 @@
                                                                         </div>
                                                                     {% endif %}
                                                                 </td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:producto' pk=producto.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
-                                                                <td style="text-align: center;"><a href="{% url 'coreAdmin:productoDelete' pk=producto.id %}" class="btn btn-danger"><i class="fas fa-eraser fa-lg"></i> Eliminar</a></td>
+                                                                <td style="text-align: center;"><a href="{% url 'comercioAdmin:producto' pk=producto.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
+                                                                <td style="text-align: center;"><a href="{% url 'comercioAdmin:productoDelete' pk=producto.id %}" class="btn btn-danger"><i class="fas fa-eraser fa-lg"></i> Eliminar</a></td>
                                                             </tr>
                                                         {% endfor%}
                                                     </tbody>

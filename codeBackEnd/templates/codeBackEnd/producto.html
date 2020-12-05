@@ -8,7 +8,7 @@
 
         {% if request.session.comercioId != producto.comercio.id %}
             <script>
-                window.location.href = "{% url 'coreAdmin:productos' %}";
+                window.location.href = "{% url 'comercioAdmin:productos' %}";
             </script>
         {% endif %}
 {% endblock %}
@@ -141,7 +141,7 @@
                                                             <img class="card-img-top" src="{{ ImagenProducto.imagen.url }}" alt="Card image cap">
                                                             <div class="row col-md-12 p-0 m-0">
                                                                 <div class="col-xs-6 col-md-6 p-0 m-0">
-                                                                    <form action="{% url 'coreAdmin:productoImagenDef' %}" method="post">
+                                                                    <form action="{% url 'comercioAdmin:productoImagenDef' %}" method="post">
                                                                         {% csrf_token %}
                                                                         <button type="submit" class="btn btn-info btn-block" style="border-radius:0px;"><i class="fas fa-check fa-lg"></i> Principal</button>
                                                                         
@@ -150,7 +150,7 @@
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-xs-6 col-md-6 p-0 m-0">
-                                                                    <form action="{% url 'coreAdmin:productoImagenDel' %}" method="post">
+                                                                    <form action="{% url 'comercioAdmin:productoImagenDel' %}" method="post">
                                                                         {% csrf_token %}
                                                                         <button type="submit" class="btn btn-danger btn-block" style="border-radius:0px;"><i class="fas fa-eraser fa-lg"></i> Eliminar</button>
                                                                         
@@ -169,7 +169,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <a href="{% url 'coreAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                                    <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
                                 </div>
                             </div>
                             
@@ -177,7 +177,7 @@
                     </div>
 
                     
-                    <form action="{% url 'coreAdmin:productoImagenAdd' %}" method="post" enctype="multipart/form-data">
+                    <form action="{% url 'comercioAdmin:productoImagenAdd' %}" method="post" enctype="multipart/form-data">
                         <div class="modal fade" id="Modal_Add_Img" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="Modal_Add_Img" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content" style="background: #202940;">
