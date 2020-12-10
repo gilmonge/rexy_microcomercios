@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
 from django.http import Http404, JsonResponse
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
-from .forms import ComercioForm, ProductoForm, ImagenProductoForm
+from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm
 from django import forms
 
 # Create your views here.
@@ -72,15 +72,21 @@ class comercioUpdateView(UpdateView):
     template_name = 'codeBackEnd/comercio.html'
     
     def get_success_url(self):
-        return reverse_lazy('coreAdmin:comercio', args=[self.object.id]) + '?ok'
+        return reverse_lazy('comercioAdmin:comercio', args=[self.object.id]) + '?ok'
 
 def catalogo(request):
     if request.user.is_authenticated:
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+        productos = Producto.objects.filter(comercio=request.session["comercioId"])
         colecciones = Coleccion.objects.filter(comercio=request.session["comercioId"])
+
+        totalProductos = productos.count()
+        MaximosProductos = 9
         datos = {
             'colecciones':colecciones,
             'comercio':comercio,
+            'totalProductos':totalProductos,
+            'MaximosProductos':MaximosProductos,
         }
         return render(request, "codeBackEnd/catalogo.html", datos)
     else:
@@ -102,7 +108,7 @@ class productoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'codeBackEnd/productoAdd.html'
-    success_url = reverse_lazy('coreAdmin:catalogo' )
+    success_url = reverse_lazy('comercioAdmin:catalogo' )
 
 class productoUpdateView(UpdateView):
     model = Producto
@@ -110,12 +116,12 @@ class productoUpdateView(UpdateView):
     template_name = 'codeBackEnd/producto.html'
     
     def get_success_url(self):
-        return reverse_lazy('coreAdmin:producto', args=[self.object.id]) + '?ok'
+        return reverse_lazy('comercioAdmin:producto', args=[self.object.id]) + '?ok'
 
 class productoDeleteView(DeleteView):
     model = Producto
     template_name = 'codeBackEnd/producto_confirm_delete.html'
-    success_url = reverse_lazy('coreAdmin:catalogo')
+    success_url = reverse_lazy('comercioAdmin:catalogo')
 
 def add_image(request):
     if request.method == 'POST':
@@ -150,3 +156,22 @@ def default_image(request):
         #ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
         #ImagenesProducto.objects.filter(id=pkImagen).delete()
     return redirect('coreAdmin:producto', pk = pk)
+
+class coleccionCreateView(CreateView):
+    model = Coleccion
+    form_class = ColeccionForm
+    template_name = 'codeBackEnd/coleccionAdd.html'
+    success_url = reverse_lazy('comercioAdmin:catalogo' )
+
+class coleccionUpdateView(UpdateView):
+    model = Coleccion
+    form_class = ColeccionForm
+    template_name = 'codeBackEnd/coleccion.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('comercioAdmin:coleccionEdit', args=[self.object.id]) + '?ok'
+
+class coleccionDeleteView(DeleteView):
+    model = Coleccion
+    template_name = 'codeBackEnd/coleccion_confirm_delete.html'
+    success_url = reverse_lazy('comercioAdmin:catalogo')

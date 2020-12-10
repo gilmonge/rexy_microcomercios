@@ -38,3 +38,13 @@ class ImagenProductoForm(forms.ModelForm):
     class Meta:
         model = ImagenesProducto
         fields = [ 'producto', 'imagen', 'principal', 'estado' ]
+
+class ColeccionForm(forms.ModelForm):
+    class Meta:
+        model = Coleccion
+        fields = [ 'comercio', 'nombre', 'estado']
+
+        widgets = {
+            'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
+            'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
+        }

@@ -5,7 +5,7 @@
 {% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -50,6 +50,12 @@
             width: 100%;
             text-align: right;
             padding-right: 8px;
+        }
+
+        .limite{
+            background-color: rgba(255,255,255,.05);
+            color: #fff;
+            font-size: 1.1rem;
         }
     </style>
     
@@ -113,7 +119,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="col-md-12">
-                                <a href="{% url 'comercioAdmin:productosAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar colección PENDIENTE</a>
+                                <a href="{% url 'comercioAdmin:coleccionAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar colección</a>
+                                {% if totalProductos >= MaximosProductos %}
+                                    <div class="alert alert-warning limite" role="alert">
+                                        <span>Haz alcanzado el límite de productos gratis.</span>
+                                    </div>
+                                {% endif %}
                             </div>
 
                             <div class="col-md-12 row estado">
@@ -161,16 +172,18 @@
                                         </div>
                                         {% endfor%}
 
-                                        <div class="item">
-                                            <div class="col-12 px-0">
-                                                <div class="card card-stats card-info card-info-custom card-round">
-                                                    <div class="card-body" style="padding: 0px !important;">
-                                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
-                                                            <div class="col-12" style="min-height: 163px;max-height: 163px;">
-                                                                <div class="numbers">
-                                                                    <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
-                                                                        <i class="flaticon-add text-warning"></i>
-                                                                        <p class="">Agregar producto</p>
+                                        {% if totalProductos < MaximosProductos %}
+                                            <div class="item">
+                                                <div class="col-12 px-0">
+                                                    <div class="card card-stats card-info card-info-custom card-round">
+                                                        <div class="card-body" style="padding: 0px !important;">
+                                                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                                                <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                                                    <div class="numbers">
+                                                                        <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                                            <i class="flaticon-add text-warning"></i>
+                                                                            <p class="">Agregar producto</p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -178,7 +191,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                         
                                         {% comment %} {% with ''|center:7 as range %}
                                         {% for _ in range %}
@@ -195,7 +208,7 @@
                                     {% if coleccion.estado is True %}
                                         <div class="alert alert-success" role="alert">
                                             <span>{{ coleccion.nombre }} | Activo</span>
-                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2">
+                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </button>
                                         </div>
@@ -203,7 +216,7 @@
                                         
                                         <div class="alert alert-danger" role="alert">
                                             <span>{{ coleccion.nombre }} | Inactivo</span>
-                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2">
+                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </button>
                                         </div>
@@ -249,16 +262,19 @@
                                             </div>
                                             {% endfor%}
 
-                                            <div class="item">
-                                                <div class="col-12 px-0">
-                                                    <div class="card card-stats card-info card-info-custom card-round">
-                                                        <div class="card-body" style="padding: 0px !important;">
-                                                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
-                                                                <div class="col-12" style="min-height: 163px;max-height: 163px;">
-                                                                    <div class="numbers">
-                                                                        <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
-                                                                            <i class="flaticon-add text-warning"></i>
-                                                                            <p class="">Agregar producto</p>
+
+                                            {% if totalProductos < MaximosProductos %}
+                                                <div class="item">
+                                                    <div class="col-12 px-0">
+                                                        <div class="card card-stats card-info card-info-custom card-round">
+                                                            <div class="card-body" style="padding: 0px !important;">
+                                                                <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                                                    <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                                                        <div class="numbers">
+                                                                            <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                                                <i class="flaticon-add text-warning"></i>
+                                                                                <p class="">Agregar producto</p>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -266,7 +282,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            {% endif %}
                                             
                                             {% comment %} {% with ''|center:7 as range %}
                                             {% for _ in range %}

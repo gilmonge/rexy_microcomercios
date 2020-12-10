@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock %} | Administración | Micro Comercios</title>
         <!-- Favicon -->
-        <link rel="icon" href="{% static 'admin/img/favicon.png' %}" type="image/png">
+        <link rel="icon" href="{% static 'codeBackEnd/admin/img/favicon.png' %}" type="image/png">
         
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -23,7 +23,7 @@
             
             <div class="bg-primary position-absolute h-100 top-0 left-0 zindex-100 col-lg-6 col-xl-6 zindex-100 d-none d-lg-flex flex-column justify-content-end" data-bg-size="cover" data-bg-position="center">
                 <!-- Cover image -->
-                <img src="{% static 'admin/img/login.jpg' %}" alt="Image" class="img-as-bg" style="position: absolute; z-index: 0; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                <img src="{% static 'codeBackEnd/admin/img/login.jpg' %}" alt="Image" class="img-as-bg" style="position: absolute; z-index: 0; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
                 <!-- Overlay text -->
                 <div class="row position-relative zindex-110 p-5" style="background: rgba(0,0,0,.3);">
                     <div class="col-md-8 text-center mx-auto">
@@ -45,7 +45,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-sm-12 col-md-6">
                                         <a href="#" class="btn btn-block btn-neutral btn-icon mb-3 mb-sm-0">
-                                            <img src="{% static 'admin/img/logo.png' %}" alt="Rexy Studios" class="w-100">
+                                            <img src="{% static 'codeBackEnd/admin/img/logo.png' %}" alt="Rexy Studios" class="w-100">
                                         </a>
                                     </div>
                                 </div>
@@ -79,16 +79,13 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <!-- Rexy Studio JS -->
-        <script src="{% static 'admin/assets/ccnet/ccnet.js' %}"></script>
+        <script src="{% static 'codeBackEnd/admin/assets/rexy/rexy.js' %}"></script>
         
         <script>
             
             $(document).ready(function () {
                 obtener_frase()
             })
-
-
-            
         </script>
     </body>
 
