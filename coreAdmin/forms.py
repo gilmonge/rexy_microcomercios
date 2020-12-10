@@ -1,47 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from coreComercios.models import Comercio, Producto, ImagenesProducto
 from coreAdmin.models import Perfil
-
-class ComercioForm(forms.ModelForm):
-    class Meta:
-        model = Comercio
-        fields = ['nombre', 'slug', 'eslogan', 'descripcion', 'redessociales', 'contacto', 'img_superior', 'img_acercade',]
-        
-        widgets = {
-            'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
-            'slug'          : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre corto'}),
-            'eslogan'       : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Eslogan'}),
-            'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción'}),
-            'redessociales' : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': ''}),
-            'contacto'      : forms.Textarea(attrs={'class': 'form-control', 'placeholder': ''}),
-            'img_superior'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
-            'img_acercade'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
-        }
-        
-        labels = {
-            'img_superior': 'Imagen superior ',
-            'img_acercade': 'Imagen "Acerca de" '
-        }
-
-class ProductoForm(forms.ModelForm):
-    class Meta:
-        model = Producto
-        fields = [ 'comercio', 'nombre', 'descripcion', 'estado', 'precio' ]
-
-        widgets = {
-            'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
-            'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción', 'required': 'true'}),
-            'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
-            'precio'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Precio'}),
-        }
-
-class ImagenProductoForm(forms.ModelForm):
-    class Meta:
-        model = ImagenesProducto
-        fields = [ 'producto', 'imagen', 'principal', 'estado' ]
-        
 
 class PerfilForm(forms.ModelForm):
     class Meta:

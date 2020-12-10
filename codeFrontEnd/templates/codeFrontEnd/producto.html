@@ -1,0 +1,5 @@
+{% load codeFrontEnd_extras %}
+{% Def_theme 1 as Theme %}
+{% with "codeFrontEnd/themes/"|add:Theme|add:"/producto.html" as template %}
+    {% include template %}
+{% endwith %}

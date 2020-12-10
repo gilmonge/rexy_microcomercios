@@ -36,6 +36,8 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 
 INSTALLED_APPS = [
     'coreAdmin',
+    'codeBackEnd',
+    'codeFrontEnd',
     'clearcache',
     'django.contrib.admin',
     'django.contrib.auth',

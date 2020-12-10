@@ -1,0 +1,118 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load humanize %}
+{% load static %}
+{% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
+
+{% block customHead %}
+        <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+                    <div class="panel-header bg-primary-gradient">
+                        <div class="page-inner py-5">
+                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                                <div>
+                                    <h2 class="text-white pb-2 fw-bold">Productos del comercio {{ comercio.nombre }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page-inner mt--5">
+                        <div class="row mt--2">
+
+                            <div class="col-md-12">
+
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-md-12">
+                                                <a href="{% url 'comercioAdmin:productosAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar producto</a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="display table table-striped table-hover" id="dataTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nombre</th>
+                                                            <th>Precio</th>
+                                                            <th>Estado</th>
+                                                            <th style="text-align: center;">
+                                                                <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
+                                                            </th>
+                                                            <th style="text-align: center;">
+                                                                <a href="#" title="Haga clic sobre el icono para eliminar la fila."><i class='fa fa-info'></i></a>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for producto in productos %}
+                                                            <tr>
+                                                                <td>{{ producto.nombre }} <a href="{% url 'comercio:producto' pk=producto.id prod_slug=producto.nombre|slugify comercio_slug=comercio.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
+                                                                <td>{{ producto.precio|intcomma }}</td>
+                                                                <td class="estado">
+                                                                    {% if producto.estado is True %}
+                                                                        <div class="alert alert-success" role="alert">
+                                                                            <span>Activo</span>
+                                                                        </div>
+                                                                    {% else %}
+                                                                        
+                                                                        <div class="alert alert-danger" role="alert">
+                                                                            <span>Inactivo</span>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td style="text-align: center;"><a href="{% url 'comercioAdmin:producto' pk=producto.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
+                                                                <td style="text-align: center;"><a href="{% url 'comercioAdmin:productoDelete' pk=producto.id %}" class="btn btn-danger"><i class="fas fa-eraser fa-lg"></i> Eliminar</a></td>
+                                                            </tr>
+                                                        {% endfor%}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+{% endblock %}
+
+{% block customJs %}
+        <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dataTable').dataTable( {
+                    "language": {
+                        "lengthMenu"    : "Mostrando  _MENU_ ",
+                        "zeroRecords"   : "Nada que mostrar - disculpe!",
+                        "info"          : "Mostrando la página _PAGE_ de _PAGES_",
+                        "infoEmpty"     : "No se encontrarán registros",
+                        "infoFiltered"  : "(Filtrando _MAX_ del total de registros)",
+                        "search"        : "Buscar ",
+                        "paginate": {
+                            "previous"  : " Anterior ",
+                            "next"      : " Siguiente "
+                        }
+                    },
+                    "paging"            : true,
+                    "ordering"          : true,
+                    "order"             : [[0, 'desc']],
+                    "info"              : true,
+                    "fixedHeader"       : true
+                });
+            });
+        </script>
+{% endblock %}

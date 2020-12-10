@@ -1,0 +1,338 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load  codeBackEnd_extras %}
+{% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
+
+{% block customHead %}
+        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem .5rem;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        .card-info-custom {
+            background: rgba(255,255,255,0.1) !important;
+            overflow: hidden !important;
+        }
+        .estado-producto .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 0px;
+            padding: .2rem .3rem;
+            color: #fff;
+            font-size: .8rem;
+        }
+
+        .btn-eliminar-producto{
+            color: #fff;
+            padding: .4rem 0.6rem;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        .acceso-producto:hover{
+            cursor: pointer;
+        }
+
+        .labelEditar{
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0,0,0,0.6);
+            width: 100%;
+            text-align: right;
+            padding-right: 8px;
+        }
+
+        .limite{
+            background-color: rgba(255,255,255,.05);
+            color: #fff;
+            font-size: 1.1rem;
+        }
+    </style>
+    
+    <style>
+        .owl-theme .owl-nav [class*=owl-]{
+            padding: 4px 0px !important;
+        }
+
+        .owl-carousel .nav-button {
+            width:      40px !important;
+            cursor:     pointer !important;
+            position:   absolute !important;
+            top:        -213px !important;
+            line-height:155px !important;
+            background: rgba(26, 32, 53, 0.3) !important;
+            color:      #ffffff !important;
+            padding:    4px 0px !important;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .owl-carousel .nav-button:hover {
+            background: #ffffff !important;
+            color:      rgba(26, 32, 53, 1) !important;
+        }
+
+        .owl-carousel .owl-prev.disabled,
+        .owl-carousel .owl-next.disabled {
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .owl-carousel .owl-prev {
+            left: -0.28rem !important;
+            border-radius: .25rem 0px 0px .25rem !important;
+        }
+
+        .owl-carousel .owl-next {
+            right: -5px !important;
+            border-radius: 0px .25rem .25rem 0px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Cátalogo de colecciones del comercio {{ comercio.nombre }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+
+            <div class="col-md-12">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <a href="{% url 'comercioAdmin:coleccionAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar colección</a>
+                                {% if totalProductos >= MaximosProductos %}
+                                    <div class="alert alert-warning limite" role="alert">
+                                        <span>Haz alcanzado el límite de productos gratis.</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-12 row estado">
+                                <div class="alert alert-success" role="alert">
+                                    <span>Sin colección</span>
+                                </div>
+
+                                <div class="col-md-12 px-0 ">
+                                    <div class="owl-carousel owl-theme">
+                                        {% get_ProductosColeccion None as ProductosColeccion %}
+                                        {% for ProductoColeccion in ProductosColeccion %}
+                                        <div class="item">
+                                            <div class="col-12 px-0">
+                                                <div class="card card-stats card-info card-info-custom card-round">
+                                                    <div class="card-body" style="padding: 0px !important;">
+                                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                                            {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
+                                                            
+                                                            <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                                                <label class="labelEditar">Click Para editar</label>
+                                                            </div>
+                                                            <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                                                <div class="numbers" style="width: 90%;">
+                                                                    <p class="card-category">{{ ProductoColeccion.nombre }}</p>
+                                                                    <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
+                                                                            
+                                                                    <div class="card-category estado estado-producto">
+                                                                        {% if ProductoColeccion.estado is True %}
+                                                                            <div class="alert alert-success" role="alert">
+                                                                                <span>Activo</span>
+                                                                            </div>
+                                                                        {% else %}
+                                                                            <div class="alert alert-danger" role="alert">
+                                                                                <span>Inactivo</span>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor%}
+
+                                        {% if totalProductos < MaximosProductos %}
+                                            <div class="item">
+                                                <div class="col-12 px-0">
+                                                    <div class="card card-stats card-info card-info-custom card-round">
+                                                        <div class="card-body" style="padding: 0px !important;">
+                                                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                                                <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                                                    <div class="numbers">
+                                                                        <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                                            <i class="flaticon-add text-warning"></i>
+                                                                            <p class="">Agregar producto</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        {% comment %} {% with ''|center:7 as range %}
+                                        {% for _ in range %}
+                                        
+                                        {% endfor %}
+                                        {% endwith %} {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {% for coleccion in colecciones %}
+                                <div class="col-md-12 row estado">
+                                    {% if coleccion.estado is True %}
+                                        <div class="alert alert-success" role="alert">
+                                            <span>{{ coleccion.nombre }} | Activo</span>
+                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                        </div>
+                                    {% else %}
+                                        
+                                        <div class="alert alert-danger" role="alert">
+                                            <span>{{ coleccion.nombre }} | Inactivo</span>
+                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-md-12 px-0 ">
+                                        <div class="owl-carousel owl-theme">
+                                            {% load codeBackEnd_extras %}
+                                            {% get_ProductosColeccion coleccion.id as ProductosColeccion %}
+                                            {% for ProductoColeccion in ProductosColeccion %}
+                                            <div class="item">
+                                                <div class="col-12 px-0">
+                                                    <div class="card card-stats card-info card-info-custom card-round">
+                                                        <div class="card-body" style="padding: 0px !important;">
+                                                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                                                {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
+                                                                
+                                                                <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                                                    <label class="labelEditar">Click Para editar</label>
+                                                                </div>
+                                                                <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                                                    <div class="numbers" style="width: 90%;">
+                                                                        <p class="card-category">{{ ProductoColeccion.nombre }}</p>
+                                                                        <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
+                                                                                
+                                                                        <div class="card-category estado estado-producto">
+                                                                            {% if ProductoColeccion.estado is True %}
+                                                                                <div class="alert alert-success" role="alert">
+                                                                                    <span>Activo</span>
+                                                                                </div>
+                                                                            {% else %}
+                                                                                <div class="alert alert-danger" role="alert">
+                                                                                    <span>Inactivo</span>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor%}
+
+
+                                            {% if totalProductos < MaximosProductos %}
+                                                <div class="item">
+                                                    <div class="col-12 px-0">
+                                                        <div class="card card-stats card-info card-info-custom card-round">
+                                                            <div class="card-body" style="padding: 0px !important;">
+                                                                <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                                                    <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                                                        <div class="numbers">
+                                                                            <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                                                <i class="flaticon-add text-warning"></i>
+                                                                                <p class="">Agregar producto</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            
+                                            {% comment %} {% with ''|center:7 as range %}
+                                            {% for _ in range %}
+                                            
+                                            {% endfor %}
+                                            {% endwith %} {% endcomment %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor%}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJs %}
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: false,
+            margin:10,
+            dots: false,
+            nav:true,
+            navText: [
+                `
+                    <div class='nav-button owl-prev'>
+                        <i class="flaticon-left-arrow"></i>
+                    </div>
+                `, 
+                `
+                    <div class='nav-button owl-next'>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
+                `
+            ],
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:2
+                },
+                1000:{
+                    items:3
+                }
+            }
+        })
+    </script>
+{% endblock %}

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from coreComercios.urls import coreComercios_patterns
+from coreComercios.urls import coreComercios_patterns, coreComerciosAdmin_patterns
 
 from django.conf import settings
 
@@ -26,14 +26,15 @@ urlpatterns = [
     path('DJAdmin/', admin.site.urls),
     path('DJAdmin/clearcache', include('clearcache.urls')),
 
-    # Paths de coreAdmin
+    # Paths de Admin
     path('comerciosAdmin/', include(coreAdmin_patterns)),
+    path('comerciosAdmin/', include(coreComerciosAdmin_patterns)),
     
     # Paths del auth
     path('comerciosAdmin/', include('django.contrib.auth.urls')),
 
 
-    # Paths del coreComercios
+    # Paths del Comercios frontend
     path('', include(coreComercios_patterns)),
 ]
 
