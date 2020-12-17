@@ -3,7 +3,6 @@
 {% block title %}Mis Comercios{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -59,7 +58,7 @@
 
                                 <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
                                     {{ form.descripcion.label_tag }}
-                                    {{ form.descripcion }}
+                                    <textarea name="descripcion" cols="40" rows="10" class="form-control" placeholder="Descripción" id="id_descripcion"></textarea>
                                     {{ form.descripcion.errors }}
                                 </div>
 
@@ -97,9 +96,7 @@
                                 </div>
                                 
                                 <div class="form-group" style="display: none;"> {% comment %} Redes sociales {% endcomment %}
-                                    {{ form.redessociales.label_tag }}
-                                    {{ form.redessociales }}
-                                    {{ form.redessociales.errors }}
+                                    <textarea name="redessociales" cols="40" rows="10" class="form-control" placeholder="" required="" id="id_redessociales">{}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-12">
@@ -119,10 +116,8 @@
                                     <input type="email" id="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
                                 </div>
 
-                                <div class="form-group" style="display: none;"> {% comment %} Contacto {% endcomment %}
-                                    {{ form.contacto.label_tag }}
-                                    {{ form.contacto }}
-                                    {{ form.contacto.errors }}
+                                <div class="form-group" style="display: none;">
+                                    <textarea name="contacto" cols="40" rows="10" class="form-control" placeholder="" required="" id="id_contacto">{}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-6">
@@ -135,9 +130,8 @@
                                     <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
                                 </div>
 
-                                <input type="hidden" name="owner" class="form-control" value="{{comercio.owner.id}}" id="id_owner">
-                                
-                                <input type="hidden" name="idplan" class="form-control" value="{{comercio.idplan}}" id="id_idplan">
+                                <input type="text" name="owner" class="form-control" value="{{request.user.id}}" id="id_owner">
+                                <input type="text" name="idplan" class="form-control" value="0" id="id_idplan">
                                     
                                 <div class="text-center col-md-12">
                                     <input type="submit" class="btn btn-info btn-block" value="Actualizar comercio" />
@@ -147,15 +141,15 @@
                     </div>
                 </div>
             
+                <div class="col-md-12">
+                    <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block customJs %}
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
-
         <script>
             {% if 'ok' in request.GET %}
                 $("#msgInfo").html(`
@@ -163,27 +157,6 @@
                 `)
                 $("#Modal_informacion").modal("show")
             {% endif %}
-
-            function cargarSocial(){
-                var id_redessociales = $('#id_redessociales').val()
-                var redessociales = JSON.parse(id_redessociales)
-                
-                $('#socialFacebook').val(redessociales.facebook)
-                $('#socialTwitter').val(redessociales.twitter)
-                $('#socialTiktok').val(redessociales.tiktok)
-                $('#socialInstagram').val(redessociales.instagram)
-                $('#socialTwitch').val(redessociales.twitch)
-            }
-            cargarSocial()
-
-            function cargarContacto(){
-                var id_contacto = $('#id_contacto').val()
-                var contacto = JSON.parse(id_contacto)
-                
-                $('#contactoTel').val(contacto.telefono)
-                $('#contactoEmail').val(contacto.email)
-            }
-            cargarContacto()
 
             $( "#socialFacebook" ).keyup(function() { CambiarResdSocial('facebook', $('#socialFacebook').val() ) })
             $( "#socialTwitter" ).keyup(function() { CambiarResdSocial('twitter', $('#socialTwitter').val() ) })
@@ -196,7 +169,7 @@
 
             function CambiarResdSocial(id, url){
                 var id_redessociales = $('#id_redessociales').val()
-                var redessociales = JSON.parse(id_redessociales)
+                var redessociales = (id_redessociales == '')? {} : redessociales = JSON.parse(id_redessociales)
 
                 redessociales[id] = url
                 $('#id_redessociales').val(JSON.stringify(redessociales))
@@ -204,7 +177,7 @@
 
             function CambiarContacto(id, url){
                 var id_contacto = $('#id_contacto').val()
-                var contacto = JSON.parse(id_contacto)
+                var contacto = (id_contacto == '')? {} : contacto = JSON.parse(id_contacto)
 
                 contacto[id] = url
                 $('#id_contacto').val(JSON.stringify(contacto))
@@ -237,9 +210,6 @@
                 maxFilesNum: 1,
                 showUpload: false,
                 showRemove: false,
-                initialPreview: [
-                    "/media/{{ comercio.img_superior }}",
-                ],
             });
             $("#id_img_acercade").fileinput({
                 theme: "fas",
@@ -250,36 +220,7 @@
                 maxFilesNum: 1,
                 showUpload: false,
                 showRemove: false,
-                initialPreview: [
-                    "/media/{{ comercio.img_acercade }}",
-                ],
             });
         </script>
-        {% comment %} <!-- AUTO IMAGE ORIENTATION -->
-        <div class="file-loading">
-            <input id="input-file-1" name="input-file-1[]" multiple type="file" accept="image/*">
-        </div>
-        <div class="checkbox">
-            <label>
-            <input id="toggleOrient" name="tog" type="checkbox" checked>
-            Toggle Auto Orientation
-            </label>
-        </div>
-        <div id="togStatus" class="hint-block">
-        </div>
-        <script>
-        $("#input-file-1").fileinput({
-            uploadUrl: "/file-upload-batch/2",
-            autoOrientImage: true
-        });
-        $("#toggleOrient").on('change', function() {
-            var val = $(this).prop('checked');
-            $("#input-file-1").fileinput('refresh', {
-                uploadUrl: "/file-upload-batch/2",
-                autoOrientImage: val
-            });
-            $('#togStatus').html('Fileinput is reset and <samp>autoOrientImage</samp> is set to <em>' + (val ? 'true' : 'false') + '</em>. Retry by selecting images again.');
-        });
-        </script> {% endcomment %}
 
 {% endblock %}

@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
 from django.http import Http404, JsonResponse
+from coreAdmin.models import Parametro
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm
 from django import forms
@@ -66,6 +67,12 @@ def comercios(request):
     else:
         return redirect('login')
 
+class comercioCreateView(CreateView):
+    model = Comercio
+    form_class = ComercioForm
+    template_name = 'codeBackEnd/comercioAdd.html'
+    success_url = reverse_lazy('comercioAdmin:comercios' )
+
 class comercioUpdateView(UpdateView):
     model = Comercio
     form_class = ComercioForm
@@ -76,17 +83,17 @@ class comercioUpdateView(UpdateView):
 
 def catalogo(request):
     if request.user.is_authenticated:
+        parametroLimiteGratis = Parametro.objects.filter(parametro="limiteGratis")[0].valor
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
         productos = Producto.objects.filter(comercio=request.session["comercioId"])
         colecciones = Coleccion.objects.filter(comercio=request.session["comercioId"])
 
         totalProductos = productos.count()
-        MaximosProductos = 9
         datos = {
             'colecciones':colecciones,
             'comercio':comercio,
             'totalProductos':totalProductos,
-            'MaximosProductos':MaximosProductos,
+            'MaximosProductos':parametroLimiteGratis,
         }
         return render(request, "codeBackEnd/catalogo.html", datos)
     else:

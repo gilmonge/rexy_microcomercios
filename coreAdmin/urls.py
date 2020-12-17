@@ -7,4 +7,5 @@ coreAdmin_patterns = ([
     path('', adminViews.dashboard, name="dashboard"),
     path('registro/', SingUpView.as_view(), name="signup"),
     path('<int:pk>', adminViews.dashboardSeleccion, name="dashboardSeleccion"),
+    path('seleccionarPlan', adminViews.verPlanes, name="selecPlan"),
 ], "coreAdmin")

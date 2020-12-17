@@ -24,6 +24,14 @@ class Perfil(models.Model):
     barrio              = models.CharField(verbose_name="Barrio", max_length=4, default=0)
     direccion           = models.TextField(verbose_name="Dirección", default="")
 
+class Parametro(models.Model):
+    parametro   = models.CharField(verbose_name="Identificador del parametro", max_length=100,)
+    valor       = models.CharField(verbose_name="Valor del parametro", max_length=100,)
+    detalle     = models.CharField(verbose_name="Detalle del parametro", max_length=100, default="")
+
+    def __str__(self):
+        return self.parametro
+        
 @receiver(post_save, sender=User)
 def ensure_profile_exists(sender, instance, **kwargs):
     if kwargs.get('created', False):

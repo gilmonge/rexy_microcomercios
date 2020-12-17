@@ -4,7 +4,7 @@ from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 class ComercioForm(forms.ModelForm):
     class Meta:
         model = Comercio
-        fields = ['nombre', 'slug', 'eslogan', 'descripcion', 'redessociales', 'contacto', 'img_superior', 'img_acercade',]
+        fields = ['owner', 'nombre', 'slug', 'eslogan', 'descripcion', 'redessociales', 'contacto', 'img_superior', 'img_acercade', 'idplan',]
         
         widgets = {
             'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),

@@ -4,7 +4,7 @@
 {% block title %}Agregar producto{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -104,8 +104,8 @@
 {% endblock %}
 
 {% block customJs %}
-        <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-        <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
         <script>
             {% if 'ok' in request.GET %}
                 $("#msgInfo").html(`

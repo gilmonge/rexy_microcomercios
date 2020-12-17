@@ -1,8 +1,9 @@
 from django.urls import path
 from coreComercios import views
-from coreComercios.views import comercioUpdateView, \
+from coreComercios.views import comercioUpdateView, comercioCreateView, \
     productoUpdateView, productoCreateView, productoDeleteView, \
     coleccionUpdateView, coleccionCreateView, coleccionDeleteView
+    
 from django.views.generic import RedirectView
 
 coreComercios_patterns = ([
@@ -15,6 +16,7 @@ coreComerciosAdmin_patterns = ([
     # administrador
     path('comercios/', views.comercios, name="comercios"),
     path('comercio/<int:pk>', comercioUpdateView.as_view(), name="comercio"),
+    path('comercioAdd', comercioCreateView.as_view(), name="comercioAdd"),
     path('catalogo', views.catalogo, name="catalogo"),
     path('coleccion/<int:pk>', coleccionUpdateView.as_view(), name="coleccionEdit"),
     path('coleccionAdd', coleccionCreateView.as_view(), name="coleccionAdd"),

@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
 from django.http import Http404, JsonResponse
 from coreAdmin.forms import UserCreationFormWithEmail
+from coreAdmin.models import Parametro
 from django import forms
 
 # Create your views here.
@@ -59,3 +60,14 @@ class SingUpView(CreateView):
         login(self.request, user)
         return to_return
 
+def verPlanes(request):
+    if request.user.is_authenticated:
+        parametroLimiteGratis = Parametro.objects.filter(parametro="limiteGratis")[0].valor
+        
+        datos = {
+            'MaximosProductos':parametroLimiteGratis,
+        }
+
+        return render(request, "codeBackEnd/planes.html", datos)
+    else:
+        return redirect('login')
