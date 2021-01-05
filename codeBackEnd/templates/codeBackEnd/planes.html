@@ -1,0 +1,106 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load static %}
+{% block title %}Planes para comercios{% endblock %}
+
+{% block content %}
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Selecciona uno de nuestros planes</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+
+            <div class="col-md-12">
+
+                <div class="col-md-12">
+                    <div class="card col-md-12">
+                        <div class="card-body col-md-12 ">
+                            <div class="row justify-content-center align-items-center mb-5">
+                                <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
+                                    <div class="card-pricing2 card-success">
+                                        <div class="pricing-header">
+                                            <h3 class="fw-bold">Gratis</h3>
+                                            <span class="sub-title">Apto por si estás comenzando o deseas probar nuestros servicios</span>
+                                        </div>
+                                        <div class="price-value">
+                                            <div class="value">
+                                                <span class="currency">$</span>
+                                                <span class="amount">0.<span>00</span></span>
+                                                <span class="month">/mes</span>
+                                            </div>
+                                        </div>
+                                        <ul class="pricing-content">
+                                            <li>{{MaximosProductos}} productos máximo</li>
+                                            <li>Plantilla básica</li>
+                                            {% comment %} <li>50GB Monthly Bandwidth</li>
+                                            <li class="disable">10 Subdomains</li>
+                                            <li class="disable">15 Domains</li> {% endcomment %}
+                                        </ul>
+                                        <a href="{% url 'comercioAdmin:comercioAdd' %}" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Crear comercio</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJs %}
+            <script>
+                Circles.create({
+                    id:'circles-1',
+                    radius:45,
+                    value:60,
+                    maxValue:100,
+                    width:7,
+                    text: 5,
+                    colors:['#f1f1f1', '#FF9E27'],
+                    duration:400,
+                    wrpClass:'circles-wrp',
+                    textClass:'circles-text',
+                    styleWrapper:true,
+                    styleText:true
+                })
+
+                Circles.create({
+                    id:'circles-2',
+                    radius:45,
+                    value:70,
+                    maxValue:100,
+                    width:7,
+                    text: 36,
+                    colors:['#f1f1f1', '#2BB930'],
+                    duration:400,
+                    wrpClass:'circles-wrp',
+                    textClass:'circles-text',
+                    styleWrapper:true,
+                    styleText:true
+                })
+
+                Circles.create({
+                    id:'circles-3',
+                    radius:45,
+                    value:40,
+                    maxValue:100,
+                    width:7,
+                    text: 12,
+                    colors:['#f1f1f1', '#F25961'],
+                    duration:400,
+                    wrpClass:'circles-wrp',
+                    textClass:'circles-text',
+                    styleWrapper:true,
+                    styleText:true
+                })
+            </script>
+{% endblock %}

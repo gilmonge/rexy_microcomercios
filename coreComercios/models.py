@@ -72,7 +72,7 @@ class Comercio(models.Model):
     contacto        = models.TextField(verbose_name="Contácto")
     img_superior    = ResizedImageField(upload_to=custom_upload_ComercioSup, size=[900, 600], null=False, default="comercios/noimageSup.jpg", verbose_name="Imagen superior")
     img_acercade    = ResizedImageField(upload_to=custom_upload_Comercio, size=[500, 433], null=False, default="comercios/noimageAbout.jpg", verbose_name="Imagen de acerca de")
-    idplan          = models.CharField(verbose_name="Plan", max_length=2, default="0")
+    idplan          = models.IntegerField(verbose_name="Plan", default="0")
     
     def __str__(self):
         return self.nombre

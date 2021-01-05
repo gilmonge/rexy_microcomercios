@@ -3,7 +3,7 @@
 {% block title %}Mis Comercios{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -14,63 +14,50 @@
 {% endblock %}
 
 {% block content %}
-                    <div class="panel-header bg-primary-gradient">
-                        <div class="page-inner py-5">
-                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                                <div>
-                                    <h2 class="text-white pb-2 fw-bold">Mis comercios</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Mis comercios</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <div class="page-inner mt--5">
-                        <div class="row mt--2">
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
 
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="display table table-striped table-hover" id="dataTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nombre</th>
-                                                            <th>Nombre corto</th>
-                                                            <th>Eslogan</th>
-                                                            <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para editar la fila."><i class='fa fa-info'></i></a>
-                                                            </th> 
-                                                            <th style="text-align: center;">
-                                                                <a href="#" title="Haga clic sobre el icono para ver los productos."><i class='fa fa-info'></i></a>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for comercio in comercios %}
-                                                            <tr>
-                                                                <td>{{ comercio.nombre }}</td>
-                                                                <td>{{ comercio.slug }} <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></td>
-                                                                <td>{{ comercio.eslogan }}</td>
-                                                                <td style="text-align: center;"><a href="{% url 'comercioAdmin:comercio' pk=comercio.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
-                                                                <td style="text-align: center;"><a href="{% url 'comercioAdmin:productos' pk=comercio.id %}" class="btn btn-info" title="Ver productos"><i class="fas fa-boxes fa-lg"></i> Productos</a></td>
-                                                            </tr>
-                                                        {% endfor%}
-                                                    </tbody>
-                                                </table>
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                {% for comercio in comercios %}
+                                    <div class="col-md-4" onclick="window.location.href = '{% url 'coreAdmin:dashboardSeleccion' pk=comercio.id %}';" style="cursor:pointer;">
+                                        <div class="card card-dark bg-secondary-gradient">
+                                            <div class="card-body bubble-shadow">
+                                                <h1>{{ comercio.nombre }}</h1>
+                                                <h5 class="op-8">{{ comercio.slug }}</h5>
+                                                <div class="pull-right">
+                                                    <h3 class="op-8">Seleccionar</h3>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endfor%}
                             </div>
-                            
                         </div>
                     </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 {% endblock %}
 
 {% block customJs %}
-        <script src="{% static 'admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-        <script src="{% static 'admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
         <script>
             $(document).ready(function () {
                 $('#dataTable').dataTable( {
