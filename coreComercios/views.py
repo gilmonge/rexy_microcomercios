@@ -88,6 +88,9 @@ def catalogo(request):
         productos = Producto.objects.filter(comercio=request.session["comercioId"])
         colecciones = Coleccion.objects.filter(comercio=request.session["comercioId"])
 
+        if comercio.idplan > 0:
+            parametroLimiteGratis = 0
+        
         totalProductos = productos.count()
         datos = {
             'colecciones':colecciones,
@@ -137,7 +140,7 @@ def add_image(request):
         if form.is_valid():
             form.save()
             producto = get_object_or_404(Producto, id=pk)
-    return redirect('coreAdmin:producto', pk = producto.id)
+    return redirect('comercioAdmin:producto', pk = producto.id)
 
 def del_image(request):
     if request.method == 'POST':
@@ -145,7 +148,7 @@ def del_image(request):
         pkImagen = request.POST['pkImagen']
         ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
         ImagenesProducto.objects.filter(id=pkImagen).delete()
-    return redirect('coreAdmin:producto', pk = pk)
+    return redirect('comercioAdmin:producto', pk = pk)
 
 def default_image(request):
     if request.method == 'POST':
@@ -162,7 +165,7 @@ def default_image(request):
         imagen.save()
         #ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
         #ImagenesProducto.objects.filter(id=pkImagen).delete()
-    return redirect('coreAdmin:producto', pk = pk)
+    return redirect('comercioAdmin:producto', pk = pk)
 
 class coleccionCreateView(CreateView):
     model = Coleccion
