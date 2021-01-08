@@ -13,6 +13,7 @@
             color: #fff !important;
         }
         .kv-file-remove, .img-block>a{ display: none !important; }
+        .file-drop-zone { min-height: 300px; }
     </style>
 {% endblock %}
 
@@ -35,7 +36,7 @@
                 <div class="col-md-12">
                     <div class="card col-md-12">
                         <div class="card-body col-md-12 ">
-                            <form action="" method="post" enctype="multipart/form-data" class="row ">
+                            <form id="formAddComercio" action="" method="post" enctype="multipart/form-data" class="row ">
                                 {% csrf_token %}
 
                                 <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
@@ -72,27 +73,27 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="socialFacebook">URL Facebook:</label>
-                                    <input type="text" id="socialFacebook" value="" class="form-control" placeholder="URL Facebook:" maxlength="200">
+                                    <input type="text" id="socialFacebook" name="socialFacebook" value="" class="form-control" placeholder="URL Facebook:" maxlength="200">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="socialTwitter">URL Twitter:</label>
-                                    <input type="text" id="socialTwitter" value="" class="form-control" placeholder="URL Twitter:" maxlength="200">
+                                    <input type="text" id="socialTwitter" name="socialTwitter" value="" class="form-control" placeholder="URL Twitter:" maxlength="200">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="socialTiktok">URL Tiktok:</label>
-                                    <input type="text" id="socialTiktok" value="" class="form-control" placeholder="URL Tiktok:" maxlength="200">
+                                    <input type="text" id="socialTiktok" name="socialTiktok" value="" class="form-control" placeholder="URL Tiktok:" maxlength="200">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="socialInstagram">URL Instagram:</label>
-                                    <input type="text" id="socialInstagram" value="" class="form-control" placeholder="URL Instagram:" maxlength="200">
+                                    <input type="text" id="socialInstagram" name="socialInstagram" value="" class="form-control" placeholder="URL Instagram:" maxlength="200">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="socialTwitch">URL Twitch:</label>
-                                    <input type="text" id="socialTwitch" value="" class="form-control" placeholder="URL Twitch:" maxlength="200">
+                                    <input type="text" id="socialTwitch" name="socialTwitch" value="" class="form-control" placeholder="URL Twitch:" maxlength="200">
                                 </div>
                                 
                                 <div class="form-group" style="display: none;"> {% comment %} Redes sociales {% endcomment %}
@@ -108,12 +109,12 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="contactoTel">Teléfono:</label>
-                                    <input type="text" id="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
+                                    <input type="text" id="contactoTel" name="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="contactoEmail">Correo electrónico:</label>
-                                    <input type="email" id="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
+                                    <input type="email" id="contactoEmail" name="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
                                 </div>
 
                                 <div class="form-group" style="display: none;">
@@ -130,11 +131,11 @@
                                     <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
                                 </div>
 
-                                <input type="text" name="owner" class="form-control" value="{{request.user.id}}" id="id_owner">
-                                <input type="text" name="idplan" class="form-control" value="0" id="id_idplan">
+                                <input type="hidden" name="owner" class="form-control" value="{{request.user.id}}" id="id_owner">
+                                <input type="hidden" name="idplan" class="form-control" value="0" id="id_idplan">
                                     
                                 <div class="text-center col-md-12">
-                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar comercio" />
+                                    <input type="submit" class="btn btn-info btn-block" id="btnForm" value="Actualizar comercio" />
                                 </div>
                             </form>
                         </div>
@@ -150,77 +151,227 @@
 {% endblock %}
 
 {% block customJs %}
-        <script>
-            {% if 'ok' in request.GET %}
-                $("#msgInfo").html(`
-                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
-                `)
-                $("#Modal_informacion").modal("show")
-            {% endif %}
+    <script>
+        {% if 'ok' in request.GET %}
+            $("#msgInfo").html(`
+                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+            `)
+            $("#Modal_informacion").modal("show")
+        {% endif %}
 
-            $( "#socialFacebook" ).keyup(function() { CambiarResdSocial('facebook', $('#socialFacebook').val() ) })
-            $( "#socialTwitter" ).keyup(function() { CambiarResdSocial('twitter', $('#socialTwitter').val() ) })
-            $( "#socialTiktok" ).keyup(function() { CambiarResdSocial('tiktok', $('#socialTiktok').val() ) })
-            $( "#socialInstagram" ).keyup(function() { CambiarResdSocial('instagram', $('#socialInstagram').val() ) })
-            $( "#socialTwitch" ).keyup(function() { CambiarResdSocial('twitch', $('#socialTwitch').val() ) })
+        $( "#socialFacebook" ).keyup(function() { CambiarResdSocial('facebook', $('#socialFacebook').val() ) })
+        $( "#socialTwitter" ).keyup(function() { CambiarResdSocial('twitter', $('#socialTwitter').val() ) })
+        $( "#socialTiktok" ).keyup(function() { CambiarResdSocial('tiktok', $('#socialTiktok').val() ) })
+        $( "#socialInstagram" ).keyup(function() { CambiarResdSocial('instagram', $('#socialInstagram').val() ) })
+        $( "#socialTwitch" ).keyup(function() { CambiarResdSocial('twitch', $('#socialTwitch').val() ) })
 
-            $( "#contactoTel" ).keyup(function() { CambiarContacto('telefono', $('#contactoTel').val() ) })
-            $( "#contactoEmail" ).keyup(function() { CambiarContacto('email', $('#contactoEmail').val() ) })
+        $( "#contactoTel" ).keyup(function() { CambiarContacto('telefono', $('#contactoTel').val() ) })
+        $( "#contactoEmail" ).keyup(function() { CambiarContacto('email', $('#contactoEmail').val() ) })
 
-            function CambiarResdSocial(id, url){
-                var id_redessociales = $('#id_redessociales').val()
-                var redessociales = (id_redessociales == '')? {} : redessociales = JSON.parse(id_redessociales)
+        function CambiarResdSocial(id, url){
+            var id_redessociales = $('#id_redessociales').val()
+            var redessociales = (id_redessociales == '')? {} : redessociales = JSON.parse(id_redessociales)
 
-                redessociales[id] = url
-                $('#id_redessociales').val(JSON.stringify(redessociales))
+            redessociales[id] = url
+            $('#id_redessociales').val(JSON.stringify(redessociales))
+        }
+
+        function CambiarContacto(id, url){
+            var id_contacto = $('#id_contacto').val()
+            var contacto = (id_contacto == '')? {} : contacto = JSON.parse(id_contacto)
+
+            contacto[id] = url
+            $('#id_contacto').val(JSON.stringify(contacto))
+        }
+
+        tinymce.init({
+            selector: '#id_descripcion',
+            height: 300,
+            language: 'es',
+            theme: 'modern',
+            relative_urls: false,
+            remove_script_host : false,
+            plugins: [
+                'advlist charmap preview hr anchor pagebreak', 
+                'searchreplace', 
+                'insertdatetime nonbreaking contextmenu directionality', 
+                'emoticons paste textcolor colorpicker textpattern '
+            ],
+            toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+            toolbar2: '',
+            image_advtab: true,
+        });
+
+        $("#id_img_superior").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+        });
+        $("#id_img_acercade").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+        });
+
+        $( "#id_slug" ).keyup(function() {
+            var comercio_slug = $('#id_slug').val()
+            $('#btnForm').show()
+            if(comercio_slug.length >= 5){
+                var URL = '{% url 'comercioAdmin:comercioDisponibilidad' comercio_slug='comercio_slug'  %}'
+
+                var urlConsulta = URL.replace("comercio_slug", comercio_slug);
+
+                $.get(`${urlConsulta}`, {}, function(data){
+                    if(data.existe == 1){
+                        $('#btnForm').hide()
+                        swal("¡Ten cuidado!", "El nombre del comercio ya se encuentra utilizado", {
+                            icon : "error",
+                            buttons: {
+                                confirm: {
+                                    className : 'btn btn-danger'
+                                }
+                            },
+                        });
+                    }
+                })
             }
+        })
 
-            function CambiarContacto(id, url){
-                var id_contacto = $('#id_contacto').val()
-                var contacto = (id_contacto == '')? {} : contacto = JSON.parse(id_contacto)
-
-                contacto[id] = url
-                $('#id_contacto').val(JSON.stringify(contacto))
+        document.addEventListener('DOMContentLoaded', function() {
+            /* formAddComercio*/
+            if ( document.getElementById( "formAddComercio" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formAddComercio'),
+                    {
+                        fields: {
+                            nombre: {
+                                validators:{
+                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            slug: {
+                                validators:{
+                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    stringLength: {
+                                        min: 5,
+                                        message: 'El tamaño del campo debe ser de mínimo 5 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9_-]+$/,
+                                        message: 'Solo puede contener valores alfabéticos puede utilizar símbolos como los siguientes: -, _ '
+                                    }
+                                }
+                            },
+                            eslogan: {
+                                validators:{
+                                    notEmpty: { message: 'El eslogan es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            socialFacebook: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)facebook.com\/?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones Facebook'
+                                    }
+                                }
+                            },
+                            socialTwitter: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)twitter.com\/?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones Twitter'
+                                    }
+                                }
+                            },
+                            socialTiktok: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)tiktok.com\/@?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones TikTok'
+                                    }
+                                }
+                            },
+                            socialInstagram: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)instagram.com\/?([\w\-]*)?(?:\/)+$/,
+                                        message: 'Solo se admiten direcciones Instagram'
+                                    }
+                                }
+                            },
+                            socialTwitch: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)twitch.tv\/?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones Twitch'
+                                    }
+                                }
+                            },
+                            contactoTel: {
+                                validators:{
+                                    stringLength: { min: 8, max: 11, message: 'El tamaño del teléfono debe ser mínimo 8 caracteres y máximo 11.' },
+                                    notEmpty: { message: 'El teléfono es obligatorio.' },
+                                    regexp: { regexp: /^[0-9]+$/, message: 'Solo puede contener valores numéricos' }
+                                }
+                            },
+                            contactoEmail: {
+                                validators:{
+                                    notEmpty: { message: 'El correo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /[a-z0-9]+([-._]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*\s*/,
+                                        message: ' Correo inválido. '
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
+                        }
+                    }
+                );
             }
-
-            tinymce.init({
-                selector: '#id_descripcion',
-                height: 300,
-                language: 'es',
-                theme: 'modern',
-                relative_urls: false,
-                remove_script_host : false,
-                plugins: [
-                    'advlist charmap preview hr anchor pagebreak', 
-                    'searchreplace', 
-                    'insertdatetime nonbreaking contextmenu directionality', 
-                    'emoticons paste textcolor colorpicker textpattern '
-                ],
-                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
-                toolbar2: '',
-                image_advtab: true,
-            });
-
-            $("#id_img_superior").fileinput({
-                theme: "fas",
-                language: 'es',
-                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
-                overwriteInitial: false,
-                initialPreviewAsData: true,
-                maxFilesNum: 1,
-                showUpload: false,
-                showRemove: false,
-            });
-            $("#id_img_acercade").fileinput({
-                theme: "fas",
-                language: 'es',
-                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
-                overwriteInitial: false,
-                initialPreviewAsData: true,
-                maxFilesNum: 1,
-                showUpload: false,
-                showRemove: false,
-            });
-        </script>
+            /* formAddComercio*/
+        });
+        
+    </script>
 
 {% endblock %}
