@@ -14,6 +14,21 @@ from django import forms
 def home(request):
     return render(request, "codeFrontEnd/home.html")
 
+def consultarDisponibilidadComercio(request, comercio_slug):
+    comercio = Comercio.objects.filter(slug=comercio_slug)
+    
+    if comercio:
+        data = {
+            'existe': 1,
+            'comercio': comercio[0].id,
+        }
+    else:
+        data = {
+            'existe': 0
+        }
+        
+    return JsonResponse(data)
+
 def comercio (request, comercio_slug):
     #trae el comercio si existe
     comercio = get_object_or_404(Comercio, slug=comercio_slug)
@@ -83,20 +98,24 @@ class comercioUpdateView(UpdateView):
 
 def catalogo(request):
     if request.user.is_authenticated:
-        parametroLimiteGratis = Parametro.objects.filter(parametro="limiteGratis")[0].valor
+        parametroLimiteGratis = int(Parametro.objects.filter(parametro="limiteGratis")[0].valor)
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
         productos = Producto.objects.filter(comercio=request.session["comercioId"])
         colecciones = Coleccion.objects.filter(comercio=request.session["comercioId"])
+        totalProductos = productos.count()
 
         if comercio.idplan > 0:
             parametroLimiteGratis = 0
+
+        permiteProductos = 0
+
+        if totalProductos < parametroLimiteGratis and parametroLimiteGratis > 0:
+            permiteProductos = 1
         
-        totalProductos = productos.count()
         datos = {
             'colecciones':colecciones,
             'comercio':comercio,
-            'totalProductos':totalProductos,
-            'MaximosProductos':parametroLimiteGratis,
+            'permiteProductos':permiteProductos,
         }
         return render(request, "codeBackEnd/catalogo.html", datos)
     else:

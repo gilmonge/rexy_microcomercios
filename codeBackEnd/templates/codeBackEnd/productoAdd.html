@@ -20,118 +20,163 @@
 {% endblock %}
 
 {% block content %}
-                    <div class="panel-header bg-primary-gradient">
-                        <div class="page-inner py-5">
-                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                                <div>
-                                    <h2 class="text-white pb-2 fw-bold">Nuevo producto</h2>
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Nuevo producto</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+
+            <div class="col-md-12">
+                
+                <div class="col-md-12">
+                    <div class="card col-md-12">
+                        <div class="card-body col-md-12 ">
+                            <form action="" id="formAddProducto" method="post" enctype="multipart/form-data" class="row ">
+                                {% csrf_token %}
+
+                                <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
+                                    {{ form.nombre.label_tag }}
+                                    {{ form.nombre }}
+                                    {{ form.nombre.errors }}
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="page-inner mt--5">
-                        <div class="row mt--2">
+                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+                                    <label for="id_descripcion">Descripción:</label>
+                                    <textarea name="descripcion" cols="40" rows="10" class="form-control" placeholder="Descripción" id="id_descripcion"></textarea>
+                                    
+                                </div>
 
-                            <div class="col-md-12">
-                                
-                                <div class="col-md-12">
-                                    <div class="card col-md-12">
-                                        <div class="card-body col-md-12 ">
-                                            <form action="" method="post" enctype="multipart/form-data" class="row ">
-                                                {% csrf_token %}
+                                <div class="form-group col-md-4"> {% comment %} Precio {% endcomment %}
+                                    {{ form.precio.label_tag }}
+                                    {{ form.precio }}
+                                    {{ form.precio.errors }}
+                                </div>
 
-                                                <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
-                                                    {{ form.nombre.label_tag }}
-                                                    {{ form.nombre }}
-                                                    {{ form.nombre.errors }}
-                                                </div>
-
-                                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
-                                                    <label for="id_descripcion">Descripción:</label>
-                                                    <textarea name="descripcion" cols="40" rows="10" class="form-control" placeholder="Descripción" id="id_descripcion"></textarea>
-                                                    
-                                                </div>
-
-                                                <div class="form-group col-md-4"> {% comment %} Precio {% endcomment %}
-                                                    {{ form.precio.label_tag }}
-                                                    {{ form.precio }}
-                                                    {{ form.precio.errors }}
-                                                </div>
-
-                                                <div class="form-group col-md-4"> {% comment %} Colecciones {% endcomment %}
-                                                    <label class="form-label">Colecciones</label>
-                                                    <div class="selectgroup w-100">
-                                                        <select id="id_colecciones" name="colecciones" class="selectpicker w-100" multiple data-live-search="true">
-                                                            {% get_colecciones request.session.comercioId as Colecciones %}
-                                                            {% for Coleccion in Colecciones %}
-                                                                <option value="{{ Coleccion.id }}">{{ Coleccion.nombre }}</option> 
-                                                            {% endfor%}
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group col-md-4"> {% comment %} Estado {% endcomment %}
-                                                    <label class="form-label">Estado</label>
-                                                    <div class="selectgroup w-100">
-                                                        <label class="selectgroup-item">
-                                                            <input type="radio" name="estado" value="1" class="selectgroup-input" checked="" >
-                                                            <span class="selectgroup-button">Activo</span>
-                                                        </label>
-                                                        <label class="selectgroup-item">
-                                                            <input type="radio" name="estado" value="0" class="selectgroup-input" >
-                                                            <span class="selectgroup-button">Inactivo</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <input type="hidden" name="comercio" value="{{request.session.comercioId}}" />
-
-                                                <div class="text-center col-md-12">
-                                                    <input type="submit" class="btn btn-info btn-block" value="Agregar producto" />
-                                                </div>
-                                            </form>
-                                        </div>
+                                <div class="form-group col-md-4"> {% comment %} Colecciones {% endcomment %}
+                                    <label class="form-label">Colecciones</label>
+                                    <div class="selectgroup w-100">
+                                        <select id="id_colecciones" name="colecciones" class="selectpicker w-100" multiple data-live-search="true">
+                                            {% get_colecciones request.session.comercioId as Colecciones %}
+                                            {% for Coleccion in Colecciones %}
+                                                <option value="{{ Coleccion.id }}">{{ Coleccion.nombre }}</option> 
+                                            {% endfor%}
+                                        </select>
                                     </div>
                                 </div>
-                            
-                                <div class="col-md-12">
-                                    <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+
+                                <div class="form-group col-md-4"> {% comment %} Estado {% endcomment %}
+                                    <label class="form-label">Estado</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="estado" value="1" class="selectgroup-input" checked="" >
+                                            <span class="selectgroup-button">Activo</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="estado" value="0" class="selectgroup-input" >
+                                            <span class="selectgroup-button">Inactivo</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <input type="hidden" name="comercio" value="{{request.session.comercioId}}" />
+
+                                <div class="text-center col-md-12">
+                                    <input type="submit" class="btn btn-info btn-block" value="Agregar producto" />
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
+            
+                <div class="col-md-12">
+                    <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block customJs %}
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
-        <script>
-            {% if 'ok' in request.GET %}
-                $("#msgInfo").html(`
-                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
-                `)
-                $("#Modal_informacion").modal("show")
-            {% endif %}
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+    <script>
+        {% if 'ok' in request.GET %}
+            $("#msgInfo").html(`
+                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+            `)
+            $("#Modal_informacion").modal("show")
+        {% endif %}
 
-            tinymce.init({
-                selector: '#id_descripcion',
-                height: 300,
-                language: 'es',
-                theme: 'modern',
-                relative_urls: false,
-                remove_script_host : false,
-                plugins: [
-                    'advlist charmap preview hr anchor pagebreak', 
-                    'searchreplace', 
-                    'insertdatetime nonbreaking contextmenu directionality', 
-                    'emoticons paste textcolor colorpicker textpattern '
-                ],
-                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
-                toolbar2: '',
-                image_advtab: true,
-            });
+        tinymce.init({
+            selector: '#id_descripcion',
+            height: 300,
+            language: 'es',
+            theme: 'modern',
+            relative_urls: false,
+            remove_script_host : false,
+            plugins: [
+                'advlist charmap preview hr anchor pagebreak', 
+                'searchreplace', 
+                'insertdatetime nonbreaking contextmenu directionality', 
+                'emoticons paste textcolor colorpicker textpattern '
+            ],
+            toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+            toolbar2: '',
+            image_advtab: true,
+        });
 
-            /*$('#id_colecciones').selectpicker();*/
-        </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            /* formAddProducto*/
+            if ( document.getElementById( "formAddProducto" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formAddProducto'),
+                    {
+                        fields: {
+                            nombre: {
+                                validators:{
+                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            precio: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^[0-9]+(\.[0-9]{1,2})+$/,
+                                        message: 'Solo puede contener valores numéricos con dos decimales'
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
+                        }
+                    }
+                );
+            }
+            /* formAddProducto*/
+        });
+    </script>
 {% endblock %}

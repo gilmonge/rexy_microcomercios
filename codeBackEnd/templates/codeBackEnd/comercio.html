@@ -14,6 +14,11 @@
             color: #fff !important;
         }
         .kv-file-remove, .img-block>a{ display: none !important; }
+        
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #1a2035 !important;
+            border-color: #2f374b !important;
+        }
     </style>
 {% endblock %}
 
@@ -36,7 +41,7 @@
                 <div class="col-md-12">
                     <div class="card col-md-12">
                         <div class="card-body col-md-12 ">
-                            <form action="" method="post" enctype="multipart/form-data" class="row ">
+                            <form action="" id="formEditComercio" method="post" enctype="multipart/form-data" class="row ">
                                 {% csrf_token %}
 
                                 <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
@@ -50,6 +55,8 @@
                                     {{ form.slug }}
                                     {{ form.slug.errors }}
                                 </div>
+                                
+
 
                                 <div class="form-group col-md-12"> {% comment %} eslogan {% endcomment %}
                                     {{ form.eslogan.label_tag }}
@@ -140,7 +147,7 @@
                                 <input type="hidden" name="idplan" class="form-control" value="{{comercio.idplan}}" id="id_idplan">
                                     
                                 <div class="text-center col-md-12">
-                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar comercio" />
+                                    <input type="submit" class="btn btn-info btn-block" id="btnForm" value="Actualizar comercio" />
                                 </div>
                             </form>
                         </div>
@@ -153,133 +160,256 @@
 {% endblock %}
 
 {% block customJs %}
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
 
-        <script>
-            {% if 'ok' in request.GET %}
-                $("#msgInfo").html(`
-                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
-                `)
-                $("#Modal_informacion").modal("show")
-            {% endif %}
+    <script>
+        {% if 'ok' in request.GET %}
+            $("#msgInfo").html(`
+                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+            `)
+            $("#Modal_informacion").modal("show")
+        {% endif %}
 
-            function cargarSocial(){
-                var id_redessociales = $('#id_redessociales').val()
-                var redessociales = JSON.parse(id_redessociales)
-                
-                $('#socialFacebook').val(redessociales.facebook)
-                $('#socialTwitter').val(redessociales.twitter)
-                $('#socialTiktok').val(redessociales.tiktok)
-                $('#socialInstagram').val(redessociales.instagram)
-                $('#socialTwitch').val(redessociales.twitch)
-            }
-            cargarSocial()
+        function cargarSocial(){
+            var id_redessociales = $('#id_redessociales').val()
+            var redessociales = JSON.parse(id_redessociales)
+            
+            $('#socialFacebook').val(redessociales.facebook)
+            $('#socialTwitter').val(redessociales.twitter)
+            $('#socialTiktok').val(redessociales.tiktok)
+            $('#socialInstagram').val(redessociales.instagram)
+            $('#socialTwitch').val(redessociales.twitch)
+        }
+        cargarSocial()
 
-            function cargarContacto(){
-                var id_contacto = $('#id_contacto').val()
-                var contacto = JSON.parse(id_contacto)
-                
-                $('#contactoTel').val(contacto.telefono)
-                $('#contactoEmail').val(contacto.email)
-            }
-            cargarContacto()
+        function cargarContacto(){
+            var id_contacto = $('#id_contacto').val()
+            var contacto = JSON.parse(id_contacto)
+            
+            $('#contactoTel').val(contacto.telefono)
+            $('#contactoEmail').val(contacto.email)
+        }
+        cargarContacto()
 
-            $( "#socialFacebook" ).keyup(function() { CambiarResdSocial('facebook', $('#socialFacebook').val() ) })
-            $( "#socialTwitter" ).keyup(function() { CambiarResdSocial('twitter', $('#socialTwitter').val() ) })
-            $( "#socialTiktok" ).keyup(function() { CambiarResdSocial('tiktok', $('#socialTiktok').val() ) })
-            $( "#socialInstagram" ).keyup(function() { CambiarResdSocial('instagram', $('#socialInstagram').val() ) })
-            $( "#socialTwitch" ).keyup(function() { CambiarResdSocial('twitch', $('#socialTwitch').val() ) })
+        $( "#socialFacebook" ).keyup(function() { CambiarResdSocial('facebook', $('#socialFacebook').val() ) })
+        $( "#socialTwitter" ).keyup(function() { CambiarResdSocial('twitter', $('#socialTwitter').val() ) })
+        $( "#socialTiktok" ).keyup(function() { CambiarResdSocial('tiktok', $('#socialTiktok').val() ) })
+        $( "#socialInstagram" ).keyup(function() { CambiarResdSocial('instagram', $('#socialInstagram').val() ) })
+        $( "#socialTwitch" ).keyup(function() { CambiarResdSocial('twitch', $('#socialTwitch').val() ) })
 
-            $( "#contactoTel" ).keyup(function() { CambiarContacto('telefono', $('#contactoTel').val() ) })
-            $( "#contactoEmail" ).keyup(function() { CambiarContacto('email', $('#contactoEmail').val() ) })
+        $( "#contactoTel" ).keyup(function() { CambiarContacto('telefono', $('#contactoTel').val() ) })
+        $( "#contactoEmail" ).keyup(function() { CambiarContacto('email', $('#contactoEmail').val() ) })
 
-            function CambiarResdSocial(id, url){
-                var id_redessociales = $('#id_redessociales').val()
-                var redessociales = JSON.parse(id_redessociales)
+        function CambiarResdSocial(id, url){
+            var id_redessociales = $('#id_redessociales').val()
+            var redessociales = JSON.parse(id_redessociales)
 
-                redessociales[id] = url
-                $('#id_redessociales').val(JSON.stringify(redessociales))
-            }
+            redessociales[id] = url
+            $('#id_redessociales').val(JSON.stringify(redessociales))
+        }
 
-            function CambiarContacto(id, url){
-                var id_contacto = $('#id_contacto').val()
-                var contacto = JSON.parse(id_contacto)
+        function CambiarContacto(id, url){
+            var id_contacto = $('#id_contacto').val()
+            var contacto = JSON.parse(id_contacto)
 
-                contacto[id] = url
-                $('#id_contacto').val(JSON.stringify(contacto))
-            }
+            contacto[id] = url
+            $('#id_contacto').val(JSON.stringify(contacto))
+        }
 
-            tinymce.init({
-                selector: '#id_descripcion',
-                height: 300,
-                language: 'es',
-                theme: 'modern',
-                relative_urls: false,
-                remove_script_host : false,
-                plugins: [
-                    'advlist charmap preview hr anchor pagebreak', 
-                    'searchreplace', 
-                    'insertdatetime nonbreaking contextmenu directionality', 
-                    'emoticons paste textcolor colorpicker textpattern '
-                ],
-                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
-                toolbar2: '',
-                image_advtab: true,
-            });
-
-            $("#id_img_superior").fileinput({
-                theme: "fas",
-                language: 'es',
-                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
-                overwriteInitial: false,
-                initialPreviewAsData: true,
-                maxFilesNum: 1,
-                showUpload: false,
-                showRemove: false,
-                initialPreview: [
-                    "/media/{{ comercio.img_superior }}",
-                ],
-            });
-            $("#id_img_acercade").fileinput({
-                theme: "fas",
-                language: 'es',
-                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
-                overwriteInitial: false,
-                initialPreviewAsData: true,
-                maxFilesNum: 1,
-                showUpload: false,
-                showRemove: false,
-                initialPreview: [
-                    "/media/{{ comercio.img_acercade }}",
-                ],
-            });
-        </script>
-        {% comment %} <!-- AUTO IMAGE ORIENTATION -->
-        <div class="file-loading">
-            <input id="input-file-1" name="input-file-1[]" multiple type="file" accept="image/*">
-        </div>
-        <div class="checkbox">
-            <label>
-            <input id="toggleOrient" name="tog" type="checkbox" checked>
-            Toggle Auto Orientation
-            </label>
-        </div>
-        <div id="togStatus" class="hint-block">
-        </div>
-        <script>
-        $("#input-file-1").fileinput({
-            uploadUrl: "/file-upload-batch/2",
-            autoOrientImage: true
+        tinymce.init({
+            selector: '#id_descripcion',
+            height: 300,
+            language: 'es',
+            theme: 'modern',
+            relative_urls: false,
+            remove_script_host : false,
+            plugins: [
+                'advlist charmap preview hr anchor pagebreak', 
+                'searchreplace', 
+                'insertdatetime nonbreaking contextmenu directionality', 
+                'emoticons paste textcolor colorpicker textpattern '
+            ],
+            toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+            toolbar2: '',
+            image_advtab: true,
         });
-        $("#toggleOrient").on('change', function() {
-            var val = $(this).prop('checked');
-            $("#input-file-1").fileinput('refresh', {
-                uploadUrl: "/file-upload-batch/2",
-                autoOrientImage: val
-            });
-            $('#togStatus').html('Fileinput is reset and <samp>autoOrientImage</samp> is set to <em>' + (val ? 'true' : 'false') + '</em>. Retry by selecting images again.');
-        });
-        </script> {% endcomment %}
 
+        $("#id_img_superior").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+            initialPreview: [
+                "/media/{{ comercio.img_superior }}",
+            ],
+        });
+        $("#id_img_acercade").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+            initialPreview: [
+                "/media/{{ comercio.img_acercade }}",
+            ],
+        });
+        
+        $( "#id_slug" ).keyup(function() {
+            var comercio_slug = $('#id_slug').val()
+            $('#btnForm').show()
+            if(comercio_slug.length >= 5){
+                var idComercio = {{comercio.id}};
+                var URL = '{% url 'comercioAdmin:comercioDisponibilidad' comercio_slug='comercio_slug'  %}'
+
+                var urlConsulta = URL.replace("comercio_slug", comercio_slug);
+
+                $.get(`${urlConsulta}`, {}, function(data){
+                    if(data.existe == 1 && idComercio != data.comercio){
+                        $('#btnForm').hide()
+                        swal("¡Ten cuidado!", "El nombre del comercio ya se encuentra utilizado", {
+                            icon : "error",
+                            buttons: {
+                                confirm: {
+                                    className : 'btn btn-danger'
+                                }
+                            },
+                        });
+                    }
+                })
+            }
+        })
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            /* formEditComercio*/
+            if ( document.getElementById( "formEditComercio" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formEditComercio'),
+                    {
+                        fields: {
+                            nombre: {
+                                validators:{
+                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            slug: {
+                                validators:{
+                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    stringLength: {
+                                        min: 5,
+                                        message: 'El tamaño del campo debe ser de mínimo 5 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9_-]+$/,
+                                        message: 'Solo puede contener valores alfabéticos puede utilizar símbolos como los siguientes: -, _ '
+                                    }
+                                }
+                            },
+                            eslogan: {
+                                validators:{
+                                    notEmpty: { message: 'El eslogan es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            socialFacebook: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)facebook.com\/?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones Facebook'
+                                    }
+                                }
+                            },
+                            socialTwitter: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)twitter.com\/?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones Twitter'
+                                    }
+                                }
+                            },
+                            socialTiktok: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)tiktok.com\/@?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones TikTok'
+                                    }
+                                }
+                            },
+                            socialInstagram: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)instagram.com\/?([\w\-]*)?(?:\/)+$/,
+                                        message: 'Solo se admiten direcciones Instagram'
+                                    }
+                                }
+                            },
+                            socialTwitch: {
+                                validators: {
+                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /^(?:(?:https):\/\/)(?:www.)twitch.tv\/?([\w\-]*)+$/,
+                                        message: 'Solo se admiten direcciones Twitch'
+                                    }
+                                }
+                            },
+                            contactoTel: {
+                                validators:{
+                                    stringLength: { min: 8, max: 11, message: 'El tamaño del teléfono debe ser mínimo 8 caracteres y máximo 11.' },
+                                    notEmpty: { message: 'El teléfono es obligatorio.' },
+                                    regexp: { regexp: /^[0-9]+$/, message: 'Solo puede contener valores numéricos' }
+                                }
+                            },
+                            contactoEmail: {
+                                validators:{
+                                    notEmpty: { message: 'El correo es obligatorio.' },
+                                    regexp: {
+                                        regexp: /[a-z0-9]+([-._]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*\s*/,
+                                        message: ' Correo inválido. '
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
+                        }
+                    }
+                );
+            }
+            /* formEditComercio*/
+        });
+    </script>
 {% endblock %}
