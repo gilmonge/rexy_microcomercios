@@ -8,7 +8,7 @@
 
         {% if request.session.comercioId != producto.comercio.id %}
             <script>
-                window.location.href = "{% url 'comercioAdmin:productos' %}";
+                window.location.href = "{% url 'comercioAdmin:catalogo' %}";
             </script>
         {% endif %}
 {% endblock %}

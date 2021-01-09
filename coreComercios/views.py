@@ -31,7 +31,10 @@ def consultarDisponibilidadComercio(request, comercio_slug):
 
 def comercio (request, comercio_slug):
     #trae el comercio si existe
-    comercio = get_object_or_404(Comercio, slug=comercio_slug)
+    try:
+        comercio = Comercio.objects.get(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
 
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
@@ -48,11 +51,15 @@ def comercio (request, comercio_slug):
 
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
-    producto = get_object_or_404(Producto, id=pk)
+    try:
+        producto = Producto.objects.get(id=pk, comercio__slug=comercio_slug)[0]
+    except Producto.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
     imagenes_producto = ImagenesProducto.objects.select_related('producto').filter(producto=producto.id, estado=True)
 
     # trae el comercio respectivo al producto
-    comercio = Comercio.objects.filter(id=producto.comercio.id)[0]
+    comercio = Comercio.objects.filter(slug=producto.comercio.id)[0]
 
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
@@ -100,8 +107,8 @@ def catalogo(request):
     if request.user.is_authenticated:
         parametroLimiteGratis = int(Parametro.objects.filter(parametro="limiteGratis")[0].valor)
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
-        productos = Producto.objects.filter(comercio=request.session["comercioId"])
-        colecciones = Coleccion.objects.filter(comercio=request.session["comercioId"])
+        productos = Producto.objects.filter(comercio=comercio.id)
+        colecciones = Coleccion.objects.filter(comercio=comercio.id)
         totalProductos = productos.count()
 
         if comercio.idplan > 0:

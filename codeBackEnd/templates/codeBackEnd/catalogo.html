@@ -96,10 +96,17 @@
             right: -5px !important;
             border-radius: 0px .25rem .25rem 0px !important;
         }
+
+        .item:hover{
+            -webkit-box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+            -moz-box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+            box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+        }
     </style>
 {% endblock %}
 
 {% block content %}
+    <h1>{{request.session.comercioId}} </h1>
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -134,7 +141,7 @@
 
                                 <div class="col-md-12 px-0 ">
                                     <div class="owl-carousel owl-theme">
-                                        {% get_ProductosColeccion None as ProductosColeccion %}
+                                        {% get_ProductosColeccion request.session.comercioId None as ProductosColeccion %}
                                         {% for ProductoColeccion in ProductosColeccion %}
                                         <div class="item">
                                             <div class="col-12 px-0">
@@ -148,7 +155,7 @@
                                                             </div>
                                                             <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                                                 <div class="numbers" style="width: 90%;">
-                                                                    <p class="card-category">{{ ProductoColeccion.nombre }}</p>
+                                                                    <p class="card-category">{{ ProductoColeccion.nombre }} {{ ProductoColeccion.comercio }}</p>
                                                                     <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
                                                                             
                                                                     <div class="card-category estado estado-producto">
@@ -192,12 +199,6 @@
                                                 </div>
                                             </div>
                                         {% endif %}
-                                        
-                                        {% comment %} {% with ''|center:7 as range %}
-                                        {% for _ in range %}
-                                        
-                                        {% endfor %}
-                                        {% endwith %} {% endcomment %}
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +214,6 @@
                                             </button>
                                         </div>
                                     {% else %}
-                                        
                                         <div class="alert alert-danger" role="alert">
                                             <span>{{ coleccion.nombre }} | Inactivo</span>
                                             <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
@@ -223,8 +223,7 @@
                                     {% endif %}
                                     <div class="col-md-12 px-0 ">
                                         <div class="owl-carousel owl-theme">
-                                            {% load codeBackEnd_extras %}
-                                            {% get_ProductosColeccion coleccion.id as ProductosColeccion %}
+                                            {% get_ProductosColeccion request.session.comercioId coleccion.id as ProductosColeccion %}
                                             {% for ProductoColeccion in ProductosColeccion %}
                                             <div class="item">
                                                 <div class="col-12 px-0">

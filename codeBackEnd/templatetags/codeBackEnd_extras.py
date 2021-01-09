@@ -19,9 +19,10 @@ def get_Imagenes_Producto(pk):
     return ImagenesDelProducto
 
 @register.simple_tag
-def get_ProductosColeccion(pk):
+def get_ProductosColeccion(pkcomercio, pk):
     productos = Producto.objects.filter(
-        colecciones__id=pk,
+        colecciones__id = pk,
+        comercio = pkcomercio
     )
     return productos
 
