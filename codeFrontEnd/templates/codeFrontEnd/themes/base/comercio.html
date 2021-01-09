@@ -3,53 +3,8 @@
 {% load static %}
 
 {% block title %}{{ comercio.nombre }}{% endblock %}
-{% block customHead %}
-    <meta name="description" content="{{comercio.eslogan}}"/>
-{% endblock %}
-{% block nombreEmpresa %}<h1 class="mb-0 site-logo"><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class="text-black mb-0">{{ comercio.nombre }}</a></h1>{% endblock %}
-
-{% block Social1Empresa %}
-    <ul class="social-media">
-        <li><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class=""><i class="fas fa-store"></i></a></li>
-        {% if comercio.redessociales.facebook != '' %}<li><a href="{{comercio.redessociales.facebook}}" target="_blank" class=""><span class="icon-facebook"></span></a></li>{% endif %}
-        {% if comercio.redessociales.instagram != '' %}<li><a href="{{comercio.redessociales.instagram}}" target="_blank" class=""><span class="icon-instagram"></span></a></li>{% endif %}
-        {% if comercio.redessociales.twitter != '' %}<li><a href="{{comercio.redessociales.twitter}}" target="_blank" class=""><span class="icon-twitter"></span></a></li>{% endif %}
-        {% if comercio.redessociales.twitch != '' %}<li><a href="{{comercio.redessociales.twitch}}" target="_blank" class=""><span class="icon-twitch"></span></a></li>{% endif %}
-        {% if comercio.redessociales.tiktok != '' %}<li><a href="{{comercio.redessociales.tiktok}}" target="_blank" class=""><i class="fab fa-tiktok"></i></a></li>{% endif %}
-    </ul>
-{% endblock %}
-
-{% block Social2Empresa %}
-    {% if comercio.redessociales.facebook != '' or comercio.redessociales.instagram != '' or comercio.redessociales.twitter != '' or comercio.redessociales.twitch != '' or comercio.redessociales.tiktok != '' %}
-        <h2 class="footer-heading mb-4">Síguenos</h2>
-    {% endif %}
-    {% if comercio.redessociales.facebook != '' %}<a href="{{comercio.redessociales.facebook}}" target="_blank" class="pl-0 pr-3"><span class="icon-facebook"></span></a>{% endif %}
-    {% if comercio.redessociales.instagram != '' %}<a href="{{comercio.redessociales.instagram}}" target="_blank" class="pl-3 pr-3"><span class="icon-instagram"></span></a>{% endif %}
-    {% if comercio.redessociales.twitter != '' %}<a href="{{comercio.redessociales.twitter}}" target="_blank" class="pl-3 pr-3"><span class="icon-twitter"></span></a>{% endif %}
-    {% if comercio.redessociales.twitch != '' %}<a href="{{comercio.redessociales.twitch}}" target="_blank" class="pl-3 pr-3"><span class="icon-twitch"></span></span></a>{% endif %}
-    {% if comercio.redessociales.tiktok != '' %}<a href="{{comercio.redessociales.tiktok}}" target="_blank" class="pl-3 pr-3"><i class="fab fa-tiktok"></i></span></a>{% endif %}
-{% endblock %}
-
-{% block contactoEmpresa %}
-    <p class="mb-0 float-right">
-        {% if comercio.contacto.telefono != '' %}
-            <span class="mr-3">
-                <a href="tel://{{comercio.contacto.telefono}}"> 
-                    <span class="icon-phone mr-2" style="position: relative; top: 2px;"></span>
-                    <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.telefono}}</span>
-                </a>
-            </span>
-        {% endif %}
-        {% if comercio.contacto.email != '' %}
-            <span>
-                <a href="mailto:{{comercio.contacto.email}}">
-                    <span class="icon-envelope mr-2" style="position: relative; top: 2px;"></span>
-                    <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.email}}</span>
-                </a>
-            </span>
-        {% endif %}
-    </p>
-{% endblock %}
+    
+{% block customHead %}{% endblock %}
 
 {% block customcss %}
     <style>
