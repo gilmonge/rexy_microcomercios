@@ -93,6 +93,7 @@ class Producto(models.Model):
     moneda          = models.IntegerField(verbose_name="Moneda", default=0)
     precio          = models.DecimalField(verbose_name="Precio", max_digits=12, decimal_places=2)
     colecciones     = models.ManyToManyField(Coleccion, verbose_name="Colecciones", blank=True)
+    visualizaciones = models.IntegerField(verbose_name="Visualizaciones", default="0")
     
     def __str__(self):
         return self.nombre

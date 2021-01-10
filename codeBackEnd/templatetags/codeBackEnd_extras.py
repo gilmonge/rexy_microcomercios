@@ -1,3 +1,4 @@
+from random import randint
 from django import template
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 
@@ -41,5 +42,28 @@ def get_ImagenPrincipalProd(pkProducto):
 @register.simple_tag
 def get_colecciones(comercio):
     colecciones = Coleccion.objects.filter(comercio=comercio)
-
     return colecciones
+
+@register.simple_tag
+def get_top10productos(pkcomercio):
+    productos = Producto.objects.filter(comercio=pkcomercio).order_by('-visualizaciones')[:10]
+    return productos
+
+@register.simple_tag
+def get_colorRandom():
+    colores = [
+        "#177DFF",
+        "#FFFFFF",
+        "#436FB8",
+        "#C7C7C7",
+        "#F17073",
+        "#F14B4F",
+        "#CAC73F",
+        "#F1ED4B",
+        "#C73FCA",
+        "#7ECA7C",
+        "#94F1EE",
+    ]
+    colorSeleccionado = randint(0, len(colores)-1)
+
+    return colores[colorSeleccionado]
