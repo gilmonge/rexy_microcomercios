@@ -32,7 +32,7 @@ def consultarDisponibilidadComercio(request, comercio_slug):
 def comercio (request, comercio_slug):
     #trae el comercio si existe
     try:
-        comercio = Comercio.objects.get(slug=comercio_slug)[0]
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
     except Comercio.DoesNotExist:
         return render(request, "codeFrontEnd/404.html")
 
@@ -52,14 +52,18 @@ def comercio (request, comercio_slug):
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
     try:
-        producto = Producto.objects.get(id=pk, comercio__slug=comercio_slug)[0]
+        producto = Producto.objects.filter(id=pk).filter(comercio__slug=comercio_slug)
+        producto = producto[0]
     except Producto.DoesNotExist:
         return render(request, "codeFrontEnd/404.html")
+
+    producto.visualizaciones = producto.visualizaciones + 1
+    producto.save()
 
     imagenes_producto = ImagenesProducto.objects.select_related('producto').filter(producto=producto.id, estado=True)
 
     # trae el comercio respectivo al producto
-    comercio = Comercio.objects.filter(slug=producto.comercio.id)[0]
+    comercio = Comercio.objects.filter(id=producto.comercio.id)[0]
 
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
