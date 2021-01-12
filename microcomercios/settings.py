@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'coreComercios'
+    'coreComercios',
+    'codeHome',
 ]
 
 MIDDLEWARE = [

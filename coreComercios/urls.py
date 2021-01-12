@@ -7,7 +7,6 @@ from coreComercios.views import comercioUpdateView, comercioCreateView, \
 from django.views.generic import RedirectView
 
 coreComercios_patterns = ([
-    path('', views.home, name='inicio'),
     path('<slug:comercio_slug>/', views.comercio, name='comercio'),
     path('<slug:comercio_slug>/<int:pk>/<slug:prod_slug>/', views.producto, name="producto"),
 ], "comercio")
