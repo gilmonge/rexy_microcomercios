@@ -31,9 +31,32 @@
 
             svg{ max-width: 100%; }
 
-            .header__menu ul li a:after { height: 20%!important; }
+            .header__menu ul li a:after { 
+                height: 20% !important; 
+                bottom: -1px;
+                background: #FFD92E;
+            }
+            .header__info {
+                padding: 10px 0 !important;
+                border-bottom: 1px solid #00357D !important;
+                background: #00357D !important;
+            }
+
+            .footer__top::before { background: #004193 !important; }
+            .footer__top::after { background: #005aa6 !important; }
+            .header-section.header-normal { background: #002E6B !important; }
+
+            .btn-inferior:hover{ background: #fff; color: #002E6B; }
+            .btn-inferior.sign-up{ border: 2px solid #fff; }
+
+            .primary-btn{ background: #002E6B; }
+            .footer__text-widget .footer__widget-info li span {
+                color: #ffffff;
+            }
         </style>
         <script src="https://kit.fontawesome.com/0265b153d4.js" ></script>
+
+        {% block customCss %}{% endblock %}
     </head>
 
     <body>
@@ -54,8 +77,8 @@
             </div>
             <nav class="offcanvas__menu mobile-menu">
                 <ul>
-                    <li class="active"><a href="{% url 'codeHome:inicio'%}">Home</a></li>
-                    <li><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
+                    <li class="{% if request.path == "/" %}active{% endif %}"><a href="{% url 'codeHome:inicio'%}">Home</a></li>
+                    <li class="{% if request.path == "/acerca-de" %}active{% endif %}"><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
                     {% comment %} 
                     <li><a href="./hosting.html">Hosting</a></li>
                     <li><a href="#">Pages</a>
@@ -86,7 +109,7 @@
         <!-- Offcanvas Menu End -->
 
         <!-- Header Section Begin -->
-        <header class="header-section">
+        <header class="header-section {% if request.path != "/" %} header-normal {% endif %}">
             <div class="header__info">
                 <div class="container">
                     <div class="row">
@@ -121,8 +144,8 @@
                     <div class="col-lg-9 col-md-9">
                         <nav class="header__menu">
                             <ul>
-                                <li class="active"><a href="{% url 'codeHome:inicio'%}">Inicio</a></li>
-                                <li><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
+                                <li class="{% if request.path == "/" %}active{% endif %}"><a href="{% url 'codeHome:inicio'%}">Inicio</a></li>
+                                <li class="{% if request.path == "/acerca-de" %}active{% endif %}"><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
                                 {% comment %} 
                                 <li><a href="./hosting.html">Hosting</a></li>
                                 <li><a href="#">Pages</a>
@@ -159,8 +182,8 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="footer__top-auth">
-                                <a href="{% url 'login'%}" class="primary-btn">Ingresar</a>
-                                <a href="{% url 'coreAdmin:signup'%}" class="primary-btn sign-up">Registrarme</a>
+                                <a href="{% url 'login'%}" class="primary-btn btn-inferior">Ingresar</a>
+                                <a href="{% url 'coreAdmin:signup'%}" class="primary-btn btn-inferior sign-up">Registrarme</a>
                             </div>
                         </div>
                     </div>
