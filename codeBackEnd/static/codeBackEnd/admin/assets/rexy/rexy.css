@@ -1,0 +1,39 @@
+/* Personalizacion de la plantilla */
+    .navbar-header[data-background-color=dark] {
+        background: #001737 !important;
+    }
+
+    .sidebar[data-background-color=dark2] {
+        background: #002A61 !important;
+    }
+
+    .logo-header[data-background-color=dark2] {
+        background: #003B87 !important;
+    }
+
+    body[data-background-color=dark] {
+        background: #001027;
+    }
+
+    .main-panel>.content {
+        padding: 0!important;
+        min-height: calc(100% - 114px);
+        margin-top: 62px;
+        overflow: hidden;
+    }
+    
+    body[data-background-color=dark] .footer {
+        border-top: 1px solid #FFD92E;
+        background: #001737;
+    }
+
+    body[data-background-color=dark] .card, body[data-background-color=dark] .list-group-item, body[data-background-color=dark] .row-card-no-pd, body[data-background-color=dark] .timeline>li>.timeline-panel {
+        background: #002A61;
+    }
+
+    body[data-background-color=dark] .form-control, body[data-background-color=dark] .form-group-default, body[data-background-color=dark] .select2-container--bootstrap .select2-selection {
+        background-color: #001737;
+        color: #fff;
+        border-color: #003B87;
+    }
+/* Personalizacion de la plantilla */

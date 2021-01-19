@@ -1,0 +1,45 @@
+{% extends 'codeHome/base.html' %}
+{% load static %}
+{% load  codeHome_extras %}
+
+{% block customCss %}
+    <style>
+        .about__text .about__achievement .about__achieve__item span {
+            font-size: 30px;
+            color: #002E6B;
+        }
+    </style>
+{% endblock %}
+
+{% block customContent %}
+    <!-- Clients Section Begin -->
+    <section class="about-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="about__text">
+                        <h2>Algunos de nuestros clientes</h2>
+                        <p style="text-align: justify;">
+                            Estos son algunos de los clientes han optado por nuestra plataforma.
+                        </p>
+                    </div>
+                </div>
+
+                {% for comercio in comercios %}
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="blog__item">
+                            <div class="blog__pic set-bg" data-setbg="{{comercio.img_superior.url}}" style="background-image: url('{{comercio.img_superior.url}}');">
+                                {% comment %} <div class="label">Hosting</div> {% endcomment %}
+                            </div>
+                            <div class="blog__text">
+                                <h5><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i> {{comercio}}</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+    <!-- Clients Section End -->
+{% endblock %}

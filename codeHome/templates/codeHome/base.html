@@ -53,6 +53,8 @@
             .footer__text-widget .footer__widget-info li span {
                 color: #ffffff;
             }
+
+            .footer__text-copyright { border-top: 1px solid #FFD92E; }
         </style>
         <script src="https://kit.fontawesome.com/0265b153d4.js" ></script>
 
@@ -79,6 +81,7 @@
                 <ul>
                     <li class="{% if request.path == "/" %}active{% endif %}"><a href="{% url 'codeHome:inicio'%}">Home</a></li>
                     <li class="{% if request.path == "/acerca-de" %}active{% endif %}"><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
+                    <li class="{% if request.path == "/clientes" %}active{% endif %}"><a href="{% url 'codeHome:clients'%}">Clientes</a></li>
                     {% comment %} 
                     <li><a href="./hosting.html">Hosting</a></li>
                     <li><a href="#">Pages</a>
@@ -146,6 +149,7 @@
                             <ul>
                                 <li class="{% if request.path == "/" %}active{% endif %}"><a href="{% url 'codeHome:inicio'%}">Inicio</a></li>
                                 <li class="{% if request.path == "/acerca-de" %}active{% endif %}"><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
+                                <li class="{% if request.path == "/clientes" %}active{% endif %}"><a href="{% url 'codeHome:clients'%}">Clientes</a></li>
                                 {% comment %} 
                                 <li><a href="./hosting.html">Hosting</a></li>
                                 <li><a href="#">Pages</a>
@@ -197,7 +201,7 @@
                                 <div class="footer__logo">
                                     <a href="./index.html"><img src="{% static 'codeHome/img/logo.png' %}" alt=""></a>
                                 </div>
-                                <p>Potenciando los micro emprendimientos en tiempos difíciles</p>
+                                <p style="color: #fff;">Potenciando los micro emprendimientos en tiempos difíciles</p>
                                 {% comment %} <div class="footer__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -241,7 +245,7 @@
                     </div>
                     <div class="footer__text-copyright">
                         <p style="color: #fff;">
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> todos los derechos reservados | Un proyecto de <a href="https://rexystudios.com" target="_blank" style="color: #D8D8EB;">Rexy Studios</a>
+                            Copyright &copy;2020 - <script>document.write(new Date().getFullYear());</script> todos los derechos reservados | Un proyecto de <a href="https://rexystudios.com" target="_blank" style="color: #D8D8EB;">Rexy Studios</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>

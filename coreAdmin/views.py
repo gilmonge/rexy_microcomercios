@@ -6,6 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.http import Http404, JsonResponse
 from coreAdmin.forms import UserCreationFormWithEmail
 from coreAdmin.models import Parametro, Perfil
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 from django import forms
 
 # Create your views here.

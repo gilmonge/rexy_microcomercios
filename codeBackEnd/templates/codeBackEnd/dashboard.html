@@ -3,6 +3,13 @@
 {% load  codeBackEnd_extras %}
 {% block title %}Dashboard{% endblock %}
 
+{% block customCss %}
+    {% if request.session.comercioId is None %}
+        <style>
+        </style>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -21,18 +28,50 @@
     <div class="page-inner mt--5">
         <div class="row mt--2">
         
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Productos más vistos</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="barChart"></canvas>
+            {% if request.session.comercioId is not None %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="flaticon-presentation text-white"></i> Productos más vistos</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="barChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
+            
+            
+            {% if request.session.comercioId is None %}
+                <div class="col-md-12">
+                    <div class="row">
+                        {% get_Comercios_list request.user as Comercios_list %}
+                        {% for ComercioSeleccion in Comercios_list %}
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card card-stats card-round" onclick="window.location.href = '{% url 'coreAdmin:dashboardSeleccion' pk=ComercioSeleccion.id %}';" style="cursor: pointer;">
+                                    <div class="card-body ">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-store text-white"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-9 col-stats">
+                                                <div class="numbers">
+                                                    <h4 class="card-title">{{ ComercioSeleccion.nombre }}</h4>
+                                                    <p class="card-category">Seleccionar comercio</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor%}
+                    </div>
+                </div>
+            {% endif %}
             
             {% comment %} <div class="col-md-6">
                 <div class="card full-height">
@@ -223,82 +262,43 @@
 
 {% block customJs %}
     <script>
-        Circles.create({
-            id:'circles-1',
-            radius:45,
-            value:60,
-            maxValue:100,
-            width:7,
-            text: 5,
-            colors:['#f1f1f1', '#FF9E27'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
+        {% if request.session.comercioId is not None %}
+            var barChart = document.getElementById('barChart').getContext('2d')
 
-        Circles.create({
-            id:'circles-2',
-            radius:45,
-            value:70,
-            maxValue:100,
-            width:7,
-            text: 36,
-            colors:['#f1f1f1', '#2BB930'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
-
-        Circles.create({
-            id:'circles-3',
-            radius:45,
-            value:40,
-            maxValue:100,
-            width:7,
-            text: 12,
-            colors:['#f1f1f1', '#F25961'],
-            duration:400,
-            wrpClass:'circles-wrp',
-            textClass:'circles-text',
-            styleWrapper:true,
-            styleText:true
-        })
-
-        var barChart = document.getElementById('barChart').getContext('2d')
-
-        var myBarChart = new Chart(barChart, {
-            type: 'bar',
-            data: {
-                labels: ["Visualizaciones"],
-                datasets : [
-                    {% get_top10productos request.session.comercioId as Productos %}
-                    {% for Producto in Productos %}
-                    
-                        {% get_colorRandom as color %}
-                        {
-                            label: "{{Producto}}",
-                            backgroundColor: '{{color}}',
-                            borderColor: '{{color}}',
-                            data: [{{Producto.visualizaciones}}],
-                        },
-                    {% endfor%}
-                ],
-            },
-            options: {
-                responsive: true, 
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
+            var myBarChart = new Chart(barChart, {
+                type: 'bar',
+                data: {
+                    labels: ["Visualizaciones"],
+                    datasets : [
+                        {% get_top10productos request.session.comercioId as Productos %}
+                        {% for Producto in Productos %}
+                        
+                            {% get_colorRandom as color %}
+                            {
+                                label: "{{Producto}}",
+                                backgroundColor: '{{color}}',
+                                borderColor: '{{color}}',
+                                data: [{{Producto.visualizaciones}}],
+                            },
+                        {% endfor%}
+                    ],
                 },
-            }
-        });
+                options: {
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    },
+                }
+            });
+        {% endif %}
+
+        {% if request.session.comercioId is None %}
+        {% endif %}
+        
     </script>
 {% endblock %}
