@@ -1,14 +1,14 @@
-ERP - Módulo de estudiantes
+Sistema de comercio electrónico para micro comercios
 ========
 
 > __Proyecto realizado por:__
-> C.C. Net Technologies
+> Rexy Studios
 
 > __Copyright (C):__
-> Prohibido su distribución, todos los derechos reservados C.C. Net Technologies S.A.
+> Prohibido su distribución, todos los derechos reservados Rexy Studios
 
 > __Última modificación__
-> 25 de febrero de 2020
+> 20 de enero de 2021
 
 ---
 Instanciamiento en servidor

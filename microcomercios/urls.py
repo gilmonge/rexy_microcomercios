@@ -26,7 +26,6 @@ from codeHome.urls import codeHome_patterns
 
 urlpatterns = [
     path('DJAdmin/', admin.site.urls),
-    path('DJAdmin/clearcache', include('clearcache.urls')),
 
     # Paths de Admin
     path('comerciosAdmin/', include(coreAdmin_patterns)),
