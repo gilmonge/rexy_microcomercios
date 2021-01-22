@@ -12,8 +12,7 @@
         <title>Micro Comercios</title>
 
         <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&display=swap"
-            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&display=swap" rel="stylesheet">
 
         <!-- Css Styles -->
         <link rel="stylesheet" href="{% static 'codeHome/css/bootstrap.min.css' %}" type="text/css">
@@ -82,17 +81,7 @@
                     <li class="{% if request.path == "/" %}active{% endif %}"><a href="{% url 'codeHome:inicio'%}">Home</a></li>
                     <li class="{% if request.path == "/acerca-de" %}active{% endif %}"><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
                     <li class="{% if request.path == "/clientes" %}active{% endif %}"><a href="{% url 'codeHome:clients'%}">Clientes</a></li>
-                    {% comment %} 
-                    <li><a href="./hosting.html">Hosting</a></li>
-                    <li><a href="#">Pages</a>
-                        <ul class="dropdown">
-                            <li><a href="./pricing.html">Pricing</a></li>
-                            <li><a href="./blog-details.html">Blog Details</a></li>
-                            <li><a href="./404.html">404</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="./blog.html">News</a></li>
-                    <li><a href="./contact.html">Contact</a></li> {% endcomment %}
+                    <li class="{% if request.path == "/ayuda" %}active{% endif %}"><a href="{% url 'codeHome:help'%}">Ayuda</a></li>
                 </ul>
             </nav>
             <div id="mobile-menu-wrap"></div>
@@ -104,7 +93,6 @@
             </div>
             <div class="offcanvas__info">
                 <ul>
-                    {% comment %} <li><span class="icon_phone"></span> +1 123-456-7890</li> {% endcomment %}
                     <li><span class="fa fa-envelope"></span> <label class="span-links">moc.soidutsyxer@ofni</label></li>
                 </ul>
             </div>
@@ -150,17 +138,7 @@
                                 <li class="{% if request.path == "/" %}active{% endif %}"><a href="{% url 'codeHome:inicio'%}">Inicio</a></li>
                                 <li class="{% if request.path == "/acerca-de" %}active{% endif %}"><a href="{% url 'codeHome:about'%}">Acerca de</a></li>
                                 <li class="{% if request.path == "/clientes" %}active{% endif %}"><a href="{% url 'codeHome:clients'%}">Clientes</a></li>
-                                {% comment %} 
-                                <li><a href="./hosting.html">Hosting</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="./pricing.html">Pricing</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                        <li><a href="./404.html">404</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="./blog.html">News</a></li>
-                                <li><a href="./contact.html">Contact</a></li> {% endcomment %}
+                                <li class="{% if request.path == "/ayuda" %}active{% endif %}"><a href="{% url 'codeHome:help'%}">Ayuda</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -223,16 +201,13 @@
                             </div> {% endcomment %}
                         </div>
                         <div class="col-lg-2 col-md-6 col-sm-6">
-                            {% comment %} <div class="footer__text-widget">
-                                <h5>Hosting</h5>
+                            <div class="footer__text-widget">
+                                <h5>Legal</h5>
                                 <ul>
-                                    <li><a href="#">Web Hosting</a></li>
-                                    <li><a href="#">Reseller Hosting</a></li>
-                                    <li><a href="#">VPS Hosting</a></li>
-                                    <li><a href="#">Dedicated Servers</a></li>
-                                    <li><a href="#">Cloud Hosting</a></li>
+                                    <li><a href="#">Términos y condiciones</a></li>
+                                    <li><a href="#">Política de privacidad</a></li>
                                 </ul>
-                            </div> {% endcomment %}
+                            </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="footer__text-widget">

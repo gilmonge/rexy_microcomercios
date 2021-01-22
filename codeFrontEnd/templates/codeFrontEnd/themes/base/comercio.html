@@ -1,6 +1,7 @@
 {% extends 'codeFrontEnd/themes/base/base.html' %}
 {% load humanize %}
 {% load static %}
+{% load codeFrontEnd_extras %}
 
 {% block title %}{{ comercio.nombre }}{% endblock %}
     
@@ -66,13 +67,15 @@
                 {% for producto in productos %}
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="product-item">
-                            <figure>
-                                {% load codeFrontEnd_extras %}
-                                {% get_ImagenPrincipal producto.id as ImagenPrincipal %}
-                                <img src="{{ImagenPrincipal}}" alt="Image" class="img-fluid">
-                            </figure>
+                            {% encoded_id producto.id as id_encryptado %}
+                            <a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=id_encryptado prod_slug=producto.nombre|slugify  %}">
+                                <figure>
+                                    {% get_ImagenPrincipal producto.id as ImagenPrincipal %}
+                                    <img src="{{ImagenPrincipal}}" alt="Image" class="img-fluid">
+                                </figure>
+                            </a>
                             <div class="px-4">
-                                <h3><a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=producto.id prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>
+                                <h3><a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=id_encryptado prod_slug=producto.nombre|slugify  %}">{{producto.nombre}}</a></h3>
                                 {% comment %} <div class="mb-3">
                                     <span class="meta-icons mr-3"><a href="#" class="mr-2"><span class="icon-star text-warning"></span></a> 5.0</span>
                                     <span class="meta-icons wishlist"><a href="#" class="mr-2"><span class="icon-heart"></span></a> 29</span>
@@ -90,7 +93,6 @@
                         <textarea style="display:none;" id="{{producto.id}}_imagenes" >
                             [
                                 ""
-                                {% load codeFrontEnd_extras %}
                                 {% get_Imagenes producto.id as ImagenesProducto %}
                                 {% for img in ImagenesProducto %}
                                     , "{{img}}"

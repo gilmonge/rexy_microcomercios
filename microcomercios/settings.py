@@ -166,3 +166,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'noreply.microcomercios@gmail.com'
 EMAIL_HOST_PASSWORD = 'wNxS5i1erbotIbnOtsuz'
 EMAIL_PORT = 587
+
+# Key Fernet
+FERNET_KEY = 'x00iG4BM3q1gA2rg6wwoijlqs9fT0IVBGMfqGo-NHZw='

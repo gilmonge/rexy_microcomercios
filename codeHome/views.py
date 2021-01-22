@@ -1,6 +1,6 @@
 import random
 from django.shortcuts import render, redirect, get_object_or_404, redirect
-from coreAdmin.models import Parametro
+from coreAdmin.models import Parametro, Faq
 from coreComercios.models import Comercio
 
 # Create your views here.
@@ -16,6 +16,13 @@ def about(request):
     datos = {
     }
     return render(request, "codeHome/about.html", datos)
+
+def help(request):
+    faqs = Faq.objects.filter(estado=True)
+    datos = {
+        'faqs': faqs
+    }
+    return render(request, "codeHome/help.html", datos)
 
 def clients(request):
     # Trae el id maximo
