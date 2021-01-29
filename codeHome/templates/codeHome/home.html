@@ -1,0 +1,142 @@
+{% extends 'codeHome/base.html' %}
+{% load static %}
+
+{% block customCss %}
+    <style>
+        .btn-banner{ background: #fcfcfe; color: #001737; }
+        .pricing__item:hover h3 { background: #001737; }
+        .pricing__item h3 { background: #002e6b; }
+        .pricing__item:hover .primary-btn { background: #004193; color: #ffffff; }
+        .hero__slider.owl-carousel .owl-dots button { background: #ffd92e8c; }
+        .hero__slider.owl-carousel .owl-dots button.active { background: #FFD92E; }
+        a:hover, a:focus { color: #001737; }
+    </style>
+{% endblock %}
+
+{% block customContent %}
+
+    <!-- Hero Section Begin -->
+    <section class="hero-section">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__item set-bg" data-setbg="{% static 'codeHome/img/hero/hero-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <h5>Consigue más ventas</h5>
+                                <h2>Potencia el negocio<br /> publica el catálogo</h2>
+                                <a href="{% url 'coreAdmin:signup'%}" class="primary-btn btn-banner">Iniciar ahora</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="hero__img">
+                                <img src="{% static 'codeHome/img/assets/productos.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__item set-bg" data-setbg="{% static 'codeHome/img/hero/hero-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <h5>Impúlsate</h5>
+                                <h2>Expone al público<br /> los proyectos que puedes realizar</h2>
+                                <a href="{% url 'coreAdmin:signup'%}" class="primary-btn btn-banner">Iniciar ahora</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="hero__img">
+                                <img src="{% static 'codeHome/img/assets/fotografia.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__item set-bg" data-setbg="{% static 'codeHome/img/hero/hero-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <h5>Agranda tu mercado</h5>
+                                <h2>Muestra tus platillos<br /> al mundo</h2>
+                                <a href="{% url 'coreAdmin:signup'%}" class="primary-btn btn-banner">Iniciar ahora</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="hero__img">
+                                <img src="{% static 'codeHome/img/assets/chef.png' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    
+    <!-- About Section Begin -->
+    <section class="about-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about__img">
+                        <img src="{% static 'codeHome/img/assets/emprendedor.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about__text">
+                        <h2>¡Nunca es tarde!</h2>
+                        <p>
+                            Siempre hay un momento para iniciar un nuevo emprendimiento, y nosotros deseamos impulsarte en el camino hacia el éxito.<br/>
+                            <br/>
+                            Te brindamos una plataforma donde con pocos pasos podrás ofrecer tus servicios, productos, comidas o cualquier otro artículo que desee poner a la venta.<br/>
+                            <br/>
+                            Muestra al mundo lo que eres capaz de realizar, nosotros creemos en tí.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Pricing Section Begin -->
+    <section class="services-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="section-title normal-title">
+                        <h3>Elige un plan y comienza ahora</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row monthly__plans active">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="pricing__item">
+                        <h4>Gratis</h4>
+                        <h3>$0.00 USD <span>/ Mes</span></h3>
+                        <ul>
+                            <li>{{parametroLimiteGratis}} productos máximos</li>
+                        </ul>
+                        <a href="{% url 'coreAdmin:signup'%}" class="primary-btn">Seleccionar</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="pricing__item">
+                        <h4>Pyme</h4>
+                        <h3>$5.00 USD <span>/ Mes</span></h3>
+                        <ul>
+                            <li>Productos ilimitados</li>
+                        </ul>
+                        <a href="#" class="primary-btn">Próximamente</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Pricing Section End -->
+
+{% endblock %}

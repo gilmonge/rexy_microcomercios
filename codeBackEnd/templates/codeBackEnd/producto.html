@@ -49,7 +49,7 @@
                                 {% csrf_token %}
 
                                 <div class="form-group col-md-12">
-                                    <button class="btn btn-default" onclick="window.location.href = '{% url 'comercio:producto' pk=producto.id prod_slug=object.nombre|slugify comercio_slug=object.comercio.slug|slugify %}';">
+                                    <button type="button" class="btn btn-default" onclick="window.open('{% url 'comercio:producto' pk=producto.id prod_slug=object.nombre|slugify comercio_slug=object.comercio.slug|slugify %}', '_blank');">
                                         <span class="btn-label">
                                             <i class="fas fa-external-link-alt"></i>
                                         </span>

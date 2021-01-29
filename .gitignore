@@ -147,3 +147,5 @@ dmypy.json
 
 # no ignore
 !/core/static/core/assets/libs/*/dist
+
+*.txt

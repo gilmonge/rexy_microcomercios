@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'coreAdmin',
     'codeBackEnd',
     'codeFrontEnd',
-    'clearcache',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'coreComercios'
+    'coreComercios',
+    'codeHome',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +165,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'noreply.microcomercios@gmail.com'
 EMAIL_HOST_PASSWORD = 'wNxS5i1erbotIbnOtsuz'
 EMAIL_PORT = 587
+
+# Key Fernet
+FERNET_KEY = 'x00iG4BM3q1gA2rg6wwoijlqs9fT0IVBGMfqGo-NHZw='

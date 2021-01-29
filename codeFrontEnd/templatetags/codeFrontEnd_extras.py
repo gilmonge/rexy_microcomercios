@@ -39,3 +39,19 @@ def Def_theme(idTheme):
         pass
 
     return theme
+
+@register.simple_tag
+def encoded_id(id):
+    import base64
+    Encryptado = base64.b64encode(bytes(str(id), 'ascii'))
+    """ Encryptado = str(Encryptado)
+    Encryptado.replace("b'", '')
+    Encryptado.replace("'", '') """
+    return Encryptado.decode("utf-8")
+
+@register.simple_tag
+def decode_id(id):
+    import base64
+    Desencryptado = base64.b64decode(id).decode('utf-8')
+
+    return Desencryptado

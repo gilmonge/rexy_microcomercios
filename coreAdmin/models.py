@@ -31,6 +31,14 @@ class Parametro(models.Model):
 
     def __str__(self):
         return self.parametro
+
+class Faq(models.Model):
+    titulo      = models.CharField(verbose_name="Identificador del parametro", max_length=200,)
+    descripcion = models.TextField(verbose_name="Descripción", default="")
+    estado      = models.BooleanField(verbose_name="Estado", default=False)
+
+    def __str__(self):
+        return self.titulo
         
 @receiver(post_save, sender=User)
 def ensure_profile_exists(sender, instance, **kwargs):

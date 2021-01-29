@@ -291,8 +291,10 @@
         <!-- fancybox -->
         <script src="{% static 'codeFrontEnd/assets/libs/fancybox/jquery.fancybox.min.js' %}"></script>
 
+        {% if "/p/" not in request.path %}
         <!-- sticky -->
         <script src="{% static 'codeFrontEnd/assets/libs/sticky/jquery.sticky.js' %}"></script>
+        {% endif %}
 
         <!-- Selling -->
         <script src="{% static 'codeFrontEnd/assets/libs/selling/main.js' %}"></script>

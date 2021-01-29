@@ -1,4 +1,5 @@
 import json
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login, authenticate
@@ -10,10 +11,6 @@ from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm
 from django import forms
 
 # Create your views here.
-
-def home(request):
-    return render(request, "codeFrontEnd/home.html")
-
 def consultarDisponibilidadComercio(request, comercio_slug):
     comercio = Comercio.objects.filter(slug=comercio_slug)
     
@@ -47,12 +44,18 @@ def comercio (request, comercio_slug):
         'comercio':comercio,
         'productos':productos,
     }
+
     return render(request, "codeFrontEnd/comercio.html", datos)
 
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
     try:
-        producto = Producto.objects.filter(id=pk).filter(comercio__slug=comercio_slug)
+        import base64
+        try:
+            Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        except:
+            return render(request, "codeFrontEnd/404.html")
+        producto = Producto.objects.filter(id=Desencryptado).filter(comercio__slug=comercio_slug)
         producto = producto[0]
     except Producto.DoesNotExist:
         return render(request, "codeFrontEnd/404.html")
@@ -70,7 +73,7 @@ def producto(request, comercio_slug, pk, prod_slug):
     comercio.contacto      = json.loads(comercio.contacto)
 
     # trae los productos relacionados al comercio
-    productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = pk)
+    productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = Desencryptado)
 
     datos = {
         'producto':producto,

@@ -1,0 +1,99 @@
+{% extends 'codeHome/base.html' %}
+{% load static %}
+{% load  codeHome_extras %}
+
+{% block customCss %}
+    <style>
+        .about__text .about__achievement .about__achieve__item span {
+            font-size: 30px;
+            color: #002E6B;
+        }
+    </style>
+{% endblock %}
+
+{% block customContent %}
+    <!-- About Section Begin -->
+    <section class="about-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="about__img">
+                        <img src="{% static 'codeHome/img/assets/acerca-de.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="about__text">
+                        <h2>Acerca de Micro Comercios</h2>
+                        <p style="text-align: justify;">
+                            Sin duda alguna deseo agradecerte por estar aquí y contar con Micro Comercios.<br/>
+                            <br/>
+                            Soy un desarrollador web con 5 años de experiencia en el ámbito de ecommerce y herramientas empresariales.<br/>
+                            <br/>
+                            A raíz de la problemática social que se originó durante el año 2020 por causa de la pandemia de Covid, personas con muchas ansias de superación han iniciado una gran cantidad de emprendimientos, algunos ofreciendo servicios, otros vendiendo productos externos o creados por sí mismos.<br/>
+                            <br/>
+                            Micro Comercios nace con el afán de brindar una herramienta de fácil acceso a todas aquellas personas que deseen involucrarse en el ámbito digital sin tener mucho conocimiento, manteniendo una constante mejora y renovación con el tiempo.
+                        </p>
+                        <div class="about__achievement">
+                            {% get_Contadores as Contadores %}
+                            <div class="about__achieve__item">
+                                <span class="fa fa-user-o"></span>
+                                <h4 class="achieve-counter">{{Contadores.Perfiles}}</h4>
+                                <p>Clientes</p>
+                            </div>
+                            <div class="about__achieve__item">
+                                <span class="fas fa-store-alt"></span>
+                                <h4 class="achieve-counter">{{Contadores.Comercios}}</h4>
+                                <p>Comercios</p>
+                            </div>
+                            <div class="about__achieve__item">
+                                <span class="fas fa-shopping-cart"></span>
+                                <h4 class="achieve-counter">{{Contadores.Productos}}</h4>
+                                <p>Productos</p>
+                            </div>
+                            {% comment %} <div class="about__achieve__item">
+                                <span class="fa fa-cog"></span>
+                                <h4 class="achieve-counter">2468</h4>
+                                <p>Installs</p>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Feature Section Begin -->
+    <section class="feature-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="feature__item">
+                        <h5>MISIÓN</h5>
+                        <p>Apoyar a todo pequeño emprendedor que desea o requiere una presencia digital a un costo accesible y de fácil acceso.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="feature__item">
+                        <h5>VISIÓN</h5>
+                        <p>Ser una empresa que pueda crecer a nivel internacional en busca de la innovación, impulsando a diversos giros de negocio.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="feature__item">
+                        <h5>VALORES</h5>
+                        <p>
+                            Innovación<br/>
+                            Mejora continua<br/>
+                            Adaptabilidad<br/>
+                            Cercanía
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section End -->
+{% endblock %}

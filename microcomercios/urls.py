@@ -22,9 +22,10 @@ from django.conf import settings
 
 from coreAdmin.urls import coreAdmin_patterns
 
+from codeHome.urls import codeHome_patterns
+
 urlpatterns = [
     path('DJAdmin/', admin.site.urls),
-    path('DJAdmin/clearcache', include('clearcache.urls')),
 
     # Paths de Admin
     path('comerciosAdmin/', include(coreAdmin_patterns)),
@@ -36,6 +37,9 @@ urlpatterns = [
 
     # Paths del Comercios frontend
     path('', include(coreComercios_patterns)),
+
+    # Paths del home
+    path('', include(codeHome_patterns)),
 ]
 
 if settings.DEBUG:
