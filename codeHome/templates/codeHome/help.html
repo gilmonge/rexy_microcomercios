@@ -186,7 +186,7 @@
                                             <a class="collapsed" role="button" data-toggle="collapse" href="#faq_{{faq.id}}" aria-expanded="false">{{faq.titulo}}</a>
                                         </div>
                                         <div id="faq_{{faq.id}}" class="collapse" data-parent="#accordion_FAQ">
-                                            <div class="card-body pa-15">{{faq.descripcion}}</div>
+                                            <div class="card-body pa-15">{{faq.descripcion|safe}}</div>
                                         </div>
                                     </div>
                                 
