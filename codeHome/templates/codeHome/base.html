@@ -54,6 +54,12 @@
             }
 
             .footer__text-copyright { border-top: 1px solid #FFD92E; }
+
+            @media(max-width: 991px){
+                .footer__top-auth .sign-up {
+                    padding: 12px 16px 10px;
+                }
+            }
         </style>
         <script src="https://kit.fontawesome.com/0265b153d4.js" ></script>
 
@@ -163,7 +169,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <div class="footer__top-auth">
+                            <div class="footer__top-auth" style="text-align: center;">
                                 <a href="{% url 'login'%}" class="primary-btn btn-inferior">Ingresar</a>
                                 <a href="{% url 'coreAdmin:signup'%}" class="primary-btn btn-inferior sign-up">Registrarme</a>
                             </div>
