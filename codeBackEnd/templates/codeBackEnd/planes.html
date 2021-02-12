@@ -2,6 +2,14 @@
 {% load static %}
 {% block title %}Planes para comercios{% endblock %}
 
+{% block customCss %}
+    <style>
+        body[data-background-color=dark] .card-pricing2 {
+            background: #001737 !important
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">

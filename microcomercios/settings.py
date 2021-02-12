@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'coreComercios',
     'codeHome',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +169,7 @@ EMAIL_PORT = 587
 
 # Key Fernet
 FERNET_KEY = 'x00iG4BM3q1gA2rg6wwoijlqs9fT0IVBGMfqGo-NHZw='
+
+#Datos del paypal
+PAYPAL_RECEIVER_EMAIL = 'email@mail.com'
+PAYPAL_TEST = True

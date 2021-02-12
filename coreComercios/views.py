@@ -135,6 +135,20 @@ def catalogo(request):
     else:
         return redirect('login')
 
+def configuracion(request):
+    if request.user.is_authenticated:
+        comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+
+        if comercio.idplan > 0:
+            parametroLimiteGratis = 0
+
+        datos = {
+            'comercio':comercio,
+        }
+        return render(request, "codeBackEnd/configuraciones.html", datos)
+    else:
+        return redirect('login')
+
 def productos(request):
     if request.user.is_authenticated:
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]

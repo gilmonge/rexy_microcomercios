@@ -40,6 +40,9 @@ urlpatterns = [
 
     # Paths del home
     path('', include(codeHome_patterns)),
+
+    # Paths de Paypal
+    path('paypal/', include('paypal.standard.ipn.urls')),
 ]
 
 if settings.DEBUG:
