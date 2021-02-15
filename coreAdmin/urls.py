@@ -11,4 +11,7 @@ coreAdmin_patterns = ([
     path('cuenta/passEdit', adminViews.PerfilPassEdit, name="perfilPassEdit"),
     path('<int:pk>', adminViews.dashboardSeleccion, name="dashboardSeleccion"),
     path('seleccionarPlan', adminViews.verPlanes, name="selecPlan"),
+    path('checkoutPlan', adminViews.pagarPlan, name="pagarPlan"),
+    path('pagoRealizado', adminViews.payment_done, name="payment_done"),
+    path('pagoRechazado', adminViews.payment_cancelled, name="payment_cancelled"),
 ], "coreAdmin")

@@ -7,6 +7,8 @@
         body[data-background-color=dark] .card-pricing2 {
             background: #001737 !important
         }
+
+        .list-group li{ background: rgba(255,255,255,.1) !important; }
     </style>
 {% endblock %}
 
@@ -30,6 +32,7 @@
                     <div class="card col-md-12">
                         <div class="card-body col-md-12 ">
                             <div class="row justify-content-center align-items-center mb-5">
+
                                 <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
                                     <div class="card-pricing2 card-success">
                                         <div class="pricing-header">
@@ -46,15 +49,56 @@
                                         <ul class="pricing-content">
                                             <li>{{MaximosProductos}} productos máximo</li>
                                             <li>Plantilla básica</li>
-                                            {% comment %} <li>50GB Monthly Bandwidth</li>
-                                            <li class="disable">10 Subdomains</li>
-                                            <li class="disable">15 Domains</li> {% endcomment %}
+                                            <li class="disable">Plantilla adicionales que se vayan habilitando</li>
                                         </ul>
-                                        <a href="{% url 'comercioAdmin:comercioAdd' %}" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Crear comercio</a>
+                                        <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
+                                            {% csrf_token %}
+                                            <input name="idPlan" type="hidden" value="0">
+                                            <button type="submit" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Seleccionar plan</button>
+                                        </form>
                                     </div>
                                 </div>
-                            </div>
 
+                                <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
+                                    <div class="card-pricing2 card-info">
+                                        <div class="pricing-header">
+                                            <h3 class="fw-bold">Pyme</h3>
+                                            <span class="sub-title">Apto por si posees un gran catálogo que deseas mostrar al mundo</span>
+                                        </div>
+                                        <div class="price-value">
+                                            <div class="value">
+                                                <span class="currency">$</span>
+                                                <span class="amount">5.<span>00</span></span>
+                                                <span class="month">/mes</span>
+                                            </div>
+                                        </div>
+                                        <ul class="pricing-content">
+                                            <li>Productos ilimitados</li>
+                                            <li>Plantilla básica</li>
+                                            <li>Plantilla adicionales que se vayan habilitando</li>
+                                        </ul>
+                                        <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
+                                            {% csrf_token %}
+                                            <input name="idPlan" type="hidden" value="1">
+                                            <button type="submit" class="btn btn-info btn-border btn-lg w-75 fw-bold mb-3">Seleccionar plan</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card mt-3">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white"><span style="color:yellow;">*</span> Si posees un plan activo y deseas cambiarlo, no se realizará ningún reembolso del dinero.</h6>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white">Las nuevas caracteristicas que se vayan añadiendo serán informadas mediante la plataforma</h6>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,50 +109,50 @@
 {% endblock %}
 
 {% block customJs %}
-            <script>
-                Circles.create({
-                    id:'circles-1',
-                    radius:45,
-                    value:60,
-                    maxValue:100,
-                    width:7,
-                    text: 5,
-                    colors:['#f1f1f1', '#FF9E27'],
-                    duration:400,
-                    wrpClass:'circles-wrp',
-                    textClass:'circles-text',
-                    styleWrapper:true,
-                    styleText:true
-                })
+    <script>
+        Circles.create({
+            id:'circles-1',
+            radius:45,
+            value:60,
+            maxValue:100,
+            width:7,
+            text: 5,
+            colors:['#f1f1f1', '#FF9E27'],
+            duration:400,
+            wrpClass:'circles-wrp',
+            textClass:'circles-text',
+            styleWrapper:true,
+            styleText:true
+        })
 
-                Circles.create({
-                    id:'circles-2',
-                    radius:45,
-                    value:70,
-                    maxValue:100,
-                    width:7,
-                    text: 36,
-                    colors:['#f1f1f1', '#2BB930'],
-                    duration:400,
-                    wrpClass:'circles-wrp',
-                    textClass:'circles-text',
-                    styleWrapper:true,
-                    styleText:true
-                })
+        Circles.create({
+            id:'circles-2',
+            radius:45,
+            value:70,
+            maxValue:100,
+            width:7,
+            text: 36,
+            colors:['#f1f1f1', '#2BB930'],
+            duration:400,
+            wrpClass:'circles-wrp',
+            textClass:'circles-text',
+            styleWrapper:true,
+            styleText:true
+        })
 
-                Circles.create({
-                    id:'circles-3',
-                    radius:45,
-                    value:40,
-                    maxValue:100,
-                    width:7,
-                    text: 12,
-                    colors:['#f1f1f1', '#F25961'],
-                    duration:400,
-                    wrpClass:'circles-wrp',
-                    textClass:'circles-text',
-                    styleWrapper:true,
-                    styleText:true
-                })
-            </script>
+        Circles.create({
+            id:'circles-3',
+            radius:45,
+            value:40,
+            maxValue:100,
+            width:7,
+            text: 12,
+            colors:['#f1f1f1', '#F25961'],
+            duration:400,
+            wrpClass:'circles-wrp',
+            textClass:'circles-text',
+            styleWrapper:true,
+            styleText:true
+        })
+    </script>
 {% endblock %}

@@ -12,6 +12,9 @@ class Plan(models.Model):
     precio      = models.DecimalField(verbose_name="Precio", max_digits=12, decimal_places=2)
     opciones    = models.TextField(verbose_name="Opciones", default="")
 
+    def __str__(self):
+        return self.nombre
+
 class Perfil(models.Model):
     usuario             = models.OneToOneField(User, on_delete=models.CASCADE)
     tipoIdentificacion  = models.CharField(verbose_name="Tipo identificacion", max_length=1, default="")

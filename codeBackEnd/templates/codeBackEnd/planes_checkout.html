@@ -1,0 +1,328 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load static %}
+{% block title %}Realizar pago del plan{% endblock %}
+
+{% block customCss %}
+    <style>
+        body[data-background-color=dark] .card-pricing2 {
+            background: #001737 !important
+        }
+
+        .list-group li{ background: rgba(255,255,255,.1) !important; }
+        
+        /* checkout info */
+            .checkoutInfo .title {
+                margin-bottom: 5vh
+            }
+
+            .checkoutInfo .card {
+                margin: auto;
+                max-width: 950px;
+                width: 90%;
+                box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                border-radius: 1rem;
+                border: transparent
+            }
+
+            @media(max-width:767px) {
+                .checkoutInfo .card {
+                    margin: 3vh auto
+                }
+            }
+
+            .checkoutInfo .cart {
+                background-color: rgba(0,23,55,.5);
+                padding: 4vh 5vh;
+                border-bottom-left-radius: 1rem;
+                border-top-left-radius: 1rem;
+                color: #fff;
+            }
+
+            @media(max-width:767px) {
+                .checkoutInfo .cart {
+                    padding: 4vh;
+                    border-bottom-left-radius: unset;
+                    border-top-right-radius: 1rem
+                }
+            }
+
+            .checkoutInfo .summary {
+                background-color: rgba(0,0,0,.4);
+                border-top-right-radius: 1rem;
+                border-bottom-right-radius: 1rem;
+                padding: 4vh;
+                color: #fff;
+            }
+
+            @media(max-width:767px) {
+                .checkoutInfo .summary {
+                    border-top-right-radius: unset;
+                    border-bottom-left-radius: 1rem
+                }
+            }
+
+            .checkoutInfo .summary .col-2 {
+                padding: 0
+            }
+
+            .checkoutInfo .summary .col-10 {
+                padding: 0
+            }
+
+            .checkoutInfo .row {
+                margin: 0
+            }
+
+            .checkoutInfo .title b {
+                font-size: 1.5rem
+            }
+
+            .checkoutInfo .main {
+                margin: 0;
+                padding: 2vh 0;
+                width: 100%
+            }
+
+            .checkoutInfo .col-2,
+            .checkoutInfo .col {
+                padding: 0 1vh
+            }
+
+            .checkoutInfo a {
+                padding: 0 1vh
+            }
+
+            .checkoutInfo .close {
+                margin-left: auto;
+                font-size: 0.7rem
+            }
+
+            .checkoutInfo img {
+                width: 3.5rem
+            }
+
+            .checkoutInfo .back-to-shop {
+                margin-top: 4.5rem
+            }
+
+            .checkoutInfo h5 {
+                margin-top: 4vh
+            }
+
+            .checkoutInfo hr {
+                margin-top: 1.25rem
+            }
+
+            .checkoutInfo form {
+                padding: 2vh 0
+            }
+
+            .checkoutInfo select {
+                border: 1px solid rgba(0, 0, 0, 0.137);
+                padding: 1.5vh 1vh;
+                margin-bottom: 4vh;
+                outline: none;
+                width: 100%;
+                background-color: rgb(247, 247, 247)
+            }
+
+            .checkoutInfo input {
+                border: 1px solid rgba(0, 0, 0, 0.137);
+                padding: 1vh;
+                margin-bottom: 4vh;
+                outline: none;
+                width: 100%;
+                background-color: rgb(247, 247, 247)
+            }
+
+            .checkoutInfo input:focus::-webkit-input-placeholder {
+                color: transparent
+            }
+
+            .checkoutInfo .btn {
+                background-color: #000;
+                border-color: #000;
+                color: white;
+                width: 100%;
+                font-size: 0.7rem;
+                margin-top: 4vh;
+                padding: 1vh;
+                border-radius: 0
+            }
+
+            .checkoutInfo .btn:focus {
+                box-shadow: none;
+                outline: none;
+                box-shadow: none;
+                color: white;
+                -webkit-box-shadow: none;
+                -webkit-user-select: none;
+                transition: none
+            }
+
+            .checkoutInfo .btn:hover {
+                color: white
+            }
+
+            .checkoutInfo a {
+                color: black
+            }
+
+            .checkoutInfo a:hover {
+                color: black;
+                text-decoration: none
+            }
+
+            .checkoutInfo #code {
+                background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+                background-repeat: no-repeat;
+                background-position-x: 95%;
+                background-position-y: center
+            }
+        /* checkout info */
+
+        .checkOpciones{
+            line-height: 20px !important;
+            margin-right: 15px !important;
+            margin-left: 10px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Realizar pago del plan</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+
+            <div class="col-md-12">
+
+                <div class="col-md-12">
+                    <div class="card col-md-12">
+                        <div class="card-body col-md-12 ">
+                            <div class="card checkoutInfo">
+                                <div class="row">
+                                    <div class="col-md-8 cart">
+                                        <div class="title">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4><b>Información del plan {{nombrePlan}}</b></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row border-top border-bottom">
+                                            <div class="row main align-items-center">
+                                                <div class="col">
+                                                {% for dato in datosPlan %}
+                                                    <div class="row">
+                                                        <i class="fas fa-check text-success checkOpciones"></i> {{dato}}
+                                                    </div>
+                                                {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="back-to-shop">
+                                            <a href="{% url 'coreAdmin:selecPlan' %}"><span class="text-white"><i class="fas fa-arrow-left"></i> Volver a los planes</span></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 summary">
+                                        <div>
+                                            <h5><b>Resumen</b></h5>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col" style="padding-left:0;">{{nombrePlan}}</div>
+                                            <div class="col text-right">${{costoPlan}}</div>
+                                        </div>
+                                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                            <div class="col">TOTAL</div>
+                                            <div class="col text-right">${{costoPlan}}</div>
+                                        </div>
+                                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                                            {% if idPlan != 0 %}
+                                                {{ form.render }}
+                                            {% else %}
+                                                <button class="btn btn-success">CHECKOUT</button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card mt-3">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white"><span style="color:yellow;">*</span> Si posees un plan activo y deseas cambiarlo, no se realizará ningún reembolso del dinero.</h6>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white">Las nuevas caracteristicas que se vayan añadiendo serán informadas mediante la plataforma</h6>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJs %}
+    <script>
+        Circles.create({
+            id:'circles-1',
+            radius:45,
+            value:60,
+            maxValue:100,
+            width:7,
+            text: 5,
+            colors:['#f1f1f1', '#FF9E27'],
+            duration:400,
+            wrpClass:'circles-wrp',
+            textClass:'circles-text',
+            styleWrapper:true,
+            styleText:true
+        })
+
+        Circles.create({
+            id:'circles-2',
+            radius:45,
+            value:70,
+            maxValue:100,
+            width:7,
+            text: 36,
+            colors:['#f1f1f1', '#2BB930'],
+            duration:400,
+            wrpClass:'circles-wrp',
+            textClass:'circles-text',
+            styleWrapper:true,
+            styleText:true
+        })
+
+        Circles.create({
+            id:'circles-3',
+            radius:45,
+            value:40,
+            maxValue:100,
+            width:7,
+            text: 12,
+            colors:['#f1f1f1', '#F25961'],
+            duration:400,
+            wrpClass:'circles-wrp',
+            textClass:'circles-text',
+            styleWrapper:true,
+            styleText:true
+        })
+    </script>
+{% endblock %}

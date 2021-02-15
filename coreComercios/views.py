@@ -137,13 +137,23 @@ def catalogo(request):
 
 def configuracion(request):
     if request.user.is_authenticated:
+        import datetime
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
 
         if comercio.idplan > 0:
             parametroLimiteGratis = 0
 
+        """ Calcula el tiempo restante del plan """
+        if comercio.idplan != 0:
+            fechaActual = datetime.date.today()
+            diasRestantes = (comercio.fechaVencimiento - fechaActual).days
+        else:
+            diasRestantes = 0
+        """ Calcula el tiempo restante del plan """
+
         datos = {
             'comercio':comercio,
+            'diasRestantes':diasRestantes,
         }
         return render(request, "codeBackEnd/configuraciones.html", datos)
     else:

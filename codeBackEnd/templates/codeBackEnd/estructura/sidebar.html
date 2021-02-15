@@ -11,12 +11,7 @@
                             <div class="info">
                                 <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                     <span>
-                                        {% if request.session.comercioId is not None %}
-                                            <span class="user-level text-white">
-                                                {{ comercio.nombre }}
-                                            </span>
-                                        {% endif %}
-                                        <span class="user-level">
+                                        <span class="user-level text-white">
                                             {{request.user.first_name}} {{request.user.last_name}}
                                         </span>
                                         <span class="user-level">
@@ -55,7 +50,7 @@
                                 <span class="sidebar-mini-icon">
                                     <i class="fa fa-ellipsis-h"></i>
                                 </span>
-                                <h4 class="text-section">Opciones del Comercio</h4>
+                                <h4 class="text-section text-white">Opciones del Comercio</h4>
                             </li>
 
                             {% if request.session.comercioId is not None %}

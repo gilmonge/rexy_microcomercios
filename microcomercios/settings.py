@@ -25,7 +25,10 @@ SECRET_KEY = '@ox%@ar_#m@gy@ew9t5q-szhc0v*!$31lr$ws*5cu7fdwu$h0y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['microcomercios.com', 'localhost', '127.0.0.1', '206.189.228.176']
+ALLOWED_HOSTS = ['microcomercios.com', 'localhost', '127.0.0.1', '206.189.228.176', ]
+
+if DEBUG:
+    ALLOWED_HOSTS.append('cab785c15db4.ngrok.io')
 
 #django-resized
 DJANGORESIZED_DEFAULT_QUALITY = 75
