@@ -32,6 +32,8 @@
                 <ul class="pricing-content">
                     <li>{{MaximosProductos}} productos máximo</li>
                     <li>Plantilla básica</li>
+                    <li class="disable">Plantilla adicionales que se vayan habilitando (gratis y de pago)</li>
+                    <li class="disable">Clasificación de productos por colecciones</li>
                 </ul>
                 <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
                     {% csrf_token %}
