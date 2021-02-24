@@ -13,5 +13,5 @@ coreAdmin_patterns = ([
     path('checkoutPlan', adminViews.pagarPlan, name="pagarPlan"),
     path('pagoRealizado', adminViews.payment_done, name="payment_done"),
     path('pagoRechazado', adminViews.payment_cancelled, name="payment_cancelled"),
-    path('verOrden/<int:pk>', adminViews.mostrarPdf.as_view(), name="ordenPdfVer"),
+    path('verOrden/<pk>', adminViews.mostrarPdf.as_view(), name="ordenPdfVer"),
 ], "coreAdmin")

@@ -161,16 +161,22 @@ def pagarPlan(request):
             return redirect('coreAdmin:selecPlan')
     else:
         return redirect('login')
-    
+
 @csrf_exempt
 def payment_done(request):
-    datos = {}
-    return render(request, "codeBackEnd/payment_done.html", datos)
+    if request.user.is_authenticated:
+        datos = {}
+        return render(request, "codeBackEnd/payment_done.html", datos)
+    else:
+        return redirect('login')
 
 @csrf_exempt
 def payment_cancelled(request):
-    datos = {}
-    return render(request, "codeBackEnd/payment_cancelled.html", datos)
+    if request.user.is_authenticated:
+        datos = {}
+        return render(request, "codeBackEnd/payment_cancelled.html", datos)
+    else:
+        return redirect('login')
 
 def verPerfil(request):
     if request.user.is_authenticated:
@@ -240,10 +246,26 @@ def PerfilPassEdit(request):
         return redirect('login')
 
 class mostrarPdf(View):
-    def get(self, request, *args, **kwargs):
-        orden = OrdenesComercios.objects.filter(pk=kwargs["pk"])
+    def get(self, request, *args, **kwargs): 
+        import base64
+        try:
+            Desencryptado = int(base64.b64decode(kwargs["pk"]).decode('utf-8'))
+        except:
+            return render(request, "codeFrontEnd/404.html")
+            
+        from microcomercios import settings
+        orden = OrdenesComercios.objects.filter(pk=Desencryptado)[0]
         
-        pdf = render_to_pdf('codeBackEnd/pdf.html')
+        protocoloHttp = "https://"
+        if settings.DEBUG == True:
+            protocoloHttp = "http://"
+
+        context = {
+            "host" : "{}{}".format(protocoloHttp, request.get_host()),
+            "orden": orden,
+        }
+
+        pdf = render_to_pdf("codeBackEnd/pdf.html", context)
         return HttpResponse(pdf, content_type='application/pdf')
 
 # otras funciones

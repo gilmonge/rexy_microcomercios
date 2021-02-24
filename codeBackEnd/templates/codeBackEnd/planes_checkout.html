@@ -230,10 +230,10 @@
                     <div class="col text-right">${{costoPlan}}</div>
                 </div>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    {% if idPlan != 0 %}
+                    {% if idPlan != "0" %}
                         {{ form.render }}
                     {% else %}
-                        <button class="btn btn-success">CHECKOUT</button>
+                        <button class="btn btn-info" style="font-size: 15px; background: #002E6A!important; border-color: #002E6A!important;">Volver al plan gratis</button>
                     {% endif %}
                 </div>
             </div>

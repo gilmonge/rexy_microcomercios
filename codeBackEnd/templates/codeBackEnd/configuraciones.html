@@ -1,6 +1,7 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
 {% load codeBackEnd_extras %}
+{% load codeFrontEnd_extras %}
 {% block title %}Mis Comercios{% endblock %}
 {% block tituloSeccion %}Configuraciones del comercio{% endblock %}
 
@@ -205,7 +206,8 @@
                                                         <span class="taxes text-sm mb-0">{{Orden.fechaVencimiento|date:"DATE_FORMAT"}}</span>
                                                     </td>
                                                     <td>
-                                                        <a class="badge badge-info">Descargar PDF</a>
+                                                        {% encoded_id Orden.id as id_encryptado %}
+                                                        <a href="{% url 'coreAdmin:ordenPdfVer' pk=id_encryptado %}" target="_blank" class="badge badge-info">Descargar PDF</a>
                                                     </td>
                                                 </tr>
                                             {% endfor%}
