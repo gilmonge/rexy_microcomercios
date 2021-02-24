@@ -1,6 +1,7 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
 {% block title %}Planes para comercios{% endblock %}
+{% block tituloSeccion %}Selecciona uno de nuestros planes{% endblock %}
 
 {% block customCss %}
     <style>
@@ -13,97 +14,76 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Selecciona uno de nuestros planes</h2>
+    <div class="row justify-content-center align-items-center mb-5">
+
+        <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
+            <div class="card-pricing2 card-success">
+                <div class="pricing-header">
+                    <h3 class="fw-bold">Gratis</h3>
+                    <span class="sub-title">Apto por si estás comenzando o deseas probar nuestros servicios</span>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
-
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="card-body col-md-12 ">
-                            <div class="row justify-content-center align-items-center mb-5">
-
-                                <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
-                                    <div class="card-pricing2 card-success">
-                                        <div class="pricing-header">
-                                            <h3 class="fw-bold">Gratis</h3>
-                                            <span class="sub-title">Apto por si estás comenzando o deseas probar nuestros servicios</span>
-                                        </div>
-                                        <div class="price-value">
-                                            <div class="value">
-                                                <span class="currency">$</span>
-                                                <span class="amount">0.<span>00</span></span>
-                                                <span class="month">/mes</span>
-                                            </div>
-                                        </div>
-                                        <ul class="pricing-content">
-                                            <li>{{MaximosProductos}} productos máximo</li>
-                                            <li>Plantilla básica</li>
-                                            <li class="disable">Plantilla adicionales que se vayan habilitando</li>
-                                        </ul>
-                                        <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
-                                            {% csrf_token %}
-                                            <input name="idPlan" type="hidden" value="0">
-                                            <button type="submit" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Seleccionar plan</button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
-                                    <div class="card-pricing2 card-info">
-                                        <div class="pricing-header">
-                                            <h3 class="fw-bold">Pyme</h3>
-                                            <span class="sub-title">Apto por si posees un gran catálogo que deseas mostrar al mundo</span>
-                                        </div>
-                                        <div class="price-value">
-                                            <div class="value">
-                                                <span class="currency">$</span>
-                                                <span class="amount">5.<span>00</span></span>
-                                                <span class="month">/mes</span>
-                                            </div>
-                                        </div>
-                                        <ul class="pricing-content">
-                                            <li>Productos ilimitados</li>
-                                            <li>Plantilla básica</li>
-                                            <li>Plantilla adicionales que se vayan habilitando</li>
-                                        </ul>
-                                        <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
-                                            {% csrf_token %}
-                                            <input name="idPlan" type="hidden" value="1">
-                                            <button type="submit" class="btn btn-info btn-border btn-lg w-75 fw-bold mb-3">Seleccionar plan</button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="card mt-3">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0 text-white"><span style="color:yellow;">*</span> Si posees un plan activo y deseas cambiarlo, no se realizará ningún reembolso del dinero.</h6>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0 text-white">Las nuevas caracteristicas que se vayan añadiendo serán informadas mediante la plataforma</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="price-value">
+                    <div class="value">
+                        <span class="currency">$</span>
+                        <span class="amount">0.<span>00</span></span>
+                        <span class="month">/mes</span>
                     </div>
                 </div>
-            
+                <ul class="pricing-content">
+                    <li>{{MaximosProductos}} productos máximo</li>
+                    <li>Plantilla básica</li>
+                </ul>
+                <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
+                    {% csrf_token %}
+                    <input name="idPlan" type="hidden" value="0">
+                    <button type="submit" class="btn btn-success btn-border btn-lg w-75 fw-bold mb-3">Seleccionar plan</button>
+                </form>
             </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 pl-md-0 mb-2">
+            <div class="card-pricing2 card-info">
+                <div class="pricing-header">
+                    <h3 class="fw-bold">Pyme</h3>
+                    <span class="sub-title">Apto por si posees un gran catálogo que deseas mostrar al mundo</span>
+                </div>
+                <div class="price-value">
+                    <div class="value">
+                        <span class="currency">$</span>
+                        <span class="amount">5.<span>00</span></span>
+                        <span class="month">/mes</span>
+                    </div>
+                </div>
+                <ul class="pricing-content">
+                    <li>Productos ilimitados</li>
+                    <li>Plantilla básica</li>
+                    <li>Plantilla adicionales que se vayan habilitando (gratis y de pago)</li>
+                    <li>Clasificación de productos por colecciones</li>
+                </ul>
+                <form action="{% url 'coreAdmin:pagarPlan' %}" method="post">
+                    {% csrf_token %}
+                    <input name="idPlan" type="hidden" value="1">
+                    <button type="submit" class="btn btn-info btn-border btn-lg w-75 fw-bold mb-3">Seleccionar plan</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+        <hr/>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="card mt-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0 text-white"><span style="color:yellow;">*</span> Si posees un plan activo y deseas cambiarlo, no se realizará ningún reembolso del dinero.</h6>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0 text-white">Las nuevas caracteristicas que se vayan añadiendo serán informadas mediante la plataforma</h6>
+                </li>
+            </ul>
         </div>
     </div>
 {% endblock %}

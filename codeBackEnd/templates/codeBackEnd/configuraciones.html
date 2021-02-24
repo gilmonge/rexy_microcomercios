@@ -1,6 +1,8 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
+{% load codeBackEnd_extras %}
 {% block title %}Mis Comercios{% endblock %}
+{% block tituloSeccion %}Configuraciones del comercio{% endblock %}
 
 {% block customHead %}
     <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css"/>
@@ -41,6 +43,9 @@
             border: 1px #011128 !important;
             border-radius: 0px !important;
         }
+        .tab-config a.active .svg-menu, .tab-config a:hover .svg-menu{
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+        }
 
         .fillPersonalizado.active svg path, .fillPersonalizado:hover svg path{
             fill: #fff !important;
@@ -61,271 +66,161 @@
             text-align: left !important;
             padding-left: 15px !important;
         }
+        
     </style>
 {% endblock %}
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Configuraciones del comercio</h2>
+    <div class="container">
+        <div class="row gutters-sm">
+            <div class="col-md-4 d-none d-md-block">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
+                            <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active fillPersonalizado">
+                                <img src="{% static 'codeBackEnd/admin/img/svg/planActivo.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                Plan activo
+                            </a>
+                            <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                <img src="{% static 'codeBackEnd/admin/img/svg/invoice.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                Historial de pagos
+                            </a>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
-
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="card-body col-md-12 ">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
+                        <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
+                            <li class="nav-item">
+                                <a href="#profile" data-toggle="tab" class="nav-link has-icon active fillPersonalizado">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/planActivo.svg' %}" class="svg-menu" style="width: 40px;">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#account" data-toggle="tab" class="nav-link has-icon">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/invoice.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
+                        <div class="tab-pane active" id="profile">
+                            <h6 class="text-white">INFORMACIÓN DEL PLAN DE COMERCIO</h6>
+                            <hr>
                             
-                            <div class="container">
-                                <div class="row gutters-sm">
-                                    <div class="col-md-4 d-none d-md-block">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
-                                                    <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active fillPersonalizado">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="24" height="24" stroke="currentColor" version="1.1" x="0" y="0" viewBox="0 0 511 511.998" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
-                                                            <g><path xmlns="http://www.w3.org/2000/svg" d="m444.972656 0h-288.960937c-9.648438 0-17.5 7.851562-17.5 17.5v191.859375l-91.492188-101.859375c-2.65625-2.957031-6.308593-4.703125-10.277343-4.914062-3.980469-.214844-7.785157 1.132812-10.742188 3.789062l-20.570312 18.476562c-6.105469 5.484376-6.609376 14.914063-1.125 21.019532l129.238281 143.875c1.410156 1.570312 3.101562 2.785156 4.96875 3.625v115.769531h-29.152344c-4.144531 0-7.5 3.359375-7.5 7.5s3.355469 7.5 7.5 7.5h206.765625c1.378906 0 2.5 1.121094 2.5 2.5v15.417969c0 22.257812 10.453125 42.121094 26.703125 54.9375h-265.746094c-30.296875 0-54.945312-24.644532-54.945312-54.941406v-15.414063c0-1.378906 1.121093-2.5 2.5-2.5h49.5625c4.140625 0 7.5-3.359375 7.5-7.5s-3.359375-7.5-7.5-7.5h-49.5625c-9.648438 0-17.5 7.851563-17.5 17.5v15.414063c0 38.566406 31.378906 69.941406 69.945312 69.941406h312.945313c38.566406 0 69.945312-31.375 69.945312-69.941406v-204.09375c0-4.140626-3.355468-7.5-7.5-7.5-4.144531 0-7.5 3.359374-7.5 7.5v204.09375c0 30.296874-24.648437 54.945312-54.945312 54.945312h-3.964844c-30.296875 0-54.941406-24.644531-54.941406-54.941406v-15.414063c0-9.652343-7.851563-17.5-17.5-17.5h-162.609375v-110.347656l21.398437 10.636719c1.699219.84375 3.519532 1.257812 5.324219 1.257812 2.875 0 5.707031-1.046875 7.957031-3.066406 3.660156-3.289062 4.921875-8.394531 3.214844-13.011719l-11.5-31.101562c.066406-.460938.117188-.921875.140625-1.390625.214844-3.96875-1.132813-7.785156-3.789063-10.742188l-22.746093-25.320312v-208.558594c0-1.378906 1.121093-2.5 2.5-2.5h288.960937c1.378906 0 2.5 1.121094 2.5 2.5v97.804688c0 4.144531 3.355469 7.5 7.5 7.5 4.144532 0 7.5-3.355469 7.5-7.5v-97.804688c0-9.648438-7.851562-17.5-17.5-17.5zm-409.035156 117.609375 8.90625 9.917969-20.394531 18.324218-8.910157-9.917968zm-1.46875 39.402344 4.621094-4.152344 110.152344 122.628906-4.617188 4.152344zm126.046875 128.515625 8.660156-7.78125 5.480469 14.808594zm-.113281-20.0625-110.152344-122.628906 4.617188-4.148438 110.152343 122.628906zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m454.972656 140.46875c-4.140625 0-7.5 3.355469-7.5 7.5v57.332031c0 4.144531 3.359375 7.5 7.5 7.5 4.144532 0 7.5-3.355469 7.5-7.5v-57.332031c0-4.144531-3.355468-7.5-7.5-7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m214.171875 150.605469c-14.148437 0-25.660156 11.511719-25.660156 25.664062 0 14.148438 11.511719 25.660157 25.660156 25.660157 14.152344 0 25.664063-11.511719 25.664063-25.660157 0-14.152343-11.511719-25.664062-25.664063-25.664062zm0 36.324219c-5.878906 0-10.660156-4.78125-10.660156-10.660157 0-5.878906 4.78125-10.664062 10.660156-10.664062s10.664063 4.785156 10.664063 10.664062c0 5.878907-4.785157 10.660157-10.664063 10.660157zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 185.378906h36.75c4.140624 0 7.5-3.359375 7.5-7.5s-3.359376-7.5-7.5-7.5h-36.75c-4.140626 0-7.5 3.359375-7.5 7.5s3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m390.503906 188.355469h-128.105468c-4.140626 0-7.5 3.355469-7.5 7.5 0 4.140625 3.359374 7.5 7.5 7.5h128.105468c4.140625 0 7.5-3.359375 7.5-7.5 0-4.144531-3.359375-7.5-7.5-7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.4375 164.183594h.050781c4.140625-.027344 7.476563-3.40625 7.453125-7.546875-.027344-4.128907-3.382812-7.453125-7.5-7.453125-.015625 0-.03125 0-.050781 0h-.074219c-4.144531.023437-7.441406 3.402344-7.414062 7.546875.023437 4.125 3.414062 7.453125 7.535156 7.453125zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m214.171875 229.832031c-14.148437 0-25.660156 11.511719-25.660156 25.664063 0 14.148437 11.511719 25.660156 25.660156 25.660156 14.152344 0 25.664063-11.511719 25.664063-25.660156 0-14.152344-11.511719-25.664063-25.664063-25.664063zm0 36.324219c-5.878906 0-10.660156-4.78125-10.660156-10.664062 0-5.878907 4.78125-10.660157 10.660156-10.660157s10.664063 4.78125 10.664063 10.660157c0 5.882812-4.785157 10.664062-10.664063 10.664062zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 264.605469h36.75c4.140624 0 7.5-3.359375 7.5-7.5s-3.359376-7.5-7.5-7.5h-36.75c-4.140626 0-7.5 3.359375-7.5 7.5s3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m390.503906 267.582031h-128.105468c-4.140626 0-7.5 3.355469-7.5 7.5 0 4.140625 3.359374 7.5 7.5 7.5h128.105468c4.140625 0 7.5-3.359375 7.5-7.5 0-4.144531-3.359375-7.5-7.5-7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.4375 243.40625h.050781c4.140625-.023438 7.476563-3.402344 7.453125-7.546875-.027344-4.125-3.382812-7.453125-7.5-7.453125-.015625 0-.03125 0-.050781 0h-.074219c-4.144531.027344-7.441406 3.40625-7.414062 7.546875.023437 4.128906 3.414062 7.453125 7.535156 7.453125zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m214.171875 309.058594c-14.148437 0-25.660156 11.511718-25.660156 25.664062 0 14.148438 11.511719 25.660156 25.660156 25.660156 14.152344 0 25.664063-11.511718 25.664063-25.660156 0-14.152344-11.511719-25.664062-25.664063-25.664062zm0 36.324218c-5.878906 0-10.660156-4.78125-10.660156-10.660156s4.78125-10.664062 10.660156-10.664062 10.664063 4.785156 10.664063 10.664062-4.785157 10.660156-10.664063 10.660156zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 343.832031h36.75c4.140624 0 7.5-3.359375 7.5-7.5s-3.359376-7.5-7.5-7.5h-36.75c-4.140626 0-7.5 3.359375-7.5 7.5s3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 361.808594h128.105468c4.140625 0 7.5-3.359375 7.5-7.5 0-4.144532-3.359375-7.5-7.5-7.5h-128.105468c-4.140626 0-7.5 3.355468-7.5 7.5 0 4.140625 3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.4375 322.636719h.050781c4.140625-.027344 7.476563-3.40625 7.453125-7.546875-.027344-4.128906-3.382812-7.453125-7.5-7.453125-.015625 0-.03125 0-.050781 0h-.074219c-4.144531.023437-7.441406 3.402343-7.414062 7.546875.023437 4.125 3.414062 7.453125 7.535156 7.453125zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m409.230469 98.28125v-43.496094c0-4.144531-3.359375-7.5-7.5-7.5h-202.472657c-4.144531 0-7.5 3.355469-7.5 7.5v43.496094c0 4.144531 3.355469 7.5 7.5 7.5h202.472657c4.140625 0 7.5-3.355469 7.5-7.5zm-15-7.5h-187.472657v-28.496094h187.472657zm0 0" fill="#011128" data-original="#000000" style="" class=""/></g>
-                                                        </svg>
-                                                        Plan activo
-                                                    </a>
-                                                    <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings mr-2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                                        Account Settings
-                                                    </a>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card">
-                                            <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
-                                                <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a href="#profile" data-toggle="tab" class="nav-link has-icon active fillPersonalizado">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="24" height="24" stroke="currentColor" version="1.1" x="0" y="0" viewBox="0 0 511 511.998" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
-                                                                <g><path xmlns="http://www.w3.org/2000/svg" d="m444.972656 0h-288.960937c-9.648438 0-17.5 7.851562-17.5 17.5v191.859375l-91.492188-101.859375c-2.65625-2.957031-6.308593-4.703125-10.277343-4.914062-3.980469-.214844-7.785157 1.132812-10.742188 3.789062l-20.570312 18.476562c-6.105469 5.484376-6.609376 14.914063-1.125 21.019532l129.238281 143.875c1.410156 1.570312 3.101562 2.785156 4.96875 3.625v115.769531h-29.152344c-4.144531 0-7.5 3.359375-7.5 7.5s3.355469 7.5 7.5 7.5h206.765625c1.378906 0 2.5 1.121094 2.5 2.5v15.417969c0 22.257812 10.453125 42.121094 26.703125 54.9375h-265.746094c-30.296875 0-54.945312-24.644532-54.945312-54.941406v-15.414063c0-1.378906 1.121093-2.5 2.5-2.5h49.5625c4.140625 0 7.5-3.359375 7.5-7.5s-3.359375-7.5-7.5-7.5h-49.5625c-9.648438 0-17.5 7.851563-17.5 17.5v15.414063c0 38.566406 31.378906 69.941406 69.945312 69.941406h312.945313c38.566406 0 69.945312-31.375 69.945312-69.941406v-204.09375c0-4.140626-3.355468-7.5-7.5-7.5-4.144531 0-7.5 3.359374-7.5 7.5v204.09375c0 30.296874-24.648437 54.945312-54.945312 54.945312h-3.964844c-30.296875 0-54.941406-24.644531-54.941406-54.941406v-15.414063c0-9.652343-7.851563-17.5-17.5-17.5h-162.609375v-110.347656l21.398437 10.636719c1.699219.84375 3.519532 1.257812 5.324219 1.257812 2.875 0 5.707031-1.046875 7.957031-3.066406 3.660156-3.289062 4.921875-8.394531 3.214844-13.011719l-11.5-31.101562c.066406-.460938.117188-.921875.140625-1.390625.214844-3.96875-1.132813-7.785156-3.789063-10.742188l-22.746093-25.320312v-208.558594c0-1.378906 1.121093-2.5 2.5-2.5h288.960937c1.378906 0 2.5 1.121094 2.5 2.5v97.804688c0 4.144531 3.355469 7.5 7.5 7.5 4.144532 0 7.5-3.355469 7.5-7.5v-97.804688c0-9.648438-7.851562-17.5-17.5-17.5zm-409.035156 117.609375 8.90625 9.917969-20.394531 18.324218-8.910157-9.917968zm-1.46875 39.402344 4.621094-4.152344 110.152344 122.628906-4.617188 4.152344zm126.046875 128.515625 8.660156-7.78125 5.480469 14.808594zm-.113281-20.0625-110.152344-122.628906 4.617188-4.148438 110.152343 122.628906zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m454.972656 140.46875c-4.140625 0-7.5 3.355469-7.5 7.5v57.332031c0 4.144531 3.359375 7.5 7.5 7.5 4.144532 0 7.5-3.355469 7.5-7.5v-57.332031c0-4.144531-3.355468-7.5-7.5-7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m214.171875 150.605469c-14.148437 0-25.660156 11.511719-25.660156 25.664062 0 14.148438 11.511719 25.660157 25.660156 25.660157 14.152344 0 25.664063-11.511719 25.664063-25.660157 0-14.152343-11.511719-25.664062-25.664063-25.664062zm0 36.324219c-5.878906 0-10.660156-4.78125-10.660156-10.660157 0-5.878906 4.78125-10.664062 10.660156-10.664062s10.664063 4.785156 10.664063 10.664062c0 5.878907-4.785157 10.660157-10.664063 10.660157zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 185.378906h36.75c4.140624 0 7.5-3.359375 7.5-7.5s-3.359376-7.5-7.5-7.5h-36.75c-4.140626 0-7.5 3.359375-7.5 7.5s3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m390.503906 188.355469h-128.105468c-4.140626 0-7.5 3.355469-7.5 7.5 0 4.140625 3.359374 7.5 7.5 7.5h128.105468c4.140625 0 7.5-3.359375 7.5-7.5 0-4.144531-3.359375-7.5-7.5-7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.4375 164.183594h.050781c4.140625-.027344 7.476563-3.40625 7.453125-7.546875-.027344-4.128907-3.382812-7.453125-7.5-7.453125-.015625 0-.03125 0-.050781 0h-.074219c-4.144531.023437-7.441406 3.402344-7.414062 7.546875.023437 4.125 3.414062 7.453125 7.535156 7.453125zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m214.171875 229.832031c-14.148437 0-25.660156 11.511719-25.660156 25.664063 0 14.148437 11.511719 25.660156 25.660156 25.660156 14.152344 0 25.664063-11.511719 25.664063-25.660156 0-14.152344-11.511719-25.664063-25.664063-25.664063zm0 36.324219c-5.878906 0-10.660156-4.78125-10.660156-10.664062 0-5.878907 4.78125-10.660157 10.660156-10.660157s10.664063 4.78125 10.664063 10.660157c0 5.882812-4.785157 10.664062-10.664063 10.664062zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 264.605469h36.75c4.140624 0 7.5-3.359375 7.5-7.5s-3.359376-7.5-7.5-7.5h-36.75c-4.140626 0-7.5 3.359375-7.5 7.5s3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m390.503906 267.582031h-128.105468c-4.140626 0-7.5 3.355469-7.5 7.5 0 4.140625 3.359374 7.5 7.5 7.5h128.105468c4.140625 0 7.5-3.359375 7.5-7.5 0-4.144531-3.359375-7.5-7.5-7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.4375 243.40625h.050781c4.140625-.023438 7.476563-3.402344 7.453125-7.546875-.027344-4.125-3.382812-7.453125-7.5-7.453125-.015625 0-.03125 0-.050781 0h-.074219c-4.144531.027344-7.441406 3.40625-7.414062 7.546875.023437 4.128906 3.414062 7.453125 7.535156 7.453125zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m214.171875 309.058594c-14.148437 0-25.660156 11.511718-25.660156 25.664062 0 14.148438 11.511719 25.660156 25.660156 25.660156 14.152344 0 25.664063-11.511718 25.664063-25.660156 0-14.152344-11.511719-25.664062-25.664063-25.664062zm0 36.324218c-5.878906 0-10.660156-4.78125-10.660156-10.660156s4.78125-10.664062 10.660156-10.664062 10.664063 4.785156 10.664063 10.664062-4.785157 10.660156-10.664063 10.660156zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 343.832031h36.75c4.140624 0 7.5-3.359375 7.5-7.5s-3.359376-7.5-7.5-7.5h-36.75c-4.140626 0-7.5 3.359375-7.5 7.5s3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.398438 361.808594h128.105468c4.140625 0 7.5-3.359375 7.5-7.5 0-4.144532-3.359375-7.5-7.5-7.5h-128.105468c-4.140626 0-7.5 3.355468-7.5 7.5 0 4.140625 3.359374 7.5 7.5 7.5zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m262.4375 322.636719h.050781c4.140625-.027344 7.476563-3.40625 7.453125-7.546875-.027344-4.128906-3.382812-7.453125-7.5-7.453125-.015625 0-.03125 0-.050781 0h-.074219c-4.144531.023437-7.441406 3.402343-7.414062 7.546875.023437 4.125 3.414062 7.453125 7.535156 7.453125zm0 0" fill="#011128" data-original="#000000" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m409.230469 98.28125v-43.496094c0-4.144531-3.359375-7.5-7.5-7.5h-202.472657c-4.144531 0-7.5 3.355469-7.5 7.5v43.496094c0 4.144531 3.355469 7.5 7.5 7.5h202.472657c4.140625 0 7.5-3.355469 7.5-7.5zm-15-7.5h-187.472657v-28.496094h187.472657zm0 0" fill="#011128" data-original="#000000" style="" class=""/></g>
-                                                            </svg>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a href="#account" data-toggle="tab" class="nav-link has-icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
-                                                <div class="tab-pane active" id="profile">
-                                                    <h6 class="text-white">INFORMACIÓN DEL PLAN DE COMERCIO</h6>
-                                                    <hr>
-                                                    
-                                                    <div class="card mt-3">
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                                <h6 class="mb-0 text-white">Plan actual</h6>
-                                                                <span class="text-white">
-                                                                    {% if comercio.idplan == 0 %}
-                                                                        Gratis
-                                                                    {% elif comercio.idplan == 1 %}
-                                                                        Pyme
-                                                                    {% elif comercio.idplan == 2 %}
-                                                                        Avanzado
-                                                                    {% endif %}
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    
-                                                    {% if comercio.idplan != 0 %}
-                                                    <div class="card mt-3">
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                                <h6 class="mb-0 text-white">Fecha de vencimiento</h6>
-                                                                <span class="text-white">{{comercio.fechaVencimiento|date:"DATE_FORMAT"}}</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                                <h6 class="mb-0 text-white">El plan se vence en</h6>
-                                                                <span class="text-white">{{diasRestantes}} {% if diasRestantes > 1 %}
-                                                                    días
-                                                                {% else %}
-                                                                    día
-                                                                {% endif %}</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                                <h6 class="mb-0 text-white">Precio</h6>
-                                                                <span class="text-white">
-                                                                    {% if comercio.idplan == 0 %}
-                                                                        $0
-                                                                    {% elif comercio.idplan == 1 %}
-                                                                        $5
-                                                                    {% elif comercio.idplan == 2 %}
-                                                                        $9
-                                                                    {% endif %}
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    {% endif %}
-
-                                                    <div class="card mt-3">
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                                <h6 class="mb-0 text-white">Cambiar o renovar plan</h6>
-                                                                <span class="text-white">
-                                                                    <a href="{% url 'coreAdmin:selecPlan' %}" class="btn btn-primary">Ver planes</a>
-                                                                </span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="tab-pane" id="account">
-                                                    <h6>ACCOUNT SETTINGS</h6>
-                                                    <hr>
-                                                    <form>
-                                                    <div class="form-group">
-                                                        <label for="username">Username</label>
-                                                        <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="kennethvaldez">
-                                                        <small id="usernameHelp" class="form-text text-muted">After changing your username, your old username becomes available for anyone else to claim.</small>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="form-group">
-                                                        <label class="d-block text-danger">Delete Account</label>
-                                                        <p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be certain.</p>
-                                                    </div>
-                                                    <button class="btn btn-danger" type="button">Delete Account</button>
-                                                    </form>
-                                                </div>
-                                                <div class="tab-pane" id="security">
-                                                    <h6>SECURITY SETTINGS</h6>
-                                                    <hr>
-                                                    <form>
-                                                    <div class="form-group">
-                                                        <label class="d-block">Change Password</label>
-                                                        <input type="text" class="form-control" placeholder="Enter your old password">
-                                                        <input type="text" class="form-control mt-1" placeholder="New password">
-                                                        <input type="text" class="form-control mt-1" placeholder="Confirm new password">
-                                                    </div>
-                                                    </form>
-                                                    <hr>
-                                                    <form>
-                                                    <div class="form-group">
-                                                        <label class="d-block">Two Factor Authentication</label>
-                                                        <button class="btn btn-info" type="button">Enable two-factor authentication</button>
-                                                        <p class="small text-muted mt-2">Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to log in.</p>
-                                                    </div>
-                                                    </form>
-                                                    <hr>
-                                                    <form>
-                                                    <div class="form-group mb-0">
-                                                        <label class="d-block">Sessions</label>
-                                                        <p class="font-size-sm text-secondary">This is a list of devices that have logged into your account. Revoke any sessions that you do not recognize.</p>
-                                                        <ul class="list-group list-group-sm">
-                                                        <li class="list-group-item has-icon">
-                                                            <div>
-                                                            <h6 class="mb-0">San Francisco City 190.24.335.55</h6>
-                                                            <small class="text-muted">Your current session seen in United States</small>
-                                                            </div>
-                                                            <button class="btn btn-light btn-sm ml-auto" type="button">More info</button>
-                                                        </li>
-                                                        </ul>
-                                                    </div>
-                                                    </form>
-                                                </div>
-                                                <div class="tab-pane" id="notification">
-                                                    <h6>NOTIFICATION SETTINGS</h6>
-                                                    <hr>
-                                                    <form>
-                                                    <div class="form-group">
-                                                        <label class="d-block mb-0">Security Alerts</label>
-                                                        <div class="small text-muted mb-3">Receive security alert notifications via email</div>
-                                                        <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-                                                        <label class="custom-control-label" for="customCheck1">Email each time a vulnerability is found</label>
-                                                        </div>
-                                                        <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
-                                                        <label class="custom-control-label" for="customCheck2">Email a digest summary of vulnerability</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mb-0">
-                                                        <label class="d-block">SMS Notifications</label>
-                                                        <ul class="list-group list-group-sm">
-                                                        <li class="list-group-item has-icon">
-                                                            Comments
-                                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                                                            <label class="custom-control-label" for="customSwitch1"></label>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item has-icon">
-                                                            Updates From People
-                                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                                                            <label class="custom-control-label" for="customSwitch2"></label>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item has-icon">
-                                                            Reminders
-                                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch3" checked="">
-                                                            <label class="custom-control-label" for="customSwitch3"></label>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item has-icon">
-                                                            Events
-                                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch4" checked="">
-                                                            <label class="custom-control-label" for="customSwitch4"></label>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item has-icon">
-                                                            Pages You Follow
-                                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch5">
-                                                            <label class="custom-control-label" for="customSwitch5"></label>
-                                                            </div>
-                                                        </li>
-                                                        </ul>
-                                                    </div>
-                                                    </form>
-                                                </div>
-                                                <div class="tab-pane" id="billing">
-                                                    <h6>BILLING SETTINGS</h6>
-                                                    <hr>
-                                                    <form>
-                                                    <div class="form-group">
-                                                        <label class="d-block mb-0">Payment Method</label>
-                                                        <div class="small text-muted mb-3">You have not added a payment method</div>
-                                                        <button class="btn btn-info" type="button">Add Payment Method</button>
-                                                    </div>
-                                                    <div class="form-group mb-0">
-                                                        <label class="d-block">Payment History</label>
-                                                        <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have not made any payment.</div>
-                                                    </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card mt-3">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white">Plan actual</h6>
+                                        <span class="text-white">
+                                            {% if comercio.idplan == 0 %}
+                                                Gratis
+                                            {% elif comercio.idplan == 1 %}
+                                                Pyme
+                                            {% elif comercio.idplan == 2 %}
+                                                Avanzado
+                                            {% endif %}
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
+                            
+                            {% if comercio.idplan != 0 %}
+                            <div class="card mt-3">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white">Fecha de vencimiento</h6>
+                                        <span class="text-white">{{comercio.fechaVencimiento|date:"DATE_FORMAT"}}</span>
+                                    </li>
+                                    {% if diasRestantes < 11 and diasRestantes > -1 %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-0 text-white">El plan se vence en</h6>
+                                            <span class="text-white">{{diasRestantes}} {% if diasRestantes > 1 %}
+                                                días
+                                            {% else %}
+                                                día
+                                            {% endif %}</span>
+                                        </li>
+                                    {% elif comercio.idplan < 0 %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-0 text-white">El plan se encentra</h6>
+                                            <span class="text-white">Vencido</span>
+                                        </li>
+                                    {% endif %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white">Precio</h6>
+                                        <span class="text-white">
+                                            {% if comercio.idplan == 0 %}
+                                                $0
+                                            {% elif comercio.idplan == 1 %}
+                                                $5
+                                            {% elif comercio.idplan == 2 %}
+                                                $9
+                                            {% endif %}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endif %}
 
+                            <div class="card mt-3">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0 text-white">Cambiar o renovar plan</h6>
+                                        <span class="text-white">
+                                            <a href="{% url 'coreAdmin:selecPlan' %}" class="btn btn-primary">Ver planes</a>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                            
+                        <div class="tab-pane" id="account">
+                            <h6 class="text-white">HISTORIAL DE PAGOS</h6>
+                            <hr>
+                            <div class="table-responsive">
+                                <div class="card mt-3">
+                                    <table class="table align-items-center">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Plan</th>
+                                                <th scope="col">Vencimiento</th>
+                                                <th scope="col">Comprobante</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color:#fff;">
+                                            {% get_ordenesComercio request.session.comercioId as Ordenes %}
+                                            {% for Orden in Ordenes %}
+                                                <tr>
+                                                    <td class="order">
+                                                        <span class="date">{{Orden.fechaRealizado|date:"DATE_FORMAT"}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="value text-sm mb-0">{{Orden.plan}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="taxes text-sm mb-0">{{Orden.fechaVencimiento|date:"DATE_FORMAT"}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <a class="badge badge-info">Descargar PDF</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
-            
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 {% block customJs %}

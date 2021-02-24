@@ -1,9 +1,10 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
 {% block title %}Mis Comercios{% endblock %}
+{% block tituloSeccion %}Editar comercio{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -23,140 +24,115 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Editar comercio</h2>
-                </div>
-            </div>
+    <form action="" id="formEditComercio" method="post" enctype="multipart/form-data" class="row ">
+        {% csrf_token %}
+
+        <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
         </div>
-    </div>
 
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
-
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="card-body col-md-12 ">
-                            <form action="" id="formEditComercio" method="post" enctype="multipart/form-data" class="row ">
-                                {% csrf_token %}
-
-                                <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
-                                    {{ form.nombre.label_tag }}
-                                    {{ form.nombre }}
-                                    {{ form.nombre.errors }}
-                                </div>
-
-                                <div class="form-group col-md-6"> {% comment %} Nombre corto {% endcomment %}
-                                    {{ form.slug.label_tag }}
-                                    {{ form.slug }}
-                                    {{ form.slug.errors }}
-                                </div>
-                                
+        <div class="form-group col-md-6"> {% comment %} Nombre corto {% endcomment %}
+            {{ form.slug.label_tag }}
+            {{ form.slug }}
+            {{ form.slug.errors }}
+        </div>
+        
 
 
-                                <div class="form-group col-md-12"> {% comment %} eslogan {% endcomment %}
-                                    {{ form.eslogan.label_tag }}
-                                    {{ form.eslogan }}
-                                    {{ form.eslogan.errors }}
-                                </div>
+        <div class="form-group col-md-12"> {% comment %} eslogan {% endcomment %}
+            {{ form.eslogan.label_tag }}
+            {{ form.eslogan }}
+            {{ form.eslogan.errors }}
+        </div>
 
-                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
-                                    {{ form.descripcion.label_tag }}
-                                    {{ form.descripcion }}
-                                    {{ form.descripcion.errors }}
-                                </div>
+        <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
+        </div>
 
-                                <div class="form-group col-md-12">
-                                    <label for="socialFacebook">
-                                        Redes Sociales <br/>
-                                        <span class="badge badge-light" style="font-size: 0.8rem;">En caso de no poseer alguna red social la puedes dejar vacío</span>
-                                    </label>
-                                    
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="socialFacebook">URL Facebook:</label>
-                                    <input type="text" id="socialFacebook" value="" class="form-control" placeholder="URL Facebook:" maxlength="200">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="socialTwitter">URL Twitter:</label>
-                                    <input type="text" id="socialTwitter" value="" class="form-control" placeholder="URL Twitter:" maxlength="200">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="socialTiktok">URL Tiktok:</label>
-                                    <input type="text" id="socialTiktok" value="" class="form-control" placeholder="URL Tiktok:" maxlength="200">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="socialInstagram">URL Instagram:</label>
-                                    <input type="text" id="socialInstagram" value="" class="form-control" placeholder="URL Instagram:" maxlength="200">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="socialTwitch">URL Twitch:</label>
-                                    <input type="text" id="socialTwitch" value="" class="form-control" placeholder="URL Twitch:" maxlength="200">
-                                </div>
-                                
-                                <div class="form-group" style="display: none;"> {% comment %} Redes sociales {% endcomment %}
-                                    {{ form.redessociales.label_tag }}
-                                    {{ form.redessociales }}
-                                    {{ form.redessociales.errors }}
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label for="socialFacebook">
-                                        Información de contácto <br/>
-                                        <span class="badge badge-light" style="font-size: 0.8rem;">En caso de no poseer alguna información de contácto lo puedes dejar vacío</span>
-                                    </label>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="contactoTel">Teléfono:</label>
-                                    <input type="text" id="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="contactoEmail">Correo electrónico:</label>
-                                    <input type="email" id="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
-                                </div>
-
-                                <div class="form-group" style="display: none;"> {% comment %} Contacto {% endcomment %}
-                                    {{ form.contacto.label_tag }}
-                                    {{ form.contacto }}
-                                    {{ form.contacto.errors }}
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="id_img_superior">Imagen superior:</label>
-                                    <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="id_img_acercade">Imagen "Acerca de":</label>
-                                    <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
-                                </div>
-
-                                <input type="hidden" name="owner" class="form-control" value="{{comercio.owner.id}}" id="id_owner">
-                                
-                                <input type="hidden" name="idplan" class="form-control" value="{{comercio.idplan}}" id="id_idplan">
-                                    
-                                <div class="text-center col-md-12">
-                                    <input type="submit" class="btn btn-info btn-block" id="btnForm" value="Actualizar comercio" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+        <div class="form-group col-md-12">
+            <label for="socialFacebook">
+                Redes Sociales <br/>
+                <span class="badge badge-light" style="font-size: 0.8rem;">En caso de no poseer alguna red social la puedes dejar vacío</span>
+            </label>
             
-            </div>
         </div>
-    </div>
+
+        <div class="form-group col-md-4">
+            <label for="socialFacebook">URL Facebook:</label>
+            <input type="text" id="socialFacebook" value="" class="form-control" placeholder="URL Facebook:" maxlength="200">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="socialTwitter">URL Twitter:</label>
+            <input type="text" id="socialTwitter" value="" class="form-control" placeholder="URL Twitter:" maxlength="200">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="socialTiktok">URL Tiktok:</label>
+            <input type="text" id="socialTiktok" value="" class="form-control" placeholder="URL Tiktok:" maxlength="200">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="socialInstagram">URL Instagram:</label>
+            <input type="text" id="socialInstagram" value="" class="form-control" placeholder="URL Instagram:" maxlength="200">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="socialTwitch">URL Twitch:</label>
+            <input type="text" id="socialTwitch" value="" class="form-control" placeholder="URL Twitch:" maxlength="200">
+        </div>
+        
+        <div class="form-group" style="display: none;"> {% comment %} Redes sociales {% endcomment %}
+            {{ form.redessociales.label_tag }}
+            {{ form.redessociales }}
+            {{ form.redessociales.errors }}
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="socialFacebook">
+                Información de contácto <br/>
+                <span class="badge badge-light" style="font-size: 0.8rem;">En caso de no poseer alguna información de contácto lo puedes dejar vacío</span>
+            </label>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="contactoTel">Teléfono:</label>
+            <input type="text" id="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="contactoEmail">Correo electrónico:</label>
+            <input type="email" id="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
+        </div>
+
+        <div class="form-group" style="display: none;"> {% comment %} Contacto {% endcomment %}
+            {{ form.contacto.label_tag }}
+            {{ form.contacto }}
+            {{ form.contacto.errors }}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="id_img_superior">Imagen superior:</label>
+            <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="id_img_acercade">Imagen "Acerca de":</label>
+            <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
+        </div>
+
+        <input type="hidden" name="owner" class="form-control" value="{{comercio.owner.id}}" id="id_owner">
+        
+        <input type="hidden" name="idplan" class="form-control" value="{{comercio.idplan}}" id="id_idplan">
+            
+        <div class="text-center col-md-12">
+            <input type="submit" class="btn btn-info btn-block" id="btnForm" value="Actualizar comercio" />
+        </div>
+    </form>
 {% endblock %}
 
 {% block customJs %}

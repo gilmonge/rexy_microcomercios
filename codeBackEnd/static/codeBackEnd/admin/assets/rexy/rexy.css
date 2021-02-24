@@ -52,7 +52,8 @@
     }
 
     .sidebar .nav>.nav-item a i, .sidebar[data-background-color=white] .nav>.nav-item a i ,
-    .sidebar .nav>.nav-item a svg, .sidebar[data-background-color=white] .nav>.nav-item a svg {
+    .sidebar .nav>.nav-item a svg, .sidebar[data-background-color=white] .nav>.nav-item a svg ,
+    .sidebar .nav>.nav-item a img, .sidebar[data-background-color=white] .nav>.nav-item a img {
         color: #8d9498 !important;
         margin-right: 0px !important;
         width: 25px !important;
@@ -70,5 +71,9 @@
         white-space: nowrap !important;
         color: #8d9498 !important;
         margin-left: 5px !important;
+    }
+
+    .messages-notif-box .notif-center a .notif-icon.notif-primary, .notif-box .notif-center a .notif-icon.notif-primary {
+        background: #002A61!important;
     }
 /* Personalizacion de la plantilla */

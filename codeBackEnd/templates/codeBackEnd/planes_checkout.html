@@ -1,6 +1,7 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
 {% block title %}Realizar pago del plan{% endblock %}
+{% block tituloSeccion %}Realizar pago del plan{% endblock %}
 
 {% block customCss %}
     <style>
@@ -190,90 +191,69 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+    <div class="card checkoutInfo">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Información del plan {{nombrePlan}}</b></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col">
+                        {% for dato in datosPlan %}
+                            <div class="row">
+                                <i class="fas fa-check text-success checkOpciones"></i> {{dato}}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="back-to-shop">
+                    <a href="{% url 'coreAdmin:selecPlan' %}"><span class="text-white"><i class="fas fa-arrow-left"></i> Volver a los planes</span></a>
+                </div>
+            </div>
+            <div class="col-md-4 summary">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Realizar pago del plan</h2>
+                    <h5><b>Resumen</b></h5>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding-left:0;">{{nombrePlan}}</div>
+                    <div class="col text-right">${{costoPlan}}</div>
+                </div>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">TOTAL</div>
+                    <div class="col text-right">${{costoPlan}}</div>
+                </div>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    {% if idPlan != 0 %}
+                        {{ form.render }}
+                    {% else %}
+                        <button class="btn btn-success">CHECKOUT</button>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
-
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="card-body col-md-12 ">
-                            <div class="card checkoutInfo">
-                                <div class="row">
-                                    <div class="col-md-8 cart">
-                                        <div class="title">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h4><b>Información del plan {{nombrePlan}}</b></h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row border-top border-bottom">
-                                            <div class="row main align-items-center">
-                                                <div class="col">
-                                                {% for dato in datosPlan %}
-                                                    <div class="row">
-                                                        <i class="fas fa-check text-success checkOpciones"></i> {{dato}}
-                                                    </div>
-                                                {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="back-to-shop">
-                                            <a href="{% url 'coreAdmin:selecPlan' %}"><span class="text-white"><i class="fas fa-arrow-left"></i> Volver a los planes</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 summary">
-                                        <div>
-                                            <h5><b>Resumen</b></h5>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col" style="padding-left:0;">{{nombrePlan}}</div>
-                                            <div class="col text-right">${{costoPlan}}</div>
-                                        </div>
-                                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                                            <div class="col">TOTAL</div>
-                                            <div class="col text-right">${{costoPlan}}</div>
-                                        </div>
-                                        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                                            {% if idPlan != 0 %}
-                                                {{ form.render }}
-                                            {% else %}
-                                                <button class="btn btn-success">CHECKOUT</button>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="card mt-3">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0 text-white"><span style="color:yellow;">*</span> Si posees un plan activo y deseas cambiarlo, no se realizará ningún reembolso del dinero.</h6>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0 text-white">Las nuevas caracteristicas que se vayan añadiendo serán informadas mediante la plataforma</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-            </div>
+    <div class="col-md-12">
+        <hr/>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="card mt-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0 text-white"><span style="color:yellow;">*</span> Si posees un plan activo y deseas cambiarlo, no se realizará ningún reembolso del dinero.</h6>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0 text-white">Las nuevas caracteristicas que se vayan añadiendo serán informadas mediante la plataforma</h6>
+                </li>
+            </ul>
         </div>
     </div>
 {% endblock %}

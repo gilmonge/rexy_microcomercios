@@ -90,11 +90,11 @@
                     <div class="about__text">
                         <h2>¡Nunca es tarde!</h2>
                         <p>
-                            Siempre hay un momento para iniciar un nuevo emprendimiento, y nosotros deseamos impulsarte en el camino hacia el éxito.<br/>
+                            Siempre es momento para iniciar un nuevo emprendimiento y nosotros deseamos impulsarle en el camino al éxito.<br/>
                             <br/>
-                            Te brindamos una plataforma donde con pocos pasos podrás ofrecer tus servicios, productos, comidas o cualquier otro artículo que desee poner a la venta.<br/>
+                            Le brindamos una plataforma donde puede ofrecer sus servicios, productos, comidas o el artículo que desee vender.<br/>
                             <br/>
-                            Muestra al mundo lo que eres capaz de realizar, nosotros creemos en tí.
+                            Muestre lo que es capaz de realizar, nosotros creemos en usted.
                         </p>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="section-title normal-title">
-                        <h3>Elige un plan y comienza ahora</h3>
+                        <h3>Escoge un plan y comienza ahora</h3>
                     </div>
                 </div>
             </div>
@@ -118,8 +118,11 @@
                     <div class="pricing__item">
                         <h4>Gratis</h4>
                         <h3>$0.00 USD <span>/ Mes</span></h3>
-                        <ul>
-                            <li>{{parametroLimiteGratis}} productos máximos</li>
+                        <ul style="text-align:left; margin-left: 20px;">
+                            <li><img src="{% static 'codeHome/img/svg/check.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">{{parametroLimiteGratis}} productos máximos</li>
+                            <li><img src="{% static 'codeHome/img/svg/check.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Plantilla básica</li>
+                            <li><img src="{% static 'codeHome/img/svg/cancel.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Plantilla adicionales (gratis y de pago)</li>
+                            <li><img src="{% static 'codeHome/img/svg/cancel.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Clasificación de productos por colecciones</li>
                         </ul>
                         <a href="{% url 'coreAdmin:signup'%}" class="primary-btn">Seleccionar</a>
                     </div>
@@ -128,10 +131,13 @@
                     <div class="pricing__item">
                         <h4>Pyme</h4>
                         <h3>$5.00 USD <span>/ Mes</span></h3>
-                        <ul>
-                            <li>Productos ilimitados</li>
+                        <ul style="text-align:left; margin-left: 20px;">
+                            <li><img src="{% static 'codeHome/img/svg/check.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Productos ilimitados</li>
+                            <li><img src="{% static 'codeHome/img/svg/check.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Plantilla básica</li>
+                            <li><img src="{% static 'codeHome/img/svg/check.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Plantilla adicionales (gratis y de pago)</li>
+                            <li><img src="{% static 'codeHome/img/svg/check.svg' %}" style="width: 22px; margin-right: 5px; margin-top: -6px;">Clasificación de productos por colecciones</li>
                         </ul>
-                        <a href="#" class="primary-btn">Próximamente</a>
+                        <a href="{% url 'coreAdmin:signup'%}" class="primary-btn">Seleccionar</a>
                     </div>
                 </div>
             </div>

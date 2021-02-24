@@ -1,14 +1,18 @@
+from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.template.loader import get_template
+from django.views import View
 from coreAdmin.forms import UserCreationFormWithEmail
 from coreAdmin.models import Parametro, Perfil, Plan
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, OrdenesComercios
 from django import forms
+from xhtml2pdf import pisa
 
 # Create your views here.
 
@@ -235,6 +239,15 @@ def PerfilPassEdit(request):
     else:
         return redirect('login')
 
+class mostrarPdf(View):
+    def get(self, request, *args, **kwargs):
+        orden = OrdenesComercios.objects.filter(pk=kwargs["pk"])
+        
+        pdf = render_to_pdf('codeBackEnd/pdf.html')
+        return HttpResponse(pdf, content_type='application/pdf')
+
+# otras funciones
+
 def ProcesarPagoPlan(ipn):
     import json
     datoPago = json.loads(ipn.custom)
@@ -259,7 +272,6 @@ def ProcesarPagoPlan(ipn):
     )
     Orden.save()
 
-
 def CalcularMes():
     """ Calcula un mes a partir del dia de ejecucion """
     from datetime import date
@@ -269,3 +281,12 @@ def CalcularMes():
     fechaVencimiento=current_date.replace(year=current_date.year+carry, month=new_month)
     """ Calcula un mes a partir del dia de ejecucion """
     return fechaVencimiento
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None

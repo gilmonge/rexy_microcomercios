@@ -2,6 +2,7 @@
 {% load static %}
 {% load codeBackEnd_extras %}
 {% block title %}{{ producto.nombre }} | Editar producto{% endblock %}
+{% block tituloSeccion %}Editar producto{% endblock %}
 
 {% block customHead %}
     <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
@@ -27,157 +28,139 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Editar producto</h2>
+    <form action="" id="formEditProducto" method="post" class="row ">
+        {% csrf_token %}
+
+        <div class="form-group col-md-12">
+            <button type="button" class="btn btn-default" onclick="window.open('{% url 'comercio:producto' pk=producto.id prod_slug=object.nombre|slugify comercio_slug=object.comercio.slug|slugify %}', '_blank');">
+                <span class="btn-label">
+                    <i class="fas fa-external-link-alt"></i>
+                </span>
+                Ver producto en la tienda
+            </button>
+        </div>
+
+        <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
+        </div>
+
+        <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
+        </div>
+
+        <div class="form-group col-md-4"> {% comment %} Precio {% endcomment %}
+            {{ form.precio.label_tag }}
+            {{ form.precio }}
+            {{ form.precio.errors }}
+        </div>
+        
+        <div class="form-group col-md-4" style="{% if object.comercio.idplan == 0 %} display:none; {% endif %}"> {% comment %} Colecciones {% endcomment %}
+            <label class="form-label">Colecciones</label>
+            <div class="selectgroup w-100">
+                <select id="id_colecciones" name="colecciones" class="selectpicker w-100" multiple data-live-search="true">
+                    {% get_colecciones request.session.comercioId as Colecciones %}
+                    {% for Coleccion in Colecciones %}
+                        <option value="{{ Coleccion.id }}">{{ Coleccion.nombre }}</option> 
+                    {% endfor%}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4"> {% comment %} Estado {% endcomment %}
+            <label class="form-label">Estado</label>
+            <div class="selectgroup w-100">
+                <label class="selectgroup-item">
+                    <input type="radio" name="estado" value="1" class="selectgroup-input" 
+                        {% if producto.estado is True %}
+                            checked=""
+                        {% endif %}
+                    >
+                    <span class="selectgroup-button">Activo</span>
+                </label>
+                <label class="selectgroup-item">
+                    <input type="radio" name="estado" value="0" class="selectgroup-input" 
+                        {% if producto.estado is False %}
+                            checked=""
+                        {% endif %}
+                    >
+                    <span class="selectgroup-button">Inactivo</span>
+                </label>
+            </div>
+        </div>
+
+        <input type="hidden" name="comercio" value="{{producto.comercio.id}}" />
+
+        <div class="text-center col-md-12">
+            <input type="submit" class="btn btn-info btn-block" value="Actualizar producto" />
+        </div>
+    </form>
+
+    <div class="col-md-12">
+        <hr/>
+    </div>
+
+    
+    <div class="card col-md-12" style="background: rgba(0,0,0,.3)">
+        <div class="col-md-12 ">
+            <div class="col-md-12 row pt-2 pb-4">
+                <div class="col-md-6 mt-2">
+                    <h2 class="text-white pb-2 fw-bold">Imagenes del producto</h2>
+                    <span class="badge badge-light" style="font-size: 0.8rem; white-space: break-spaces !important;">La imagen principal es la que se muestra en el listado de productos</span>
                 </div>
+
+                <div class="col-md-6 mt-3 d-flex justify-content-center">
+                    <button href="" type="button" class="btn btn-light mb-3"data-toggle="modal" data-target="#Modal_Add_Img"><i class="fas fa-plus"></i> Agregar imagen al producto</button>
+                </div>
+
+                {% get_Imagenes_Producto producto.id as ImagenesProductos %}
+                {% for ImagenProducto in ImagenesProductos %}
+                    <div class="card-body col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                        <div class="card">
+                            {% if ImagenProducto.principal is True %}
+                                <div class="alert alert-success" role="alert" style="background-color: rgba(255,255,255,0.15);">
+                                    <span>Es imagen principal</span>
+                                </div>
+                            {% endif %}
+
+                            <img class="card-img-top" src="{{ ImagenProducto.imagen.url }}" alt="Card image cap">
+                            <div class="row col-md-12 p-0 m-0">
+                                <div class="col-xs-6 col-md-6 p-0 m-0">
+                                    <form action="{% url 'comercioAdmin:productoImagenDef' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-info btn-block" style="border-radius:0px;"><i class="fas fa-check fa-lg"></i> Principal</button>
+                                        
+                                        <input type="hidden" name="pk" value="{{producto.id}}" />
+                                        <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
+                                    </form>
+                                </div>
+                                <div class="col-xs-6 col-md-6 p-0 m-0">
+                                    <form action="{% url 'comercioAdmin:productoImagenDel' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-block" style="border-radius:0px;"><i class="fas fa-eraser fa-lg"></i> Eliminar</button>
+                                        
+                                        <input type="hidden" name="pk" value="{{producto.id}}" />
+                                        <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor%}
+
             </div>
         </div>
     </div>
 
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
+    <div class="col-md-12">
+        <hr/>
+    </div>
 
-            <div class="col-md-12">
-                
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="card-body col-md-12 ">
-                            <form action="" id="formEditProducto" method="post" class="row ">
-                                {% csrf_token %}
-
-                                <div class="form-group col-md-12">
-                                    <button type="button" class="btn btn-default" onclick="window.open('{% url 'comercio:producto' pk=producto.id prod_slug=object.nombre|slugify comercio_slug=object.comercio.slug|slugify %}', '_blank');">
-                                        <span class="btn-label">
-                                            <i class="fas fa-external-link-alt"></i>
-                                        </span>
-                                        Ver producto en la tienda
-                                    </button>
-                                </div>
-
-                                <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
-                                    {{ form.nombre.label_tag }}
-                                    {{ form.nombre }}
-                                    {{ form.nombre.errors }}
-                                </div>
-
-                                <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
-                                    {{ form.descripcion.label_tag }}
-                                    {{ form.descripcion }}
-                                    {{ form.descripcion.errors }}
-                                </div>
-
-                                <div class="form-group col-md-4"> {% comment %} Precio {% endcomment %}
-                                    {{ form.precio.label_tag }}
-                                    {{ form.precio }}
-                                    {{ form.precio.errors }}
-                                </div>
-                                
-                                <div class="form-group col-md-4"> {% comment %} Colecciones {% endcomment %}
-                                    <label class="form-label">Colecciones</label>
-                                    <div class="selectgroup w-100">
-                                        <select id="id_colecciones" name="colecciones" class="selectpicker w-100" multiple data-live-search="true">
-                                            {% get_colecciones request.session.comercioId as Colecciones %}
-                                            {% for Coleccion in Colecciones %}
-                                                <option value="{{ Coleccion.id }}">{{ Coleccion.nombre }}</option> 
-                                            {% endfor%}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4"> {% comment %} Estado {% endcomment %}
-                                    <label class="form-label">Estado</label>
-                                    <div class="selectgroup w-100">
-                                        <label class="selectgroup-item">
-                                            <input type="radio" name="estado" value="1" class="selectgroup-input" 
-                                                {% if producto.estado is True %}
-                                                    checked=""
-                                                {% endif %}
-                                            >
-                                            <span class="selectgroup-button">Activo</span>
-                                        </label>
-                                        <label class="selectgroup-item">
-                                            <input type="radio" name="estado" value="0" class="selectgroup-input" 
-                                                {% if producto.estado is False %}
-                                                    checked=""
-                                                {% endif %}
-                                            >
-                                            <span class="selectgroup-button">Inactivo</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="comercio" value="{{producto.comercio.id}}" />
-
-                                <div class="text-center col-md-12">
-                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar producto" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="col-md-12 ">
-                            <div class="col-md-12 row pt-2 pb-4">
-                                <div class="col-md-6 mt-2">
-                                    <h2 class="text-white pb-2 fw-bold">Imagenes del producto</h2>
-                                    <span class="badge badge-light" style="font-size: 0.8rem; white-space: break-spaces !important;">La imagen principal es la que se muestra en el listado de productos</span>
-                                </div>
-
-                                <div class="col-md-6 mt-3 d-flex justify-content-center">
-                                    <button href="" type="button" class="btn btn-light mb-3"data-toggle="modal" data-target="#Modal_Add_Img"><i class="fas fa-plus"></i> Agregar imagen al producto</button>
-                                </div>
-
-                                {% get_Imagenes_Producto producto.id as ImagenesProductos %}
-                                {% for ImagenProducto in ImagenesProductos %}
-                                    <div class="card-body col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                                        <div class="card">
-                                            {% if ImagenProducto.principal is True %}
-                                                <div class="alert alert-success" role="alert" style="background-color: rgba(255,255,255,0.15);">
-                                                    <span>Es imagen principal</span>
-                                                </div>
-                                            {% endif %}
-
-                                            <img class="card-img-top" src="{{ ImagenProducto.imagen.url }}" alt="Card image cap">
-                                            <div class="row col-md-12 p-0 m-0">
-                                                <div class="col-xs-6 col-md-6 p-0 m-0">
-                                                    <form action="{% url 'comercioAdmin:productoImagenDef' %}" method="post">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-info btn-block" style="border-radius:0px;"><i class="fas fa-check fa-lg"></i> Principal</button>
-                                                        
-                                                        <input type="hidden" name="pk" value="{{producto.id}}" />
-                                                        <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
-                                                    </form>
-                                                </div>
-                                                <div class="col-xs-6 col-md-6 p-0 m-0">
-                                                    <form action="{% url 'comercioAdmin:productoImagenDel' %}" method="post">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-danger btn-block" style="border-radius:0px;"><i class="fas fa-eraser fa-lg"></i> Eliminar</button>
-                                                        
-                                                        <input type="hidden" name="pk" value="{{producto.id}}" />
-                                                        <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor%}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
-                </div>
-            </div>
-            
-        </div>
+    <div class="col-md-12">
+        <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
     </div>
 
     

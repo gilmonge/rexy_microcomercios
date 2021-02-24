@@ -3,9 +3,10 @@
 {% load static %}
 {% load  codeBackEnd_extras %}
 {% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
+{% block tituloSeccion %}Cátalogo del comercio {{ comercio.nombre }}{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -106,199 +107,236 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Cátalogo de colecciones del comercio {{ comercio.nombre }}</h2>
-                </div>
-            </div>
+    {% if comercio.idplan != 0 %}
+        <div class="col-md-12">
+            <a href="{% url 'comercioAdmin:coleccionAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar colección</a>
         </div>
-    </div>
 
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
+        <div class="col-md-12 row estado">
+            <div class="alert alert-success" role="alert">
+                <span>Sin colección</span>
+            </div>
 
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="col-md-12">
-                                <a href="{% url 'comercioAdmin:coleccionAdd' %}" type="button" class="btn btn-light mb-3"><i class="fas fa-plus"></i> Agregar colección</a>
-                                {% if totalProductos >= MaximosProductos and MaximosProductos > 0 %}
-                                    <div class="alert alert-warning limite" role="alert">
-                                        <span>Haz alcanzado el límite de productos gratis.</span>
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="col-md-12 row estado">
-                                <div class="alert alert-success" role="alert">
-                                    <span>Sin colección</span>
-                                </div>
-
-                                <div class="col-md-12 px-0 ">
-                                    <div class="owl-carousel owl-theme">
-                                        {% get_ProductosColeccion request.session.comercioId None as ProductosColeccion %}
-                                        {% for ProductoColeccion in ProductosColeccion %}
-                                        <div class="item">
-                                            <div class="col-12 px-0">
-                                                <div class="card card-stats card-info card-info-custom card-round">
-                                                    <div class="card-body" style="padding: 0px !important;">
-                                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
-                                                            {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
-                                                            
-                                                            <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
-                                                                <label class="labelEditar">Click Para editar</label>
-                                                            </div>
-                                                            <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
-                                                                <div class="numbers" style="width: 90%;">
-                                                                    <p class="card-category">{{ ProductoColeccion.nombre }} {{ ProductoColeccion.comercio }}</p>
-                                                                    <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
-                                                                            
-                                                                    <div class="card-category estado estado-producto">
-                                                                        {% if ProductoColeccion.estado is True %}
-                                                                            <div class="alert alert-success" role="alert">
-                                                                                <span>Activo</span>
-                                                                            </div>
-                                                                        {% else %}
-                                                                            <div class="alert alert-danger" role="alert">
-                                                                                <span>Inactivo</span>
-                                                                            </div>
-                                                                        {% endif %}
-                                                                    </div>
-                                                                    <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
-                                                                </div>
-                                                            </div>
+            <div class="col-md-12 px-0 ">
+                <div class="owl-carousel owl-theme">
+                    {% get_ProductosColeccion request.session.comercioId None as ProductosColeccion %}
+                    {% for ProductoColeccion in ProductosColeccion %}
+                    <div class="item">
+                        <div class="col-12 px-0">
+                            <div class="card card-stats card-info card-info-custom card-round">
+                                <div class="card-body" style="padding: 0px !important;">
+                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                        {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
+                                        
+                                        <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                            <label class="labelEditar">Click Para editar</label>
+                                        </div>
+                                        <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                            <div class="numbers" style="width: 90%;">
+                                                <p class="card-category">{{ ProductoColeccion.nombre }} {{ ProductoColeccion.comercio }}</p>
+                                                <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
+                                                        
+                                                <div class="card-category estado estado-producto">
+                                                    {% if ProductoColeccion.estado is True %}
+                                                        <div class="alert alert-success" role="alert">
+                                                            <span>Activo</span>
                                                         </div>
-                                                    </div>
+                                                    {% else %}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span>Inactivo</span>
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
+                                                <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
                                             </div>
                                         </div>
-                                        {% endfor%}
-
-                                        {% if permiteProductos == 1 %}
-                                            <div class="item">
-                                                <div class="col-12 px-0">
-                                                    <div class="card card-stats card-info card-info-custom card-round">
-                                                        <div class="card-body" style="padding: 0px !important;">
-                                                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
-                                                                <div class="col-12" style="min-height: 163px;max-height: 163px;">
-                                                                    <div class="numbers">
-                                                                        <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
-                                                                            <i class="flaticon-add text-warning"></i>
-                                                                            <p class="">Agregar producto</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    {% endfor%}
 
-
-                            {% for coleccion in colecciones %}
-                                <div class="col-md-12 row estado">
-                                    {% if coleccion.estado is True %}
-                                        <div class="alert alert-success" role="alert">
-                                            <span>{{ coleccion.nombre }} | Activo</span>
-                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </button>
-                                        </div>
-                                    {% else %}
-                                        <div class="alert alert-danger" role="alert">
-                                            <span>{{ coleccion.nombre }} | Inactivo</span>
-                                            <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </button>
-                                        </div>
-                                    {% endif %}
-                                    <div class="col-md-12 px-0 ">
-                                        <div class="owl-carousel owl-theme">
-                                            {% get_ProductosColeccion request.session.comercioId coleccion.id as ProductosColeccion %}
-                                            {% for ProductoColeccion in ProductosColeccion %}
-                                            <div class="item">
-                                                <div class="col-12 px-0">
-                                                    <div class="card card-stats card-info card-info-custom card-round">
-                                                        <div class="card-body" style="padding: 0px !important;">
-                                                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
-                                                                {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
-                                                                
-                                                                <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
-                                                                    <label class="labelEditar">Click Para editar</label>
-                                                                </div>
-                                                                <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
-                                                                    <div class="numbers" style="width: 90%;">
-                                                                        <p class="card-category">{{ ProductoColeccion.nombre }}</p>
-                                                                        <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
-                                                                                
-                                                                        <div class="card-category estado estado-producto">
-                                                                            {% if ProductoColeccion.estado is True %}
-                                                                                <div class="alert alert-success" role="alert">
-                                                                                    <span>Activo</span>
-                                                                                </div>
-                                                                            {% else %}
-                                                                                <div class="alert alert-danger" role="alert">
-                                                                                    <span>Inactivo</span>
-                                                                                </div>
-                                                                            {% endif %}
-                                                                        </div>
-                                                                        <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                    <div class="item">
+                        <div class="col-12 px-0">
+                            <div class="card card-stats card-info card-info-custom card-round">
+                                <div class="card-body" style="padding: 0px !important;">
+                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                        <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                            <div class="numbers">
+                                                <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                    <i class="flaticon-add text-warning"></i>
+                                                    <p class="">Agregar producto</p>
                                                 </div>
                                             </div>
-                                            {% endfor%}
-
-
-                                            {% if permiteProductos == 1 %}
-                                                <div class="item">
-                                                    <div class="col-12 px-0">
-                                                        <div class="card card-stats card-info card-info-custom card-round">
-                                                            <div class="card-body" style="padding: 0px !important;">
-                                                                <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
-                                                                    <div class="col-12" style="min-height: 163px;max-height: 163px;">
-                                                                        <div class="numbers">
-                                                                            <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
-                                                                                <i class="flaticon-add text-warning"></i>
-                                                                                <p class="">Agregar producto</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                            
-                                            {% comment %} {% with ''|center:7 as range %}
-                                            {% for _ in range %}
-                                            
-                                            {% endfor %}
-                                            {% endwith %} {% endcomment %}
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor%}
-
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
         </div>
-    </div>
+
+        {% for coleccion in colecciones %}
+            <div class="col-md-12 row estado">
+                {% if coleccion.estado is True %}
+                    <div class="alert alert-success" role="alert">
+                        <span>{{ coleccion.nombre }} | Activo</span>
+                        <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        <span>{{ coleccion.nombre }} | Inactivo</span>
+                        <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </div>
+                {% endif %}
+                <div class="col-md-12 px-0 ">
+                    <div class="owl-carousel owl-theme">
+                        {% get_ProductosColeccion request.session.comercioId coleccion.id as ProductosColeccion %}
+                        {% for ProductoColeccion in ProductosColeccion %}
+                        <div class="item">
+                            <div class="col-12 px-0">
+                                <div class="card card-stats card-info card-info-custom card-round">
+                                    <div class="card-body" style="padding: 0px !important;">
+                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                            {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
+                                            
+                                            <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                                <label class="labelEditar">Click Para editar</label>
+                                            </div>
+                                            <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                                <div class="numbers" style="width: 90%;">
+                                                    <p class="card-category">{{ ProductoColeccion.nombre }}</p>
+                                                    <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
+                                                            
+                                                    <div class="card-category estado estado-producto">
+                                                        {% if ProductoColeccion.estado is True %}
+                                                            <div class="alert alert-success" role="alert">
+                                                                <span>Activo</span>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="alert alert-danger" role="alert">
+                                                                <span>Inactivo</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor%}
+
+                        <div class="item">
+                            <div class="col-12 px-0">
+                                <div class="card card-stats card-info card-info-custom card-round">
+                                    <div class="card-body" style="padding: 0px !important;">
+                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                            <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                                <div class="numbers">
+                                                    <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                        <i class="flaticon-add text-warning"></i>
+                                                        <p class="">Agregar producto</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor%}
+
+    {% else %}
+        <div class="col-md-12">
+            {% if totalProductos >= MaximosProductos and MaximosProductos > 0 %}
+                <div class="alert alert-warning limite" role="alert">
+                    <span>Haz alcanzado el límite de productos gratis.</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-12 row estado">
+            <div class="alert alert-success" role="alert">
+                <span>Sin colección</span>
+            </div>
+
+            <div class="col-md-12 px-0 ">
+                <div class="owl-carousel owl-theme">
+                    {% get_TodosProductos request.session.comercioId as ProductosColeccion %}
+                    {% for ProductoColeccion in ProductosColeccion %}
+                    <div class="item">
+                        <div class="col-12 px-0">
+                            <div class="card card-stats card-info card-info-custom card-round">
+                                <div class="card-body" style="padding: 0px !important;">
+                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                        {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
+                                        
+                                        <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                            <label class="labelEditar">Click Para editar</label>
+                                        </div>
+                                        <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                            <div class="numbers" style="width: 90%;">
+                                                <p class="card-category">{{ ProductoColeccion.nombre }} {{ ProductoColeccion.comercio }}</p>
+                                                <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
+                                                        
+                                                <div class="card-category estado estado-producto">
+                                                    {% if ProductoColeccion.estado is True %}
+                                                        <div class="alert alert-success" role="alert">
+                                                            <span>Activo</span>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span>Inactivo</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor%}
+
+                    {% if permiteProductos == 1 %}
+                        <div class="item">
+                            <div class="col-12 px-0">
+                                <div class="card card-stats card-info card-info-custom card-round">
+                                    <div class="card-body" style="padding: 0px !important;">
+                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                                            <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                                <div class="numbers">
+                                                    <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                                        <i class="flaticon-add text-warning"></i>
+                                                        <p class="">Agregar producto</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block customJs %}

@@ -1,6 +1,7 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
 {% block title %}Mi perfil{% endblock %}
+{% block tituloSeccion %}Mi cuenta{% endblock %}
 
 {% block customCss %}
     <style>
@@ -37,6 +38,10 @@
             border: 1px #011128 !important;
             border-radius: 0px !important;
         }
+        
+        .tab-config a.active .svg-menu, .tab-config a:hover .svg-menu{
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+        }
 
         .tab-config a {
             background: #fff !important;
@@ -54,134 +59,108 @@
 
 
 {% block content %}
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Mi cuenta</h2>
+    <div class="container">
+        <div class="row gutters-sm">
+            <div class="col-md-4 d-none d-md-block">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
+                            <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                                <img src="{% static 'codeBackEnd/admin/img/svg/user-blue.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                Información
+                            </a>
+                            <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                <img src="{% static 'codeBackEnd/admin/img/svg/secure-shield.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                Seguridad
+                            </a>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
+                        <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
+                            <li class="nav-item">
+                                <a href="#profile" data-toggle="tab" class="nav-link has-icon active">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/user-blue.svg' %}" class="svg-menu" style="width: 40px;">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#security" data-toggle="tab" class="nav-link has-icon">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/secure-shield.svg' %}" class="svg-menu" style="width: 40px;">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    <div class="card col-md-12">
-                        <div class="card-body col-md-12 ">
-                            
-                            <div class="container">
-                                <div class="row gutters-sm">
-                                    <div class="col-md-4 d-none d-md-block">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
-                                                    <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                        Información
-                                                    </a>
-                                                    <a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                                        Seguridad
-                                                    </a>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <div class="card">
-                                            <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
-                                                <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a href="#profile" data-toggle="tab" class="nav-link has-icon active">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a href="#security" data-toggle="tab" class="nav-link has-icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
-                                                <div class="tab-pane active" id="profile">
-                                                    <h6>INFORMACIÓN DE PERFIL</h6>
-                                                    <hr>
-                                                    <form action="{% url 'coreAdmin:perfilInformacionEdit' %}" method="post">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <label for="fullName">Nombre</label>
-                                                            <input type="text" id="idnombre" class="form-control" placeholder="Nombre" maxlength="200" value="{{request.user.first_name}}" name="nombre">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="bio">Apellido</label>
-                                                            <input type="text" id="idapellido" class="form-control" placeholder="Apellido" maxlength="200" value="{{request.user.last_name}}" name="apellido">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="url">Usuario</label>
-                                                            <input type="text" class="form-control" value="{{request.user.username}}" readonly>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="location">Correo electrónico</label>
-                                                            <input type="text" class="form-control" value="{{request.user.email}}" readonly>
-                                                        </div>
-
-                                                        <div class="form-group small text-warning">
-                                                            El usuario y correo electrónico no pueden ser modificados
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <button type="submit" class="btn btn-primary">Actualizar</button>
-                                                        </div>
-
-                                                    </form>
-                                                </div>
-
-                                                <div class="tab-pane" id="security">
-                                                    <h6>CONFIGURACIONES DE SEGURIDAD</h6>
-                                                    <hr>
-                                                    <form action="{% url 'coreAdmin:perfilPassEdit' %}" method="post">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <label for="fullName">Nueva contraseña:</label>
-                                                            <input type="password" id="idpass" class="form-control" placeholder="Nueva contraseña" maxlength="60" name="pass">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="bio">Confirmar contraseña:</label>
-                                                            <input type="password" id="idconfPass" class="form-control" placeholder="Confirmar contraseña" maxlength="60" name="confPass">
-                                                        </div>
-                                                        <div class="form-group small text-warning">
-                                                            Guarda la nueva contraseña en un lugar seguro
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <button type="submit" class="btn btn-primary">Actualizar</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
+                        <div class="tab-pane active" id="profile">
+                            <h6>INFORMACIÓN DE PERFIL</h6>
+                            <hr>
+                            <form action="{% url 'coreAdmin:perfilInformacionEdit' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="fullName">Nombre</label>
+                                    <input type="text" id="idnombre" class="form-control" placeholder="Nombre" maxlength="200" value="{{request.user.first_name}}" name="nombre">
                                 </div>
-                            </div>
 
+                                <div class="form-group">
+                                    <label for="bio">Apellido</label>
+                                    <input type="text" id="idapellido" class="form-control" placeholder="Apellido" maxlength="200" value="{{request.user.last_name}}" name="apellido">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="url">Usuario</label>
+                                    <input type="text" class="form-control" value="{{request.user.username}}" readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="location">Correo electrónico</label>
+                                    <input type="text" class="form-control" value="{{request.user.email}}" readonly>
+                                </div>
+
+                                <div class="form-group small text-warning">
+                                    El usuario y correo electrónico no pueden ser modificados
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" id="security">
+                            <h6>CONFIGURACIONES DE SEGURIDAD</h6>
+                            <hr>
+                            <form action="{% url 'coreAdmin:perfilPassEdit' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="fullName">Nueva contraseña:</label>
+                                    <input type="password" id="idpass" class="form-control" placeholder="Nueva contraseña" maxlength="60" name="pass">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="bio">Confirmar contraseña:</label>
+                                    <input type="password" id="idconfPass" class="form-control" placeholder="Confirmar contraseña" maxlength="60" name="confPass">
+                                </div>
+                                <div class="form-group small text-warning">
+                                    Guarda la nueva contraseña en un lugar seguro
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 {% block customJs %}
