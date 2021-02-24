@@ -2,35 +2,32 @@
 {% load static %}
 {% block title %}Registro{% endblock %}
 {% block content %}
-                                <style>
-                                    .errorlist li{ color:red !important; } 
-                                    label{ display: none; } 
-                                    .helptext, ul li{
-                                        font-size: .95rem;
-                                        color: #2E5A93;
-                                    }
-                                </style>
-                                <div>
-                                    <div class="mb-5">
-                                        <h6 class="h3 mb-1">Registro</h6>
-                                        <p class="text-muted mb-0">
-                                            Registrate para publicar tu comercio
-                                        </p>
-                                    </div>
-                                    <form action="" method="post">{% csrf_token %}
-                                        {{form.as_p}}
-                                        
-                                        <p><input type="submit" class="btn btn-block btn-dark" value="Registrarme"></p>
-                                        
-                                        <div class="row mt-3">
-                                            <div class="col-sm-6 mb-3">
-                                                <a href="{% url 'login' %}" type="button" class="btn btn-block btn-outline-success">¿Posees cuenta? ¡Ingresa aquí!</a>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <a  href="{% url "password_reset" %}" type="button" class="btn btn-block btn-outline-dark">¿Olvidaste la contraseña? ¡Recupérala!</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- Alternative login -->
-                                </div>
+    <style>
+        .errorlist li{ color:red !important; } 
+        label{ display: none; } 
+        .helptext, ul li{
+            font-size: .95rem;
+            color: #2E5A93;
+        }
+    </style>
+    <div>
+        <div class="mb-5">
+            <h6 class="h3 mb-1">Registro</h6>
+        </div>
+        <form action="" method="post">{% csrf_token %}
+            {{form.as_p}}
+            
+            <p><input type="submit" class="btn btn-block btn-dark" value="Registrarme"></p>
+            
+            <div class="row mt-3">
+                <div class="col-sm-6 mb-3">
+                    <a href="{% url 'login' %}" type="button" class="btn btn-block btn-outline-success">¿Posees cuenta? ¡Ingresa aquí!</a>
+                </div>
+                <div class="col-sm-6">
+                    <a  href="{% url "password_reset" %}" type="button" class="btn btn-block btn-outline-dark">¿Olvidaste la contraseña? ¡Recupérala!</a>
+                </div>
+            </div>
+        </form>
+        <!-- Alternative login -->
+    </div>
 {% endblock %}

@@ -25,6 +25,9 @@ from coreAdmin.urls import coreAdmin_patterns
 from codeHome.urls import codeHome_patterns
 
 urlpatterns = [
+    # Paths de Paypal
+    path('paypal/', include('paypal.standard.ipn.urls')),
+
     path('DJAdmin/', admin.site.urls),
 
     # Paths de Admin

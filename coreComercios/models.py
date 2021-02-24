@@ -4,6 +4,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from coreAdmin.models import Plan
+from paypal.standard.ipn.models import PayPalIPN
 
 #funcion de carga de imagen de comercio
 def custom_upload_ComercioSup(instance, filename):
@@ -73,6 +74,7 @@ class Comercio(models.Model):
     img_superior    = ResizedImageField(upload_to=custom_upload_ComercioSup, size=[900, 600], null=False, default="comercios/noimageSup.jpg", verbose_name="Imagen superior")
     img_acercade    = ResizedImageField(upload_to=custom_upload_Comercio, size=[500, 433], null=False, default="comercios/noimageAbout.jpg", verbose_name="Imagen de acerca de")
     idplan          = models.IntegerField(verbose_name="Plan", default="0")
+    fechaVencimiento= models.DateField(verbose_name="Fecha vencimiento", blank=True, null=True)
     
     def __str__(self):
         return self.nombre
@@ -106,3 +108,13 @@ class ImagenesProducto(models.Model):
     
     def __str__(self):
         return self.imagen.url
+
+class OrdenesComercios(models.Model):
+    comercio        = models.ForeignKey(Comercio, verbose_name="Comercio asociado", on_delete=models.DO_NOTHING)
+    ipn             = models.ForeignKey(PayPalIPN, verbose_name="Paypal Ipn", on_delete=models.DO_NOTHING)
+    plan            = models.ForeignKey(Plan, verbose_name="Plan seleccionado", on_delete=models.DO_NOTHING)
+    fechaRealizado  = models.DateField(verbose_name="Fecha realizado", auto_now_add=True)
+    fechaVencimiento= models.DateField(verbose_name="Fecha vencimiento", blank=True, null=True)
+    
+    def __str__(self):
+        return self.comercio

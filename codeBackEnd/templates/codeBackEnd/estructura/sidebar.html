@@ -6,17 +6,12 @@
                     <div class="sidebar-content">
                         <div class="user">
                             <div class="avatar-sm float-left mr-2">
-                                <img src="{% static 'codeBackEnd/admin/img/user.png' %}" alt="..." class="avatar-img rounded-circle">
+                                <img src="{% static 'codeBackEnd/admin/img/svg/user.svg' %}" class="avatar-img rounded-circle">
                             </div>
                             <div class="info">
                                 <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                     <span>
-                                        {% if request.session.comercioId is not None %}
-                                            <span class="user-level text-white">
-                                                {{ comercio.nombre }}
-                                            </span>
-                                        {% endif %}
-                                        <span class="user-level">
+                                        <span class="user-level text-white">
                                             {{request.user.first_name}} {{request.user.last_name}}
                                         </span>
                                         <span class="user-level">
@@ -46,7 +41,7 @@
 
                             <li class="nav-item active">
                                 <a href="{% url 'coreAdmin:dashboard' %}">
-                                    <i class="fas fa-home"></i>
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/dashboard.svg' %}">
                                     <p>Escritorio</p>
                                 </a>
                             </li>
@@ -55,21 +50,28 @@
                                 <span class="sidebar-mini-icon">
                                     <i class="fa fa-ellipsis-h"></i>
                                 </span>
-                                <h4 class="text-section">Funcionalidades</h4>
+                                <h4 class="text-section text-white">Opciones</h4>
                             </li>
 
                             {% if request.session.comercioId is not None %}
                                 <li class="nav-item">
                                     <a href="{% url 'comercioAdmin:comercio' pk=request.session.comercioId %}">
-                                        <i class="far fa-building"></i>
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/comercio.svg' %}">
                                         <p>Comercio</p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a href="{% url 'comercioAdmin:catalogo' %}">
-                                        <i class="fas fa-boxes"></i>
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/catalogo.svg' %}">
                                         <p>Catálogo</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{% url 'comercioAdmin:configuracion' %}">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones.svg' %}">
+                                        <p>Configuraciones</p>
                                     </a>
                                 </li>
                             

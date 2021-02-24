@@ -149,3 +149,4 @@ dmypy.json
 !/core/static/core/assets/libs/*/dist
 
 *.txt
+!requisitos.txt

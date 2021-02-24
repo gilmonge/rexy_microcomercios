@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Comercio, Producto, ImagenesProducto, Coleccion
+from .models import Comercio, Producto, ImagenesProducto, Coleccion, OrdenesComercios
 
 # Register your models here.
 
 class ComercioAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'slug', 'eslogan', 'owner')
+    list_display = ('nombre', 'slug', 'eslogan', 'owner', 'fechaVencimiento')
 
 class ColeccionAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'comercio', 'estado')
@@ -12,7 +12,11 @@ class ColeccionAdmin(admin.ModelAdmin):
 class ImagenesProductoAdmin(admin.ModelAdmin):
     list_display = ('producto', 'imagen', 'principal', 'estado')
 
+class OrdenesComerciosAdmin(admin.ModelAdmin):
+    list_display = ('comercio', 'ipn', 'plan', 'fechaVencimiento', 'fechaRealizado')
+
 admin.site.register(Comercio, ComercioAdmin)
 admin.site.register(Coleccion, ColeccionAdmin)
 admin.site.register(Producto)
 admin.site.register(ImagenesProducto, ImagenesProductoAdmin)
+admin.site.register(OrdenesComercios, OrdenesComerciosAdmin)

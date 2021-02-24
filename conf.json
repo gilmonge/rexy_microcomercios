@@ -1,0 +1,9 @@
+{
+    "emailConf": {
+        "EMAIL_HOST" : "smtp.gmail.com",
+        "EMAIL_HOST_USER" : "noreply.microcomercios@gmail.com",
+        "EMAIL_HOST_PASSWORD" : "wNxS5i1erbotIbnOtsuz",
+        "EMAIL_PORT" : 587
+    },
+    "ngrok": "19a917802b90.ngrok.io"
+}

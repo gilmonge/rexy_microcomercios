@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import json
+customSettings = json.loads(open('conf.json').read())
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,7 +26,10 @@ SECRET_KEY = '@ox%@ar_#m@gy@ew9t5q-szhc0v*!$31lr$ws*5cu7fdwu$h0y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['microcomercios.com', 'localhost', '127.0.0.1', '206.189.228.176']
+ALLOWED_HOSTS = ['microcomercios.com', 'localhost', '127.0.0.1', '206.189.228.176', ]
+
+if DEBUG:
+    ALLOWED_HOSTS.append(customSettings["ngrok"])
 
 #django-resized
 DJANGORESIZED_DEFAULT_QUALITY = 75
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'coreComercios',
     'codeHome',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -161,10 +166,14 @@ LOGOUT_REDIRECT_URL = 'login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'noreply.microcomercios@gmail.com'
-EMAIL_HOST_PASSWORD = 'wNxS5i1erbotIbnOtsuz'
-EMAIL_PORT = 587
+EMAIL_HOST = customSettings["emailConf"]["EMAIL_HOST"]
+EMAIL_HOST_USER = customSettings["emailConf"]["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = customSettings["emailConf"]["EMAIL_HOST_PASSWORD"]
+EMAIL_PORT = customSettings["emailConf"]["EMAIL_PORT"]
 
 # Key Fernet
 FERNET_KEY = 'x00iG4BM3q1gA2rg6wwoijlqs9fT0IVBGMfqGo-NHZw='
+
+#Datos del paypal
+PAYPAL_RECEIVER_EMAIL = 'email@mail.com'
+PAYPAL_TEST = True

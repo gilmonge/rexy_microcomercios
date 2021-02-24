@@ -1,6 +1,6 @@
 from random import randint
 from django import template
-from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, OrdenesComercios
 
 register = template.Library()
 
@@ -23,6 +23,13 @@ def get_Imagenes_Producto(pk):
 def get_ProductosColeccion(pkcomercio, pk):
     productos = Producto.objects.filter(
         colecciones__id = pk,
+        comercio = pkcomercio
+    )
+    return productos
+
+@register.simple_tag
+def get_TodosProductos(pkcomercio):
+    productos = Producto.objects.filter(
         comercio = pkcomercio
     )
     return productos
@@ -67,3 +74,10 @@ def get_colorRandom():
     colorSeleccionado = randint(0, len(colores)-1)
 
     return colores[colorSeleccionado]
+
+@register.simple_tag
+def get_ordenesComercio(pkcomercio):
+    #from paypal.standard.models import PayPalStandardBase
+    ordenes = OrdenesComercios.objects.filter(comercio=pkcomercio)
+    
+    return ordenes

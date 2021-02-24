@@ -55,7 +55,33 @@
 
             <div class="main-panel">
                 <div class="content">
-                    {% block content %}{% endblock %}
+                    <div class="panel-header bg-primary-gradient">
+                        <div class="page-inner py-5">
+                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                                <div>
+                                    <h2 class="text-white pb-2 fw-bold">{% block tituloSeccion %}{% endblock %}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-inner mt--5">
+                        <div class="row mt--2">
+
+                            <div class="col-md-12">
+
+                                <div class="col-md-12">
+                                    <div class="card col-md-12">
+                                        <div class="card-body col-md-12 ">
+                                            {% block content %}{% endblock %}
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 {% include 'codeBackEnd/estructura/footer.html' %}

@@ -19,6 +19,7 @@ coreComerciosAdmin_patterns = ([
     path('comercioDisponibilidad/<slug:comercio_slug>', views.consultarDisponibilidadComercio, name="comercioDisponibilidad"),
     
     path('catalogo', views.catalogo, name="catalogo"),
+    path('configuracion', views.configuracion, name="configuracion"),
     path('coleccion/<int:pk>', coleccionUpdateView.as_view(), name="coleccionEdit"),
     path('coleccionAdd', coleccionCreateView.as_view(), name="coleccionAdd"),
     path('coleccionDel/<int:pk>', coleccionDeleteView.as_view(), name="coleccionDelete"),

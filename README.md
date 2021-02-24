@@ -49,3 +49,11 @@ Realizar deploy del proyecto en el servidor
      $ git push centos produccion
     ```
 ---
+
+---
+Ejecutar prueba de NGrok
+--------
+ 1. Se debe ejecutar
+    ```sh
+     $ ngrok http 8000
+    ```

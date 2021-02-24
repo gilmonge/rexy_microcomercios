@@ -28,7 +28,7 @@
                                 {% load codeBackEnd_extras  %}
                                 {% get_Comercio request.session.comercioId as Comercio_info %}
                                 {% for ComercioInfo in Comercio_info %}
-                                    <h1 style="color: #fff;">{{ ComercioInfo.nombre }} <a href="{% url 'comercio:comercio' comercio_slug=ComercioInfo.slug|slugify %}" target="_blank"><i class="fas fa-external-link-alt"></i></a></h1>
+                                    <h1 style="color: #fff;">{{ ComercioInfo.nombre }} <a href="{% url 'comercio:comercio' comercio_slug=ComercioInfo.slug|slugify %}" target="_blank"><img src="{% static 'codeBackEnd/admin/img/svg/external-link.svg' %}" style="width: 30px; margin-top: -6px;"></a></h1>
                                 {% endfor%}
                             {% endif %}
                         </div>
@@ -41,8 +41,8 @@
                             </li> {% endcomment %}
                             <li class="nav-item dropdown hidden-caret">
                                 <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-exchange-alt"></i>
-                                    <span class="">Cambiar comercio</span>
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/exchange.svg' %}" style="width: 23px; margin-top: -6px;">
+                                    <span style="font-size: 16px;">Cambiar comercio</span>
                                 </a>
                                 <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                     <li>
@@ -52,14 +52,16 @@
                                                 {% get_Comercios_list request.user as Comercios_list %}
                                                 {% for ComercioSeleccion in Comercios_list %}
                                                     <a href="{% url 'coreAdmin:dashboardSeleccion' pk=ComercioSeleccion.id %}">
-                                                        <div class="notif-icon notif-primary"> <i class="far fa-building"></i> </div>
+                                                        <div class="notif-icon notif-primary"> 
+                                                            <img src="{% static 'codeBackEnd/admin/img/svg/comercio.svg' %}" style="width: 65%;">
+                                                        </div>
                                                         <div class="notif-content">
                                                             <span class="block">{{ ComercioSeleccion.nombre }}</span>
                                                             <span class="time">Seleccionar comercio</span> 
                                                         </div>
                                                     </a>
                                                 {% endfor%}
-                                                <a href="{% url 'coreAdmin:selecPlan' %}">
+                                                <a href="{% url 'comercioAdmin:comercioAdd' %}">
                                                     <div class="notif-icon notif-primary"> <i class="flaticon-add"></i> </div>
                                                     <div class="notif-content">
                                                         <span class="block">Agregar nuevo comercio</span>
@@ -74,14 +76,16 @@
                             <li class="nav-item dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="{% static 'codeBackEnd/admin/img/user.png' %}" alt="..." class="avatar-img rounded-circle">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/user.svg' %}" class="avatar-img rounded-circle">
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <li>
                                             <div class="user-box">
-                                                <div class="avatar-lg"><img src="{% static 'codeBackEnd/admin/img/user-2.png' %}" alt="image profile" class="avatar-img rounded"></div>
+                                                <div class="avatar-lg">
+                                                    <img src="{% static 'codeBackEnd/admin/img/svg/user-blue.svg' %}" class="avatar-img rounded">
+                                                </div>
                                                 <div class="u-text">
                                                     <h4>
                                                         {{request.user.first_name}} {{request.user.last_name}}
@@ -94,7 +98,7 @@
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{% url 'coreAdmin:perfil' %}">Perfil</a>
+                                            <a class="dropdown-item" href="{% url 'coreAdmin:perfil' %}">Mi cuenta</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                                         </li>

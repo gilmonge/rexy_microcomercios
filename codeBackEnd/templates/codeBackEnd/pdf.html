@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Orden N. {{orden.id}}</title>
+    </head>
+    <body>
+        <table style="margin-left:0.5cm;">
+            <tbody>
+                <tr>
+                    <td style="width: 5cm; text-align: left;">
+                        <img src="{{host}}{% static 'codeBackEnd/admin/img/logo.png' %}" style="width: 4cm;">
+                    </td>
+                    <td style="width: 15.5cm; text-align: right; padding-right: 0.15cm;">
+                        <span style="font-size: 24px;">
+                            <strong>Orden N.</strong> {{orden.id}}
+                        </span>
+                        <br/>
+                        <br/>
+                        <span style="font-size: 15px;">
+                            {{orden.fechaRealizado|date:"DATE_FORMAT"}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr style="margin-top: 20px; margin-bottom: 20px; border: 0; border-top: 1px solid #eee;"/>
+
+        <table style="margin-left:0.5cm;">
+            <tbody>
+                <tr>
+                    <td style="width: 20cm; text-align: left;">
+                        <span style="font-size: 18px;">
+                            <strong>De</strong> 
+                        </span>
+                        <br/><br/>
+                        <span style="font-size: 15px;">
+                            Micro Comercios
+                            <br/><br/>
+                            Cartago, Cartago, Costa Rica
+                            <br/><br/>
+                            <a href="mailto:info@rexystudios.com">info@rexystudios.com</a>
+                            <br/><br/>
+                            <br/><br/>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table style="margin-left:0.5cm;">
+            <tbody>
+                <tr>
+                    <td style="width: 10cm; text-align: left;">
+                        <span style="font-size: 18px;">
+                            <strong>Para</strong> 
+                        </span>
+                        <br/><br/>
+                        <span style="font-size: 15px;">
+                            Nombre: {{orden.comercio.owner.first_name}} {{orden.comercio.owner.last_name}}
+                            <br/><br/>
+                            Correo Electr&oacute;nico: {{orden.comercio.owner.email}}
+                            <br/><br/>
+                            Fecha compra: {{orden.fechaRealizado|date:"DATE_FORMAT"}}
+                        </span>
+                    </td>
+                    <td style="width: 10cm; text-align: right; padding-right: 0.15cm;">
+                        <span style="font-size: 18px;">
+                            <strong>Comercio</strong> 
+                        </span>
+                        <br/><br/>
+                        <span style="font-size: 15px;">
+                            {{orden.comercio}}
+                            <br/><br/>
+                            Fecha vencimiento: {{orden.fechaVencimiento|date:"DATE_FORMAT"}}
+                            <br/><br/>
+                            Plan comprado: {{orden.plan}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr style="margin-top: 20px; margin-bottom: 20px; border: 0; border-top: 1px solid #eee;"/>
+
+        <table style="margin-left:0.5cm;">
+            <tbody>
+                <tr>
+                    <td style="width: 20cm; text-align: left;">
+                        <span style="font-size: 18px;">
+                            <strong>Resumen</strong> 
+                            <br/><br/>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 20cm; text-align: center; font-size: 12px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SERVICIO</th>
+                                    <th>DESCRIPCI&Oacute;N</th>
+                                    <th>PRECIO</th>
+                                    <th>CANTIDAD</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1 mes periodo pago</td>
+                                    <td>Plan <b>{{orden.plan}}</b></td>
+                                    <td>${{orden.plan.precio}} US</td>
+                                    <td>1</td>
+                                    <td>${{orden.plan.precio}} US</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"  style="text-align: right;">TOTAL</td>
+                                    <td>${{orden.plan.precio}} US</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr style="margin-top: 20px; margin-bottom: 20px; border: 0;"/>
+
+        <table style="margin-left:0.5cm;">
+            <tbody>
+                <tr>
+                    <td style="width: 20cm; text-align: left;">
+                        <span style="font-size: 11px;">
+                            Micro Comercios es una marca de Rexy Studios.
+                        </span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+    </body>
+</html>

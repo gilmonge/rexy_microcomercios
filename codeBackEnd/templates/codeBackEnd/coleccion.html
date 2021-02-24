@@ -2,15 +2,16 @@
 {% load static %}
 {% load codeBackEnd_extras %}
 {% block title %}{{ coleccion.nombre }} | Editar colección{% endblock %}
+{% block tituloSeccion %}Editar colección{% endblock %}
 
 {% block customHead %}
-        <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 
-        {% if request.session.comercioId != coleccion.comercio.id %}
-            <script>
-                window.location.href = "{% url 'comercioAdmin:catalogo' %}";
-            </script>
-        {% endif %}
+    {% if request.session.comercioId != coleccion.comercio.id %}
+        <script>
+            window.location.href = "{% url 'comercioAdmin:catalogo' %}";
+        </script>
+    {% endif %}
 {% endblock %}
 
 {% block customCss %}
@@ -26,153 +27,130 @@
 {% endblock %}
 
 {% block content %}
-                    <div class="panel-header bg-primary-gradient">
-                        <div class="page-inner py-5">
-                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                                <div>
-                                    <h2 class="text-white pb-2 fw-bold">Editar colección</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <form action="" id="formEditColeccion" method="post" class="row ">
+        {% csrf_token %}
 
-                    <div class="page-inner mt--5">
-                        <div class="row mt--2">
+        <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
+        </div>
 
-                            <div class="col-md-12">
-                                
-                                <div class="col-md-12">
-                                    <div class="card col-md-12">
-                                        <div class="card-body col-md-12 ">
-                                            <form action="" id="formEditColeccion" method="post" class="row ">
-                                                {% csrf_token %}
+        <div class="form-group col-md-6"> {% comment %} Estado {% endcomment %}
+            <label class="form-label">Estado</label>
+            <div class="selectgroup w-100">
+                <label class="selectgroup-item">
+                    <input type="radio" name="estado" value="1" class="selectgroup-input" 
+                        {% if coleccion.estado is True %}
+                            checked=""
+                        {% endif %}
+                    >
+                    <span class="selectgroup-button">Activo</span>
+                </label>
+                <label class="selectgroup-item">
+                    <input type="radio" name="estado" value="0" class="selectgroup-input" 
+                        {% if coleccion.estado is False %}
+                            checked=""
+                        {% endif %}
+                    >
+                    <span class="selectgroup-button">Inactivo</span>
+                </label>
+            </div>
+        </div>
 
-                                                <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
-                                                    {{ form.nombre.label_tag }}
-                                                    {{ form.nombre }}
-                                                    {{ form.nombre.errors }}
-                                                </div>
+        <input type="hidden" name="comercio" value="{{coleccion.comercio.id}}" />
 
-                                                <div class="form-group col-md-6"> {% comment %} Estado {% endcomment %}
-                                                    <label class="form-label">Estado</label>
-                                                    <div class="selectgroup w-100">
-                                                        <label class="selectgroup-item">
-                                                            <input type="radio" name="estado" value="1" class="selectgroup-input" 
-                                                                {% if coleccion.estado is True %}
-                                                                    checked=""
-                                                                {% endif %}
-                                                            >
-                                                            <span class="selectgroup-button">Activo</span>
-                                                        </label>
-                                                        <label class="selectgroup-item">
-                                                            <input type="radio" name="estado" value="0" class="selectgroup-input" 
-                                                                {% if coleccion.estado is False %}
-                                                                    checked=""
-                                                                {% endif %}
-                                                            >
-                                                            <span class="selectgroup-button">Inactivo</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <input type="hidden" name="comercio" value="{{coleccion.comercio.id}}" />
-
-                                                <div class="text-center col-md-8">
-                                                    <input type="submit" class="btn btn-info btn-block" value="Actualizar colección" />
-                                                </div>
-                                                <div class="text-center col-md-4">
-                                                    <input type="button" onclick="window.location = '{% url 'comercioAdmin:coleccionDelete' pk=coleccion.id %}';" class="btn btn-danger btn-block" value="Eliminar" />
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
+        <div class="text-center col-md-8">
+            <input type="submit" class="btn btn-info btn-block" value="Actualizar colección" />
+        </div>
+        <div class="text-center col-md-4">
+            <input type="button" onclick="window.location = '{% url 'comercioAdmin:coleccionDelete' pk=coleccion.id %}';" class="btn btn-danger btn-block" value="Eliminar" />
+        </div>
+    </form>
+    <div class="col-md-12">
+        <hr/>
+    </div>
+    <div class="col-md-12">
+        <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+    </div>
 {% endblock %}
 
 {% block customJs %}
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-        <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
-        <script>
-            {% if 'ok' in request.GET %}
-                $("#msgInfo").html(`
-                    <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado la colección correctamente</p>
-                `)
-                $("#Modal_informacion").modal("show")
-            {% endif %}
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+    <script>
+        {% if 'ok' in request.GET %}
+            $("#msgInfo").html(`
+                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado la colección correctamente</p>
+            `)
+            $("#Modal_informacion").modal("show")
+        {% endif %}
 
-            tinymce.init({
-                selector: '#id_descripcion',
-                height: 300,
-                language: 'es',
-                theme: 'modern',
-                relative_urls: false,
-                remove_script_host : false,
-                plugins: [
-                    'advlist charmap preview hr anchor pagebreak', 
-                    'searchreplace', 
-                    'insertdatetime nonbreaking contextmenu directionality', 
-                    'emoticons paste textcolor colorpicker textpattern '
-                ],
-                toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
-                toolbar2: '',
-                image_advtab: true,
-            });
+        tinymce.init({
+            selector: '#id_descripcion',
+            height: 300,
+            language: 'es',
+            theme: 'modern',
+            relative_urls: false,
+            remove_script_host : false,
+            plugins: [
+                'advlist charmap preview hr anchor pagebreak', 
+                'searchreplace', 
+                'insertdatetime nonbreaking contextmenu directionality', 
+                'emoticons paste textcolor colorpicker textpattern '
+            ],
+            toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
+            toolbar2: '',
+            image_advtab: true,
+        });
 
-            $("#id_imagen").fileinput({
-                theme: "fas",
-                language: 'es',
-                'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
-                overwriteInitial: false,
-                initialPreviewAsData: false,
-                maxFilesNum: 1,
-                showUpload: false,
-                showRemove: false
-            });
-            
-            document.addEventListener('DOMContentLoaded', function() {
-                /* formEditColeccion*/
-                if ( document.getElementById( "formEditColeccion" )) {
-                    FormValidation.formValidation(
-                        document.getElementById('formEditColeccion'),
-                        {
-                            fields: {
-                                nombre: {
-                                    validators:{
-                                        notEmpty: { message: 'El nombre es obligatorio.' },
-                                        stringLength: {
-                                            min: 2,
-                                            message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
-                                        },
-                                        regexp: {
-                                            regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/]+$/,
-                                            message: 'Solo puede contener valores alfabéticos'
-                                        }
+        $("#id_imagen").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: false,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            /* formEditColeccion*/
+            if ( document.getElementById( "formEditColeccion" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formEditColeccion'),
+                    {
+                        fields: {
+                            nombre: {
+                                validators:{
+                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
                                     }
                                 }
-                            },
-                            plugins: {
-                                trigger: new FormValidation.plugins.Trigger(),
-                                bootstrap: new FormValidation.plugins.Bootstrap(),
-                                submitButton: new FormValidation.plugins.SubmitButton(),
-                                defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                                icon: new FormValidation.plugins.Icon({
-                                    valid: 'fa fa-check',
-                                    invalid: 'fa fa-times',
-                                    validating: 'fa fa-refresh',
-                                })
                             }
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
                         }
-                    );
-                }
-                /* formEditColeccion*/
-            });
-        </script>
+                    }
+                );
+            }
+            /* formEditColeccion*/
+        });
+    </script>
 {% endblock %}
