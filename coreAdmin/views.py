@@ -122,26 +122,26 @@ def pagarPlan(request):
                 
                 DatosPlanPaypal = {
                     # tipo de pago recibido
-                    'tipoPago'  : "PlanMicroComercios",
+                    "tipoPago"  : "PlanMicroComercios",
 
                     # Datos del plan
-                    'idPlan'    : idPlan,
-                    'precio'    : costoPlan,
+                    "idPlan"    : idPlan,
+                    "precio"    : costoPlan,
 
                     # Datos del comercio
-                    'comercio'  : request.session["comercioId"],
-                    'cliente'   : request.user.id,
+                    "comercio"  : request.session["comercioId"],
+                    "cliente"   : request.user.id,
                 }
 
                 paypal_dict = {
-                    'business'      : settings.PAYPAL_RECEIVER_EMAIL,
-                    'amount'        : '%.2f' % costoPlan,
-                    'item_name'     : 'Plan a pagar {}'.format(nombrePlan),
-                    'currency_code' : 'USD',
-                    'custom'        : json.dumps(DatosPlanPaypal),
-                    'notify_url'    : 'https://{}{}'.format(host, reverse('paypal-ipn')),
-                    'return_url'    : 'https://{}{}'.format(host, reverse('coreAdmin:payment_done')),
-                    'cancel_return' : 'https://{}{}'.format(host, reverse('coreAdmin:payment_cancelled')),
+                    "business"      : settings.PAYPAL_RECEIVER_EMAIL,
+                    "amount"        : '%.2f' % costoPlan,
+                    "item_name"     : 'Plan a pagar {}'.format(nombrePlan),
+                    "currency_code" : 'USD',
+                    "custom"        : DatosPlanPaypal,#json.dumps()
+                    "notify_url"    : 'https://{}{}'.format(host, reverse('paypal-ipn')),
+                    "return_url"    : 'https://{}{}'.format(host, reverse('coreAdmin:payment_done')),
+                    "cancel_return" : 'https://{}{}'.format(host, reverse('coreAdmin:payment_cancelled')),
                 }
 
                 form = PayPalPaymentsForm(initial=paypal_dict)
@@ -242,6 +242,24 @@ def PerfilPassEdit(request):
             url = '{}?{}'.format(base_url, query_string)
 
             return redirect(url)
+    else:
+        return redirect('login')
+
+def VolverPlanGratis(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            comercio = Comercio.objects.filter(pk=request.session["comercioId"])[0]
+            comercio.fechaVencimiento = None
+            comercio.idplan = 0
+            comercio.save()
+
+            base_url = reverse('comercioAdmin:configuracion')
+            return redirect(base_url)
+
+        else:
+            base_url = reverse('comercioAdmin:configuracion')
+
+            return redirect(base_url)
     else:
         return redirect('login')
 
