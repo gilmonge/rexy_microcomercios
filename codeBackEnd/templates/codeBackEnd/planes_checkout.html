@@ -231,9 +231,35 @@
                 </div>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     {% if idPlan != "0" %}
-                        {{ form.render }}
+                        <form action="{{form.get_endpoint}}" id="PayPalForm" method="post" style="width: 100%;">
+                            <input type="hidden" name="cmd" id="id_cmd"                       value="{{form.cmd.value}}">
+                            <input type="hidden" name="charset" id="id_charset"               value="{{form.charset.value}}">
+                            <input type="hidden" name="currency_code" id="id_currency_code"   value="{{form.currency_code.value}}">
+                            <input type="hidden" name="no_shipping" id="id_no_shipping"       value="{{form.no_shipping.value}}">
+                            <input type="hidden" name="business" id="id_business"             value="{{form.business.value}}">
+                            <input type="hidden" name="amount" id="id_amount"                 value="{{form.amount.value}}">
+                            <input type="hidden" name="item_name" id="id_item_name"           value="{{form.item_name.value}}">
+                            <input type="hidden" name="custom" id="id_custom"                 value="{{form.custom.value}}">
+                            <input type="hidden" name="notify_url" id="id_notify_url"         value="{{form.notify_url.value}}">
+                            <input type="hidden" name="cancel_return" id="id_cancel_return"   value="{{form.cancel_return.value}}">
+                            <input type="hidden" name="return" id="id_return"                 value="{{form.return.value}}">
+                            
+                            <button type="submit" class="btn btn-info" style="font-size: 15px; background: #002E6A!important; border-color: #002E6A!important; font-size: 22px;">
+                                Pagar con <img src="{% static 'codeBackEnd/admin/img/paypal.png' %}" style="width: 6rem;">
+                            </button>
+                        </form>
+
+                        <div class="col-12" style="padding: 0;">
+                            <img class="col img-responsive" src="{% static 'codeBackEnd/admin/img/svg/visa.svg' %}" style="width: 4rem;">
+                            <img class="col img-responsive" src="{% static 'codeBackEnd/admin/img/svg/mastercard.svg' %}" style="width: 4rem;">
+                            <img class="col img-responsive" src="{% static 'codeBackEnd/admin/img/svg/american-express.svg' %}" style="width: 4rem;">
+                            <img class="col img-responsive" src="{% static 'codeBackEnd/admin/img/svg/discover.svg' %}" style="width: 4rem;">
+                        </div>
                     {% else %}
-                        {% comment %} <button class="btn btn-info" style="font-size: 15px; background: #002E6A!important; border-color: #002E6A!important;">Volver al plan gratis</button> {% endcomment %}
+                        <form method="post" action="{% url 'coreAdmin:cancelarSuscripcion' %}" style="width: 100%;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-info" style="font-size: 15px; background: #002E6A!important; border-color: #002E6A!important;">Volver al plan gratis</button>
+                        </form>
                     {% endif %}
                 </div>
             </div>
