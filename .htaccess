@@ -25,7 +25,7 @@
 	deny from all  
 </files>
 
-<files rexystudios.com.conf>  
+<files microcomercios.com.conf>  
 	order allow,deny  
 	deny from all  
 </files>
