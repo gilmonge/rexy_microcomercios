@@ -4,7 +4,6 @@
 {% block tituloSeccion %}Editar comercio{% endblock %}
 
 {% block customHead %}
-    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 {% endblock %}
 
 {% block customCss %}
@@ -20,6 +19,89 @@
             background-color: #1a2035 !important;
             border-color: #2f374b !important;
         }
+        
+        .nav-link {
+            color: #4a5568;
+        }
+
+        .gutters-sm {
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+        .gutters-sm>.col, .gutters-sm>[class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+        .mb-3, .my-3 {
+            margin-bottom: 1rem!important;
+        }
+
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+        .h-100 {
+            height: 100%!important;
+        }
+        .shadow-none {
+            box-shadow: none!important;
+        }
+
+        .tab-config a.active, .tab-config a:hover{
+            background: #011128 !important;
+            color: #fff !important;
+            border: 1px #011128 !important;
+            border-radius: 0px !important;
+        }
+        
+        .tab-config a.active .svg-menu, .tab-config a:hover .svg-menu{
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+        }
+
+        .tab-config a {
+            background: #fff !important;
+            color: #011128 !important;
+            border: 1px #fff !important;
+            border-radius: 0px !important;
+        }
+
+        .tab-config-lateral a{
+            text-align: left !important;
+            padding-left: 15px !important;
+        }
+
+        .url-custom .input-group-prepend .input-group-text{
+            background-color: #001737ad;
+            color: #fff;
+            border-color: #003B87 !important;
+            padding-right: 2px;
+        }
+        .url-custom .input-group-prepend .input-group-text:hover{
+            cursor: default;
+        }
+        .url-custom .form-control{
+            border-left: 0;
+            padding-left: 4px;
+        }
+
+        body[data-background-color=dark] .selectgroup-button {
+            border: 1px solid #ffffff;
+            background: #ffffff !important;
+        }
+        .selectgroup-input:checked+.selectgroup-button {
+            border-color: #ffffff;
+            z-index: 1;
+            background: #011128 !important;
+            color: #fff !important;
+        }
+        .selectgroup-input:checked+.selectgroup-button img {
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+        }
+        .selectgroup-input:focus+.selectgroup-button {
+            border-color: #ffffff;
+            z-index: 2;
+            color: #fff;
+        }
     </style>
 {% endblock %}
 
@@ -27,135 +109,295 @@
     <form action="" id="formEditComercio" method="post" enctype="multipart/form-data" class="row ">
         {% csrf_token %}
 
-        <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
-            {{ form.nombre.label_tag }}
-            {{ form.nombre }}
-            {{ form.nombre.errors }}
-        </div>
+        <div class="container">
+            <div class="row gutters-sm">
+                <div class="col-md-4 d-none d-md-block">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
+                                <a href="#informacion" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                    Información
+                                </a>
+                                <a href="#acerca-de" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/about-us.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                    Acerca de la empresa
+                                </a>
+                                <a href="#imagen-tienda" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/website.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                    Imagen de la tienda
+                                </a>
+                                <a href="#redes-sociales" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/social-media.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                    Redes sociales
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group col-md-6"> {% comment %} Nombre corto {% endcomment %}
-            {{ form.slug.label_tag }}
-            {{ form.slug }}
-            {{ form.slug.errors }}
-        </div>
-        
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
+                            <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
+                                <li class="nav-item">
+                                    <a href="#informacion" data-toggle="tab" class="nav-link has-icon active">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px;">
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#acerca-de" data-toggle="tab" class="nav-link has-icon">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/about-us.svg' %}" class="svg-menu" style="width: 40px;">
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#imagen-tienda" data-toggle="tab" class="nav-link has-icon">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/website.svg' %}" class="svg-menu" style="width: 40px;">
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#redes-sociales" data-toggle="tab" class="nav-link has-icon">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/social-media.svg' %}" class="svg-menu" style="width: 40px;">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
+                        <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
+                            <div class="tab-pane active" id="informacion">
+                                <h6 class="text-white">INFORMACIÓN DE COMERCIO</h6>
+                                <hr>
 
-        <div class="form-group col-md-12"> {% comment %} eslogan {% endcomment %}
-            {{ form.eslogan.label_tag }}
-            {{ form.eslogan }}
-            {{ form.eslogan.errors }}
-        </div>
+                                <div class="row">
+                                    <div class="form-group col-md-5">
+                                        <label for="id_nombre">Nombre</label>
+                                        {{ form.nombre }}
+                                        {{ form.nombre.errors }}
+                                    </div>
 
-        <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
-            {{ form.descripcion.label_tag }}
-            {{ form.descripcion }}
-            {{ form.descripcion.errors }}
-        </div>
+                                    <div class="form-group col-md-7">
+                                        <label for="id_slug">URL</label>
+                                        <div class="input-group mb-3 url-custom">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">https://microcomercios.com/</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="id_slug" name="slug" aria-describedby="basic-addon3" value="{{ form.slug.value }}">
+                                        </div>
+                                        {{ form.slug.errors }}
+                                    </div>
 
-        <div class="form-group col-md-12">
-            <label for="socialFacebook">
-                Redes Sociales <br/>
-                <span class="badge badge-light" style="font-size: 0.8rem;">En caso de no poseer alguna red social la puedes dejar vacío</span>
-            </label>
-            
-        </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="id_eslogan">Eslogan</label>
+                                        {{ form.eslogan }}
+                                        {{ form.eslogan.errors }}
+                                    </div>
 
-        <div class="form-group col-md-4">
-            <label for="socialFacebook">URL Facebook:</label>
-            <input type="text" id="socialFacebook" value="" class="form-control" placeholder="URL Facebook:" maxlength="200">
-        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="contactoTel">Teléfono</label>
+                                        <input type="text" id="contactoTel" name="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
+                                    </div>
 
-        <div class="form-group col-md-4">
-            <label for="socialTwitter">URL Twitter:</label>
-            <input type="text" id="socialTwitter" value="" class="form-control" placeholder="URL Twitter:" maxlength="200">
-        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="contactoEmail">Correo electrónico</label>
+                                        <input type="email" id="contactoEmail" name="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
+                                    </div>
 
-        <div class="form-group col-md-4">
-            <label for="socialTiktok">URL Tiktok:</label>
-            <input type="text" id="socialTiktok" value="" class="form-control" placeholder="URL Tiktok:" maxlength="200">
-        </div>
+                                    <div class="form-group" style="display: none;">
+                                        {{ form.contacto }}
+                                    </div>
 
-        <div class="form-group col-md-4">
-            <label for="socialInstagram">URL Instagram:</label>
-            <input type="text" id="socialInstagram" value="" class="form-control" placeholder="URL Instagram:" maxlength="200">
-        </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="form-group col-md-4">
-            <label for="socialTwitch">URL Twitch:</label>
-            <input type="text" id="socialTwitch" value="" class="form-control" placeholder="URL Twitch:" maxlength="200">
-        </div>
-        
-        <div class="form-group" style="display: none;"> {% comment %} Redes sociales {% endcomment %}
-            {{ form.redessociales.label_tag }}
-            {{ form.redessociales }}
-            {{ form.redessociales.errors }}
-        </div>
+                            <div class="tab-pane" id="acerca-de">
+                                <h6 class="text-white">ACERCA DE LA EMPRESA</h6>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="fullName">Descripción:</label>
+                                    {{ form.descripcion }}
+                                    {{ form.descripcion.errors }}
+                                </div>
 
-        <div class="form-group col-md-12">
-            <label for="socialFacebook">
-                Información de contácto <br/>
-                <span class="badge badge-light" style="font-size: 0.8rem;">En caso de no poseer alguna información de contácto lo puedes dejar vacío</span>
-            </label>
-        </div>
+                                <div class="form-group">
+                                    <label for="fullName">Imagen</label>
+                                    <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
+                                </div>
 
-        <div class="form-group col-md-4">
-            <label for="contactoTel">Teléfono:</label>
-            <input type="text" id="contactoTel" value="" class="form-control" placeholder="Teléfono:" maxlength="200">
-        </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
 
-        <div class="form-group col-md-4">
-            <label for="contactoEmail">Correo electrónico:</label>
-            <input type="email" id="contactoEmail" value="" class="form-control" placeholder="Correo electrónico:" maxlength="200">
-        </div>
+                            <div class="tab-pane" id="imagen-tienda">
+                                <h6 class="text-white">IMAGEN DE LA TIENDA</h6>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="fullName">Imagen principal:</label>
+                                    <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
+                                </div>
 
-        <div class="form-group" style="display: none;"> {% comment %} Contacto {% endcomment %}
-            {{ form.contacto.label_tag }}
-            {{ form.contacto }}
-            {{ form.contacto.errors }}
-        </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
 
-        <div class="form-group col-md-6">
-            <label for="id_img_superior">Imagen superior:</label>
-            <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
-        </div>
+                            <div class="tab-pane" id="redes-sociales">
+                                <h6 class="text-white">REDES SOCIALES</h6>
+                                <hr>
+                                
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="50" class="selectgroup-input" id="ck_Facebook">
+                                        <span class="selectgroup-button">
+                                            <img src="{% static 'codeBackEnd/admin/img/svg/facebook.svg' %}" class="svg-menu" style="width: 30px;">
+                                        </span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="100" class="selectgroup-input" id="ck_Instagram">
+                                        <span class="selectgroup-button">
+                                            <img src="{% static 'codeBackEnd/admin/img/svg/instagram.svg' %}" class="svg-menu" style="width: 30px;">
+                                        </span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="150" class="selectgroup-input" id="ck_Twitter">
+                                        <span class="selectgroup-button">
+                                            <img src="{% static 'codeBackEnd/admin/img/svg/twitter.svg' %}" class="svg-menu" style="width: 30px;">
+                                        </span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="200" class="selectgroup-input" id="ck_Tiktok">
+                                        <span class="selectgroup-button">
+                                            <img src="{% static 'codeBackEnd/admin/img/svg/tik-tok.svg' %}" class="svg-menu" style="width: 30px;">
+                                        </span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="200" class="selectgroup-input" id="ck_Twitch">
+                                        <span class="selectgroup-button">
+                                            <img src="{% static 'codeBackEnd/admin/img/svg/twitch.svg' %}" class="svg-menu" style="width: 30px;">
+                                        </span>
+                                    </label>
+                                </div>
 
-        <div class="form-group col-md-6">
-            <label for="id_img_acercade">Imagen "Acerca de":</label>
-            <input type="file" name="img_acercade" class="form-control" placeholder="" accept="image/*" id="id_img_acercade">
+                                <div class="form-group" id="content_Facebook">
+                                    <label for="socialFacebook">Facebook:</label>
+                                    <input type="text" id="socialFacebook" name="socialFacebook" class="form-control" placeholder="URL Facebook:" maxlength="200">
+                                </div>
+                                
+                                <div class="form-group" id="content_Instagram">
+                                    <label for="socialInstagram">Instagram:</label>
+                                    <input type="text" id="socialInstagram" name="socialInstagram" class="form-control" placeholder="URL Instagram:" maxlength="200">
+                                </div>
+                                
+                                <div class="form-group" id="content_Twitter">
+                                    <label for="socialTwitter">Twitter:</label>
+                                    <input type="text" id="socialTwitter" name="socialTwitter" class="form-control" placeholder="URL Twitter:" maxlength="200">
+                                </div>
+                                
+                                <div class="form-group" id="content_Tiktok">
+                                    <label for="socialTiktok">Tiktok:</label>
+                                    <input type="text" id="socialTiktok" name="socialTiktok" class="form-control" placeholder="URL Tiktok:" maxlength="200">
+                                </div>
+                                
+                                <div class="form-group" id="content_Twitch">
+                                    <label for="socialTwitch">Twitch:</label>
+                                    <input type="text" id="socialTwitch" name="socialTwitch" class="form-control" placeholder="URL Twitch:" maxlength="200">
+                                </div>
+
+                                <div class="form-group" style="display: none;">
+                                    {{ form.redessociales }}
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <input type="hidden" name="owner" class="form-control" value="{{comercio.owner.id}}" id="id_owner">
         
         <input type="hidden" name="idplan" class="form-control" value="{{comercio.idplan}}" id="id_idplan">
-            
-        <div class="text-center col-md-12">
-            <input type="submit" class="btn btn-info btn-block" id="btnForm" value="Actualizar comercio" />
-        </div>
     </form>
 {% endblock %}
 
 {% block customJs %}
-    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
-    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
-
     <script>
         {% if 'ok' in request.GET %}
-            $("#msgInfo").html(`
-                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
-            `)
-            $("#Modal_informacion").modal("show")
+            swal({
+                title: "Realizado",
+                text: "Se ha actualizado el comercio correctamente",
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "OK",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true
+                    }
+                }
+            });
         {% endif %}
 
         function cargarSocial(){
             var id_redessociales = $('#id_redessociales').val()
             var redessociales = JSON.parse(id_redessociales)
-            
-            $('#socialFacebook').val(redessociales.facebook)
-            $('#socialTwitter').val(redessociales.twitter)
-            $('#socialTiktok').val(redessociales.tiktok)
-            $('#socialInstagram').val(redessociales.instagram)
-            $('#socialTwitch').val(redessociales.twitch)
+
+            if(redessociales.facebook.activo){ 
+                $("#content_Facebook").show()
+                $("#ck_Facebook").attr("checked", "true")
+                $('#socialFacebook').val(redessociales.facebook.url)
+            } else{ 
+                $("#content_Facebook").hide()
+                $("#ck_Facebook").removeAttr('checked')
+                $('#socialFacebook').val("")
+            }
+
+            if(redessociales.instagram.activo){ 
+                $("#content_Instagram").show()
+                $("#ck_Instagram").attr("checked", "true")
+                $('#socialInstagram').val(redessociales.instagram.url)
+            } else{ 
+                $("#content_Instagram").hide()
+                $("#ck_Instagram").removeAttr('checked')
+                $('#socialInstagram').val("")
+            }
+
+            if(redessociales.twitter.activo){ 
+                $("#content_Twitter").show()
+                $("#ck_Twitter").attr("checked", "true")
+                $('#socialTwitter').val(redessociales.twitter.url)
+            } else{ 
+                $("#content_Twitter").hide()
+                $("#ck_Twitter").removeAttr('checked')
+                $('#socialTwitter').val("")
+            }
+
+            if(redessociales.tiktok.activo){ 
+                $("#content_Tiktok").show()
+                $("#ck_Tiktok").attr("checked", "true")
+                $('#socialTiktok').val(redessociales.tiktok.url)
+            } else{ 
+                $("#content_Tiktok").hide()
+                $("#ck_Tiktok").removeAttr('checked')
+                $('#socialTiktok').val()
+            }
+
+            if(redessociales.twitch.activo){ 
+                $("#content_Twitch").show()
+                $("#ck_Twitch").attr("checked", "true")
+                $('#socialTwitch').val(redessociales.twitch.url)
+            } else{ 
+                $("#content_Twitch").hide()
+                $("#ck_Twitch").removeAttr('checked')
+                $('#socialTwitch').val("")
+            }
         }
         cargarSocial()
 
@@ -174,6 +416,12 @@
         $( "#socialInstagram" ).keyup(function() { CambiarResdSocial('instagram', $('#socialInstagram').val() ) })
         $( "#socialTwitch" ).keyup(function() { CambiarResdSocial('twitch', $('#socialTwitch').val() ) })
 
+        $( "#ck_Facebook" ).change(function() { CambiarEstadoResdSocial('facebook', "Facebook") })
+        $( "#ck_Twitter" ).change(function() { CambiarEstadoResdSocial('twitter', "Twitter") })
+        $( "#ck_Tiktok" ).change(function() { CambiarEstadoResdSocial('tiktok', "Tiktok") })
+        $( "#ck_Instagram" ).change(function() { CambiarEstadoResdSocial('instagram', "Instagram") })
+        $( "#ck_Twitch" ).change(function() { CambiarEstadoResdSocial('twitch', "Twitch") })
+
         $( "#contactoTel" ).keyup(function() { CambiarContacto('telefono', $('#contactoTel').val() ) })
         $( "#contactoEmail" ).keyup(function() { CambiarContacto('email', $('#contactoEmail').val() ) })
 
@@ -181,7 +429,26 @@
             var id_redessociales = $('#id_redessociales').val()
             var redessociales = JSON.parse(id_redessociales)
 
-            redessociales[id] = url
+            redessociales[id]["url"] = url
+            $('#id_redessociales').val(JSON.stringify(redessociales))
+        }
+
+        function CambiarEstadoResdSocial(id, label){
+            var id_redessociales = $('#id_redessociales').val()
+            var redessociales = JSON.parse(id_redessociales)
+
+            redessociales[id]["activo"] = !redessociales[id]["activo"]
+
+            if(redessociales[id]["activo"]){ 
+                $(`#content_${label}`).show()
+                $(`#ck_${label}`).attr("checked", "true")
+            } else{ 
+                $(`#content_${label}`).hide()
+                $(`#ck_${label}`).removeAttr('checked')
+                $(`#social${label}`).val("")
+                redessociales[id]["url"] = ""
+            }
+
             $('#id_redessociales').val(JSON.stringify(redessociales))
         }
 
@@ -311,7 +578,6 @@
                             },
                             socialFacebook: {
                                 validators: {
-                                    notEmpty: { message: 'Este campo es obligatorio.' },
                                     regexp: {
                                         regexp: /^(?:(?:https):\/\/)(?:www.)facebook.com\/?([\w\-]*)+$/,
                                         message: 'Solo se admiten direcciones Facebook'
@@ -320,7 +586,6 @@
                             },
                             socialTwitter: {
                                 validators: {
-                                    notEmpty: { message: 'Este campo es obligatorio.' },
                                     regexp: {
                                         regexp: /^(?:(?:https):\/\/)twitter.com\/?([\w\-]*)+$/,
                                         message: 'Solo se admiten direcciones Twitter'
@@ -329,7 +594,6 @@
                             },
                             socialTiktok: {
                                 validators: {
-                                    notEmpty: { message: 'Este campo es obligatorio.' },
                                     regexp: {
                                         regexp: /^(?:(?:https):\/\/)(?:www.)tiktok.com\/@?([\w\-]*)+$/,
                                         message: 'Solo se admiten direcciones TikTok'
@@ -338,7 +602,6 @@
                             },
                             socialInstagram: {
                                 validators: {
-                                    notEmpty: { message: 'Este campo es obligatorio.' },
                                     regexp: {
                                         regexp: /^(?:(?:https):\/\/)(?:www.)instagram.com\/?([\w\-]*)?(?:\/)+$/,
                                         message: 'Solo se admiten direcciones Instagram'
@@ -347,7 +610,6 @@
                             },
                             socialTwitch: {
                                 validators: {
-                                    notEmpty: { message: 'Este campo es obligatorio.' },
                                     regexp: {
                                         regexp: /^(?:(?:https):\/\/)(?:www.)twitch.tv\/?([\w\-]*)+$/,
                                         message: 'Solo se admiten direcciones Twitch'

@@ -15,6 +15,20 @@
                 window.location.href = "{% url 'coreAdmin:dashboard' %}";
             </script>
         {% endif %}
+
+        <style>
+            .errorlist {
+                padding: 0 !important;
+            }
+            .errorlist li {
+                color: #fff !important;
+                background-color: #dc3545;
+                list-style: none;
+                padding: .25em .4em;
+                border-radius: .25rem;
+                margin-bottom: 5px;
+            }
+        </style>
     </head>
 
     <body data-background-color="dark">

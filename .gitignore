@@ -150,3 +150,4 @@ dmypy.json
 
 *.txt
 !requisitos.txt
+!readme.txt

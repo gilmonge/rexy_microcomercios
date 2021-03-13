@@ -18,18 +18,27 @@ from xhtml2pdf import pisa
 
 def dashboard(request):
     if request.user.is_authenticated:
-        
+        perfil =  None
         datos = {}
         """ Comprueba que exite el perfil del usuario y sino lo crea """
         existe = Perfil.objects.filter(usuario=request.user).exists()
+
         if existe == False:
             Perfil.objects.get_or_create(usuario=request.user)
+
+            return redirect('comercioAdmin:comercioAdd')
+        else:
+            perfil = Perfil.objects.get_or_create(usuario=request.user)[0]
 
         if request.session.get('comercioId', None) == "dummy":
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
             datos["comercio"] = comercio
+
+        if perfil.primerIngreso is False:
+            return redirect('comercioAdmin:comercioAdd')
+        else:
+            return render(request, "codeBackEnd/dashboard.html", datos)
         
-        return render(request, "codeBackEnd/dashboard.html", datos)
     else:
         return redirect('login')
 

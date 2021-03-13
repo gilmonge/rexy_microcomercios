@@ -15,16 +15,66 @@
             <h6 class="h3 mb-1">Registro</h6>
         </div>
         <form action="" method="post">{% csrf_token %}
-            {{form.as_p}}
+            <div class="form-group">
+                <label class="form-control-label">Usuario</label>
+                <div class="input-group">
+                    <div class="input-group-prepend mb-2">
+                        <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                    </div>
+                    {{form.username}}
+                </div>
+                {{form.username.errors}}
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label">Correo electrónico</label>
+                <div class="input-group">
+                    <div class="input-group-prepend mb-2">
+                        <span class="input-group-text"><i class="far fa-envelope"></i></span>
+                    </div>
+                    {{form.email}}
+                </div>
+                {{form.email.errors}}
+            </div>
+
+            <div class="form-group">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <label class="form-control-label">Contraseña</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend mb-2">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    {{form.password1}}
+                </div>
+                {{form.password1.errors}}
+            </div>
+
+            <div class="form-group">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <label class="form-control-label">Repite la contraseña</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend mb-2">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    {{form.password2}}
+                </div>
+                {{form.password2.errors}}
+            </div>
             
             <p><input type="submit" class="btn btn-block btn-dark" value="Registrarme"></p>
             
             <div class="row mt-3">
                 <div class="col-sm-6 mb-3">
-                    <a href="{% url 'login' %}" type="button" class="btn btn-block btn-outline-success">¿Posees cuenta? ¡Ingresa aquí!</a>
+                    <a href="{% url 'login' %}" type="button" class="btn btn-block btn-outline-success">¿Posees cuenta?<br/>¡Ingresa aquí!</a>
                 </div>
                 <div class="col-sm-6">
-                    <a  href="{% url "password_reset" %}" type="button" class="btn btn-block btn-outline-dark">¿Olvidaste la contraseña? ¡Recupérala!</a>
+                    <a  href="{% url "password_reset" %}" type="button" class="btn btn-block btn-outline-dark">¿Olvidaste la contraseña?<br/>¡Recupérala!</a>
                 </div>
             </div>
         </form>

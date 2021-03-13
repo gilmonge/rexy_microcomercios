@@ -82,37 +82,37 @@
                                         <i class="fas fa-store"></i>
                                     </a>
                                 </li>
-                                {% if comercio.redessociales.facebook != '' %}
+                                {% if comercio.redessociales.facebook.activo %}
                                     <li>
-                                        <a href="{{comercio.redessociales.facebook}}" target="_blank" class="">
+                                        <a href="{{comercio.redessociales.facebook.url}}" target="_blank" class="">
                                             <span class="icon-facebook"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if comercio.redessociales.instagram != '' %}
+                                {% if comercio.redessociales.instagram.activo %}
                                     <li>
-                                        <a href="{{comercio.redessociales.instagram}}" target="_blank" class="">
+                                        <a href="{{comercio.redessociales.instagram.url}}" target="_blank" class="">
                                             <span class="icon-instagram"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if comercio.redessociales.twitter != '' %}
+                                {% if comercio.redessociales.twitter.activo %}
                                     <li>
-                                        <a href="{{comercio.redessociales.twitter}}" target="_blank" class="">
+                                        <a href="{{comercio.redessociales.twitter.url}}" target="_blank" class="">
                                             <span class="icon-twitter"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if comercio.redessociales.twitch != '' %}
+                                {% if comercio.redessociales.twitch.activo %}
                                     <li>
-                                        <a href="{{comercio.redessociales.twitch}}" target="_blank" class="">
+                                        <a href="{{comercio.redessociales.twitch.url}}" target="_blank" class="">
                                             <span class="icon-twitch"></span>
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if comercio.redessociales.tiktok != '' %}
+                                {% if comercio.redessociales.tiktok.activo %}
                                     <li>
-                                        <a href="{{comercio.redessociales.tiktok}}" target="_blank" class="">
+                                        <a href="{{comercio.redessociales.tiktok.url}}" target="_blank" class="">
                                             <i class="fab fa-tiktok"></i>
                                         </a>
                                     </li>
@@ -185,23 +185,23 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {% if comercio.redessociales.facebook != '' or comercio.redessociales.instagram != '' or comercio.redessociales.twitter != '' or comercio.redessociales.twitch != '' or comercio.redessociales.tiktok != '' %}
+                                    {% if comercio.redessociales.facebook.activo or comercio.redessociales.instagram.activo  or comercio.redessociales.twitter.activo or comercio.redessociales.twitch.activo or comercio.redessociales.tiktok.activo %}
                                         <h2 class="footer-heading mb-4">Síguenos</h2>
                                     {% endif %}
-                                    {% if comercio.redessociales.facebook != '' %}
-                                        <a href="{{comercio.redessociales.facebook}}" target="_blank" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                                    {% if comercio.redessociales.facebook.activo %}
+                                        <a href="{{comercio.redessociales.facebook.url}}" target="_blank" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                                     {% endif %}
-                                    {% if comercio.redessociales.instagram != '' %}
-                                        <a href="{{comercio.redessociales.instagram}}" target="_blank" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+                                    {% if comercio.redessociales.instagram.activo %}
+                                        <a href="{{comercio.redessociales.instagram.url}}" target="_blank" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
                                     {% endif %}
-                                    {% if comercio.redessociales.twitter != '' %}
-                                        <a href="{{comercio.redessociales.twitter}}" target="_blank" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+                                    {% if comercio.redessociales.twitter.activo%}
+                                        <a href="{{comercio.redessociales.twitter.url}}" target="_blank" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                                     {% endif %}
-                                    {% if comercio.redessociales.twitch != '' %}
-                                        <a href="{{comercio.redessociales.twitch}}" target="_blank" class="pl-3 pr-3"><span class="icon-twitch"></span></span></a>
+                                    {% if comercio.redessociales.twitch.activo %}
+                                        <a href="{{comercio.redessociales.twitch.url}}" target="_blank" class="pl-3 pr-3"><span class="icon-twitch"></span></span></a>
                                     {% endif %}
-                                    {% if comercio.redessociales.tiktok != '' %}
-                                        <a href="{{comercio.redessociales.tiktok}}" target="_blank" class="pl-3 pr-3"><i class="fab fa-tiktok"></i></span></a>
+                                    {% if comercio.redessociales.tiktok.activo %}
+                                        <a href="{{comercio.redessociales.tiktok.url}}" target="_blank" class="pl-3 pr-3"><i class="fab fa-tiktok"></i></span></a>
                                     {% endif %}
                                 </div>
                             </div>

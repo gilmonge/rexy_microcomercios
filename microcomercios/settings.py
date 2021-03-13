@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'coreComercios',
     'codeHome',
     'paypal.standard.ipn',
+    'templates',
 ]
 
 MIDDLEWARE = [

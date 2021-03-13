@@ -55,7 +55,7 @@
 
                             {% if request.session.comercioId is not None %}
                                 <li class="nav-item">
-                                    <a href="{% url 'comercioAdmin:comercio' pk=request.session.comercioId %}">
+                                    <a href="{% url 'comercioAdmin:comercio' %}">
                                         <img src="{% static 'codeBackEnd/admin/img/svg/comercio.svg' %}">
                                         <p>Comercio</p>
                                     </a>

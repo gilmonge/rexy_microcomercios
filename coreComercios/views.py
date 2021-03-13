@@ -2,13 +2,15 @@ import json
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+#from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.http import Http404, JsonResponse
-from coreAdmin.models import Parametro
+from coreAdmin.models import Parametro, Perfil
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm
 from django import forms
+import base64
 
 # Create your views here.
 def consultarDisponibilidadComercio(request, comercio_slug):
@@ -50,7 +52,6 @@ def comercio (request, comercio_slug):
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
     try:
-        import base64
         try:
             Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
         except:
@@ -100,15 +101,43 @@ class comercioCreateView(CreateView):
     model = Comercio
     form_class = ComercioForm
     template_name = 'codeBackEnd/comercioAdd.html'
-    success_url = reverse_lazy('comercioAdmin:comercios' )
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+
+    def get_success_url(self):
+        datos = {}
+
+        comercio = Comercio.objects.filter(id=self.object.id)[0]
+        usuarioPerfil = Perfil.objects.filter(usuario=comercio.owner)[0]
+
+        usuarioPerfil.primerIngreso = True
+        usuarioPerfil.save()
+
+        datos["comercio"] = comercio
+
+        return reverse_lazy('coreAdmin:dashboardSeleccion', kwargs={'pk': self.object.id})
 
 class comercioUpdateView(UpdateView):
     model = Comercio
     form_class = ComercioForm
     template_name = 'codeBackEnd/comercio.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
     
+    def get_object(self):
+        comercio = Comercio.objects.filter(id=self.request.session["comercioId"])[0]
+        return comercio
+
     def get_success_url(self):
-        return reverse_lazy('comercioAdmin:comercio', args=[self.object.id]) + '?ok'
+        return reverse_lazy('comercioAdmin:comercio') + '?ok'
 
 def catalogo(request):
     if request.user.is_authenticated:
@@ -176,19 +205,49 @@ class productoCreateView(CreateView):
     form_class = ProductoForm
     template_name = 'codeBackEnd/productoAdd.html'
     success_url = reverse_lazy('comercioAdmin:catalogo' )
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
 
 class productoUpdateView(UpdateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'codeBackEnd/producto.html'
     
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        producto = Producto.objects.filter(id=Desencryptado)[0]
+        return producto
+
     def get_success_url(self):
-        return reverse_lazy('comercioAdmin:producto', args=[self.object.id]) + '?ok'
+        return reverse_lazy('comercioAdmin:producto', args=[encoded_id(self.object.id)]) + '?ok'
 
 class productoDeleteView(DeleteView):
     model = Producto
     template_name = 'codeBackEnd/producto_confirm_delete.html'
     success_url = reverse_lazy('comercioAdmin:catalogo')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        producto = Producto.objects.filter(id=Desencryptado)[0]
+        return producto
 
 def add_image(request):
     if request.method == 'POST':
@@ -229,16 +288,55 @@ class coleccionCreateView(CreateView):
     form_class = ColeccionForm
     template_name = 'codeBackEnd/coleccionAdd.html'
     success_url = reverse_lazy('comercioAdmin:catalogo' )
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
 
 class coleccionUpdateView(UpdateView):
     model = Coleccion
     form_class = ColeccionForm
     template_name = 'codeBackEnd/coleccion.html'
     
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        coleccion = Coleccion.objects.filter(id=Desencryptado)[0]
+        return coleccion
+
     def get_success_url(self):
-        return reverse_lazy('comercioAdmin:coleccionEdit', args=[self.object.id]) + '?ok'
+        return reverse_lazy('comercioAdmin:coleccionEdit', args=[encoded_id(self.object.id)]) + '?ok'
 
 class coleccionDeleteView(DeleteView):
     model = Coleccion
     template_name = 'codeBackEnd/coleccion_confirm_delete.html'
     success_url = reverse_lazy('comercioAdmin:catalogo')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        coleccion = Coleccion.objects.filter(id=Desencryptado)[0]
+        return coleccion
+
+# Otras funcionalidades 
+
+def encoded_id(id):
+    Encryptado = base64.b64encode(bytes(str(id), 'ascii'))
+    """ Encryptado = str(Encryptado)
+    Encryptado.replace("b'", '')
+    Encryptado.replace("'", '') """
+    return Encryptado.decode("utf-8")
