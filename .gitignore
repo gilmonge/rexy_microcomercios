@@ -151,3 +151,5 @@ dmypy.json
 *.txt
 !requisitos.txt
 !readme.txt
+dist/
+!codeBackEnd/static/codeBackEnd/admin/assets/formvalidation-v1.5.0/dist
