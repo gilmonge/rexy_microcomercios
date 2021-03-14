@@ -109,15 +109,11 @@ class comercioCreateView(CreateView):
             return super().dispatch(request, *args, *kwargs)
 
     def get_success_url(self):
-        datos = {}
-
         comercio = Comercio.objects.filter(id=self.object.id)[0]
         usuarioPerfil = Perfil.objects.filter(usuario=comercio.owner)[0]
 
         usuarioPerfil.primerIngreso = True
         usuarioPerfil.save()
-
-        datos["comercio"] = comercio
 
         return reverse_lazy('coreAdmin:dashboardSeleccion', kwargs={'pk': self.object.id})
 
@@ -204,13 +200,15 @@ class productoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'codeBackEnd/productoAdd.html'
-    success_url = reverse_lazy('comercioAdmin:catalogo' )
     
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated == False:
             return redirect('login')
         else:
             return super().dispatch(request, *args, *kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('comercioAdmin:producto', kwargs={ 'pk': encoded_id( self.object.id ) })
 
 class productoUpdateView(UpdateView):
     model = Producto
@@ -256,7 +254,7 @@ def add_image(request):
         if form.is_valid():
             form.save()
             producto = get_object_or_404(Producto, id=pk)
-    return redirect('comercioAdmin:producto', pk = producto.id)
+    return redirect('comercioAdmin:producto', pk = encoded_id(producto.id))
 
 def del_image(request):
     if request.method == 'POST':
@@ -264,7 +262,7 @@ def del_image(request):
         pkImagen = request.POST['pkImagen']
         ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
         ImagenesProducto.objects.filter(id=pkImagen).delete()
-    return redirect('comercioAdmin:producto', pk = pk)
+    return redirect('comercioAdmin:producto', pk = encoded_id(pk))
 
 def default_image(request):
     if request.method == 'POST':
@@ -279,9 +277,8 @@ def default_image(request):
         imagen = ImagenesProducto.objects.filter(id=pkImagen)[0]
         imagen.principal = 1
         imagen.save()
-        #ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
-        #ImagenesProducto.objects.filter(id=pkImagen).delete()
-    return redirect('comercioAdmin:producto', pk = pk)
+        
+    return redirect('comercioAdmin:producto', pk = encoded_id(pk))
 
 class coleccionCreateView(CreateView):
     model = Coleccion
