@@ -173,6 +173,10 @@ EMAIL_HOST_USER = customSettings["emailConf"]["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = customSettings["emailConf"]["EMAIL_HOST_PASSWORD"]
 EMAIL_PORT = customSettings["emailConf"]["EMAIL_PORT"]
 
+# reCAPTCHA
+RECAPTCHA_PUBLIC = '6Le3cH8aAAAAALvxDfIdT6xoHik9Sn1Rxvwsn5MF'
+RECAPTCHA_PRIVATE = '6Le3cH8aAAAAAMYRvzxcVtjozuht8gE74FqexRZZ'
+
 # Key Fernet
 FERNET_KEY = 'x00iG4BM3q1gA2rg6wwoijlqs9fT0IVBGMfqGo-NHZw='
 

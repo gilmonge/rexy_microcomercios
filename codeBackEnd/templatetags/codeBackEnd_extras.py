@@ -87,3 +87,9 @@ def get_ordenesComercio(pkcomercio):
     ordenes = OrdenesComercios.objects.filter(comercio=pkcomercio)
     
     return ordenes
+
+@register.simple_tag
+def get_reCAPTCHA_PUBLIC():
+    from django.conf import settings
+    
+    return settings.RECAPTCHA_PUBLIC

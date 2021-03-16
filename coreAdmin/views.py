@@ -1,3 +1,5 @@
+import requests
+import json
 from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -339,3 +341,65 @@ def render_to_pdf(template_src, context_dict={}):
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
+
+def onLogin(request):
+    ErrorRequest = reverse_lazy('login') + "?error"
+    if request.method!="POST":
+        return redirect(ErrorRequest)
+    else:
+        """ reCaptcha """
+        if validaReCaptcha(request.POST.get("g-recaptcha-response"))==False:
+            return redirect(ErrorRequest)
+        """ reCaptcha """
+        
+        user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
+        print(ErrorRequest)
+        if user is not None:
+            login(request, user)
+            return redirect('coreAdmin:dashboard')
+        else:
+            return redirect(ErrorRequest)
+
+def onRegister(request):
+    ErrorRequest = reverse_lazy('coreAdmin:signup') + "?error"
+    
+    if request.method!="POST":
+        return redirect(ErrorRequest)
+    else:
+        """ reCaptcha """
+        if validaReCaptcha(request.POST.get("g-recaptcha-response"))==False:
+            return redirect(ErrorRequest)
+        """ reCaptcha """
+        
+        username=request.POST.get("username")
+        email=request.POST.get("email")
+        password1=request.POST.get("password1")
+        password2=request.POST.get("password2")
+
+        if password1 == password2:
+            try:
+                user=CustomUser.objects.create_user(username=username,password=password,email=email,user_type=1)
+                user.save()
+                messages.success(request,"Successfully Created Admin")
+                return HttpResponseRedirect(reverse("show_login"))
+            except:
+                return redirect(ErrorRequest)
+        else:
+            return redirect(ErrorRequest)
+
+
+def validaReCaptcha(captcha_token):
+    """ reCaptcha """
+    from django.conf import settings
+
+    cap_url="https://www.google.com/recaptcha/api/siteverify"
+    
+    cap_data={
+        "secret":settings.RECAPTCHA_PRIVATE,
+        "response":captcha_token
+    }
+    cap_server_response=requests.post(url=cap_url,data=cap_data)
+    cap_json=json.loads(cap_server_response.text)
+
+    return cap_json['success']
+    """ reCaptcha """
