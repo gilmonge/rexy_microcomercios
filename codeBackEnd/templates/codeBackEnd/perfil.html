@@ -97,7 +97,7 @@
 
                     <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
                         <div class="tab-pane active" id="profile">
-                            <h6>INFORMACIÓN DE PERFIL</h6>
+                            <h6 class="text-white">INFORMACIÓN DE PERFIL</h6>
                             <hr>
                             <form action="{% url 'coreAdmin:perfilInformacionEdit' %}" method="post">
                                 {% csrf_token %}
@@ -133,7 +133,7 @@
                         </div>
 
                         <div class="tab-pane" id="security">
-                            <h6>CONFIGURACIONES DE SEGURIDAD</h6>
+                            <h6 class="text-white">CONFIGURACIONES DE SEGURIDAD</h6>
                             <hr>
                             <form action="{% url 'coreAdmin:perfilPassEdit' %}" method="post">
                                 {% csrf_token %}

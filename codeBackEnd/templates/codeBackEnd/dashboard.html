@@ -18,6 +18,12 @@
     </style>
     {% if request.session.comercioId is None %}
         <style>
+            .card-stats{
+                background: rgba(0,0,0,0.2) !important;
+            }
+            .card-stats:hover{
+                background: rgba(0,0,0,0.4) !important;
+            }
         </style>
     {% endif %}
 {% endblock %}
@@ -66,6 +72,27 @@
                             </div>
                         </div>
                     {% endfor%}
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="card card-stats card-round" onclick="window.location.href = '{% url 'comercioAdmin:comercioAdd' %}';" style="cursor: pointer;">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-big text-center">
+                                            <i class="flaticon-add text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-9 col-stats">
+                                        <div class="numbers">
+                                            <h4 class="card-title">Agregar nuevo comercio</h4>
+                                            <p class="card-category">Crea un nuevo comercio</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         {% endif %}

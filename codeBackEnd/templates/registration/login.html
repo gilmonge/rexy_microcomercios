@@ -1,5 +1,6 @@
 {% extends 'registration/base.html' %}
 {% load static %}
+{% load codeBackEnd_extras %}
 {% block title %}Login{% endblock %}
 {% block content %}
     <div>
@@ -9,7 +10,8 @@
                 Ingresa para disfrutar.
             </p>
         </div>
-        <form action="" method="post">{% csrf_token %}
+        <form action="{% url 'coreAdmin:onLogin' %}" method="post">
+            {% csrf_token %}
             {% if form.non_field_errors %}
                 <div class="form-group">
                     <div class="alert alert-danger" role="alert">
@@ -39,6 +41,10 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" autocomplete="off">
                 </div>
             </div>
+            <div class="form-group">
+                {% get_reCAPTCHA_PUBLIC as KEY %}
+                <div class="g-recaptcha" data-sitekey="{{KEY}}"></div>
+            </div>
             <button type="submit" class="btn btn-block btn-dark">Ingresar</button>
 
             <div class="row mt-3">
@@ -54,4 +60,19 @@
         </form>
         <!-- Alternative login -->
     </div>
+{% endblock %}
+
+{% block customScript %}
+    <script>
+        {% if 'error' in request.GET %}
+            swal("¡Ha ocurrido un error!", "Inténtelo de nuevo", {
+                icon : "error",
+                buttons: {
+                    confirm: {
+                        className : 'btn btn-danger'
+                    }
+                },
+            });
+        {% endif %}
+    </script>
 {% endblock %}

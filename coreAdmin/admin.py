@@ -3,7 +3,7 @@ from .models import Perfil, Plan, Parametro, Faq
 # Register your models here.
 
 class PerfilAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'tipoIdentificacion', 'identificacion', 'telefono')
+    list_display = ('usuario', 'tipoIdentificacion', 'identificacion', 'telefono', 'primerIngreso')
 
 class PlanAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'iva', 'precio')

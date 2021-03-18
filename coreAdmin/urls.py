@@ -4,6 +4,8 @@ from django.views.generic import RedirectView
 
 coreAdmin_patterns = ([
     path('', adminViews.dashboard, name="dashboard"),
+    path('onLogin', adminViews.onLogin, name="onLogin"),
+    path('onRegister', adminViews.onRegister, name="onRegister"),
     path('registro/', adminViews.SingUpView.as_view(), name="signup"),
     path('cuenta', adminViews.verPerfil, name="perfil"),
     path('cuenta/informacionEdit', adminViews.PerfilInformacionEdit, name="perfilInformacionEdit"),

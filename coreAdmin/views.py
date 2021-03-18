@@ -1,3 +1,5 @@
+import requests
+import json
 from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -18,18 +20,27 @@ from xhtml2pdf import pisa
 
 def dashboard(request):
     if request.user.is_authenticated:
-        
+        perfil =  None
         datos = {}
         """ Comprueba que exite el perfil del usuario y sino lo crea """
         existe = Perfil.objects.filter(usuario=request.user).exists()
+
         if existe == False:
             Perfil.objects.get_or_create(usuario=request.user)
+
+            return redirect('comercioAdmin:comercioAdd')
+        else:
+            perfil = Perfil.objects.get_or_create(usuario=request.user)[0]
 
         if request.session.get('comercioId', None) == "dummy":
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
             datos["comercio"] = comercio
+
+        if perfil.primerIngreso is False:
+            return redirect('comercioAdmin:comercioAdd')
+        else:
+            return render(request, "codeBackEnd/dashboard.html", datos)
         
-        return render(request, "codeBackEnd/dashboard.html", datos)
     else:
         return redirect('login')
 
@@ -330,3 +341,66 @@ def render_to_pdf(template_src, context_dict={}):
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
+
+def onLogin(request):
+    ErrorRequest = reverse_lazy('login') + "?error"
+    if request.method!="POST":
+        return redirect(ErrorRequest)
+    else:
+        """ reCaptcha """
+        if validaReCaptcha(request.POST.get("g-recaptcha-response"))==False:
+            return redirect(ErrorRequest)
+        """ reCaptcha """
+        
+        user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
+
+        if user is not None:
+            login(request, user)
+            return redirect('coreAdmin:dashboard')
+        else:
+            return redirect(ErrorRequest)
+
+def onRegister(request):
+    ErrorRequest = reverse_lazy('coreAdmin:signup') + "?error"
+    
+    if request.method!="POST":
+        return redirect(ErrorRequest)
+    else:
+        """ reCaptcha """
+        if validaReCaptcha(request.POST.get("g-recaptcha-response"))==False:
+            return redirect(ErrorRequest)
+        """ reCaptcha """
+        
+        username=request.POST.get("username")
+        email=request.POST.get("email")
+        password1=request.POST.get("password1")
+        password2=request.POST.get("password2")
+
+        if password1 == password2:
+            try:
+                user = User.objects.create(username=username, password=password1, email=email)
+                user.save()
+                Perfil.objects.get_or_create(usuario=user)
+                login(request, user)
+                return redirect('coreAdmin:dashboard')
+            except:
+                return redirect(ErrorRequest)
+        else:
+            return redirect(ErrorRequest)
+
+
+def validaReCaptcha(captcha_token):
+    """ reCaptcha """
+    from django.conf import settings
+
+    cap_url="https://www.google.com/recaptcha/api/siteverify"
+    
+    cap_data={
+        "secret":settings.RECAPTCHA_PRIVATE,
+        "response":captcha_token
+    }
+    cap_server_response=requests.post(url=cap_url,data=cap_data)
+    cap_json=json.loads(cap_server_response.text)
+
+    return cap_json['success']
+    """ reCaptcha """

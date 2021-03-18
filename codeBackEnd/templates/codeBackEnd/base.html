@@ -43,6 +43,20 @@
         <!-- Rexy -->
         <link rel="stylesheet" href="{% static 'codeBackEnd/admin/assets/rexy/rexy.css' %}">
 
+        <style>
+            .errorlist {
+                padding: 0 !important;
+            }
+            .errorlist li {
+                color: #fff !important;
+                background-color: #dc3545;
+                list-style: none;
+                padding: .25em .4em;
+                border-radius: .25rem;
+                margin-bottom: 5px;
+            }
+        </style>
+
         {% block customCss %}{% endblock %}
 
     </head>

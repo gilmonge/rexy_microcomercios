@@ -1,7 +1,8 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load humanize %}
 {% load static %}
-{% load  codeBackEnd_extras %}
+{% load codeBackEnd_extras %}
+{% load codeFrontEnd_extras %}
 {% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
 {% block tituloSeccion %}Cátalogo del comercio {{ comercio.nombre }}{% endblock %}
 
@@ -125,7 +126,8 @@
                         <div class="col-12 px-0">
                             <div class="card card-stats card-info card-info-custom card-round">
                                 <div class="card-body" style="padding: 0px !important;">
-                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                    {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=id_encryptado %}';">
                                         {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
                                         
                                         <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
@@ -133,7 +135,7 @@
                                         </div>
                                         <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                             <div class="numbers" style="width: 90%;">
-                                                <p class="card-category">{{ ProductoColeccion.nombre }} {{ ProductoColeccion.comercio }}</p>
+                                                <p class="card-category">{{ ProductoColeccion.nombre }}</p>
                                                 <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
                                                         
                                                 <div class="card-category estado estado-producto">
@@ -147,7 +149,9 @@
                                                         </div>
                                                     {% endif %}
                                                 </div>
-                                                <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                                
+                                                {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                                <a href="{% url 'comercioAdmin:productoDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -184,14 +188,18 @@
                 {% if coleccion.estado is True %}
                     <div class="alert alert-success" role="alert">
                         <span>{{ coleccion.nombre }} | Activo</span>
-                        <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
+                        
+                        {% encoded_id coleccion.id as id_encryptado %}
+                        <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=id_encryptado %}';">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
                     </div>
                 {% else %}
                     <div class="alert alert-danger" role="alert">
                         <span>{{ coleccion.nombre }} | Inactivo</span>
-                        <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=coleccion.id %}';">
+
+                        {% encoded_id coleccion.id as id_encryptado %}
+                        <button type="button" class="btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=id_encryptado %}';">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
                     </div>
@@ -204,7 +212,8 @@
                             <div class="col-12 px-0">
                                 <div class="card card-stats card-info card-info-custom card-round">
                                     <div class="card-body" style="padding: 0px !important;">
-                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                        {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=id_encryptado %}';">
                                             {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
                                             
                                             <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
@@ -226,7 +235,9 @@
                                                             </div>
                                                         {% endif %}
                                                     </div>
-                                                    <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                                    
+                                                    {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                                    <a href="{% url 'comercioAdmin:productoDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,7 +292,8 @@
                         <div class="col-12 px-0">
                             <div class="card card-stats card-info card-info-custom card-round">
                                 <div class="card-body" style="padding: 0px !important;">
-                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=ProductoColeccion.id %}';">
+                                    {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=id_encryptado %}';">
                                         {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
                                         
                                         <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
@@ -289,7 +301,7 @@
                                         </div>
                                         <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                             <div class="numbers" style="width: 90%;">
-                                                <p class="card-category">{{ ProductoColeccion.nombre }} {{ ProductoColeccion.comercio }}</p>
+                                                <p class="card-category">{{ ProductoColeccion.nombre }}</p>
                                                 <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
                                                         
                                                 <div class="card-category estado estado-producto">
@@ -303,7 +315,9 @@
                                                         </div>
                                                     {% endif %}
                                                 </div>
-                                                <a href="{% url 'comercioAdmin:productoDelete' pk=ProductoColeccion.id %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                                
+                                                {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                                <a href="{% url 'comercioAdmin:productoDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
                                             </div>
                                         </div>
                                     </div>

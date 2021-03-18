@@ -26,6 +26,7 @@ class Perfil(models.Model):
     distrito            = models.CharField(verbose_name="Distrito", max_length=4, default=0)
     barrio              = models.CharField(verbose_name="Barrio", max_length=4, default=0)
     direccion           = models.TextField(verbose_name="Dirección", default="")
+    primerIngreso       = models.BooleanField(verbose_name="Ha ingresado", default=False)
 
 class Parametro(models.Model):
     parametro   = models.CharField(verbose_name="Identificador del parametro", max_length=100,)

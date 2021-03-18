@@ -24,10 +24,16 @@
     <form action="" id="formAddProducto" method="post" enctype="multipart/form-data" class="row ">
         {% csrf_token %}
 
-        <div class="form-group col-md-12"> {% comment %} Nombre {% endcomment %}
+        <div class="form-group col-md-6"> {% comment %} Nombre {% endcomment %}
             {{ form.nombre.label_tag }}
             {{ form.nombre }}
             {{ form.nombre.errors }}
+        </div>
+
+        <div class="form-group col-md-6"> {% comment %} Precio {% endcomment %}
+            {{ form.precio.label_tag }}
+            {{ form.precio }}
+            {{ form.precio.errors }}
         </div>
 
         <div class="form-group col-md-12"> {% comment %} Descripcion {% endcomment %}
@@ -36,19 +42,8 @@
             
         </div>
 
-        <div class="form-group col-md-4"> {% comment %} Precio {% endcomment %}
-            {{ form.precio.label_tag }}
-            {{ form.precio }}
-            {{ form.precio.errors }}
-        </div>
 
-        <div class="form-group col-md-4" style="
-            {% load codeBackEnd_extras  %}
-            {% get_Comercio request.session.comercioId as Comercio_info %}
-            {% for ComercioInfo in Comercio_info %}
-                {% if ComercioInfo.idplan == 0 %} display:none; {% endif %}
-            {% endfor%}
-        "> {% comment %} Colecciones {% endcomment %}
+        <div class="form-group col-md-4" style="display:none;"> {% comment %} Colecciones {% endcomment %}
             <label class="form-label">Colecciones</label>
             <div class="selectgroup w-100">
                 <select id="id_colecciones" name="colecciones" class="selectpicker w-100" multiple data-live-search="true">
@@ -60,15 +55,15 @@
             </div>
         </div>
 
-        <div class="form-group col-md-4"> {% comment %} Estado {% endcomment %}
+        <div class="form-group col-md-4" style="display: none;"> {% comment %} Estado {% endcomment %}
             <label class="form-label">Estado</label>
             <div class="selectgroup w-100">
                 <label class="selectgroup-item">
-                    <input type="radio" name="estado" value="1" class="selectgroup-input" checked="" >
+                    <input type="radio" name="estado" value="1" class="selectgroup-input" >
                     <span class="selectgroup-button">Activo</span>
                 </label>
                 <label class="selectgroup-item">
-                    <input type="radio" name="estado" value="0" class="selectgroup-input" >
+                    <input type="radio" name="estado" value="0" class="selectgroup-input" checked="" >
                     <span class="selectgroup-button">Inactivo</span>
                 </label>
             </div>

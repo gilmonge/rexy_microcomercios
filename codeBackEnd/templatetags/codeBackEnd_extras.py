@@ -1,8 +1,14 @@
 from random import randint
 from django import template
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, OrdenesComercios
+from coreAdmin.models import Perfil
 
 register = template.Library()
+
+@register.simple_tag
+def get_primerIngreso(user):
+    perfil = Perfil.objects.filter(usuario=user)[0]
+    return perfil.primerIngreso
 
 @register.simple_tag
 def get_Comercios_list(owner):
@@ -81,3 +87,9 @@ def get_ordenesComercio(pkcomercio):
     ordenes = OrdenesComercios.objects.filter(comercio=pkcomercio)
     
     return ordenes
+
+@register.simple_tag
+def get_reCAPTCHA_PUBLIC():
+    from django.conf import settings
+    
+    return settings.RECAPTCHA_PUBLIC

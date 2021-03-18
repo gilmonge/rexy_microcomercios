@@ -1,6 +1,7 @@
 {% extends 'codeBackEnd/base.html' %}
 {% load static %}
 {% load codeBackEnd_extras %}
+{% load codeFrontEnd_extras %}
 {% block title %}{{ coleccion.nombre }} | Editar colección{% endblock %}
 {% block tituloSeccion %}Editar colección{% endblock %}
 
@@ -64,7 +65,8 @@
             <input type="submit" class="btn btn-info btn-block" value="Actualizar colección" />
         </div>
         <div class="text-center col-md-4">
-            <input type="button" onclick="window.location = '{% url 'comercioAdmin:coleccionDelete' pk=coleccion.id %}';" class="btn btn-danger btn-block" value="Eliminar" />
+            {% encoded_id coleccion.id as id_encryptado %}
+            <input type="button" onclick="window.location = '{% url 'comercioAdmin:coleccionDelete' pk=id_encryptado %}';" class="btn btn-danger btn-block" value="Eliminar" />
         </div>
     </form>
     <div class="col-md-12">
