@@ -353,7 +353,7 @@ def onLogin(request):
         """ reCaptcha """
         
         user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
-        print(ErrorRequest)
+
         if user is not None:
             login(request, user)
             return redirect('coreAdmin:dashboard')
@@ -378,10 +378,11 @@ def onRegister(request):
 
         if password1 == password2:
             try:
-                user=CustomUser.objects.create_user(username=username,password=password,email=email,user_type=1)
+                user = User.objects.create(username=username, password=password1, email=email)
                 user.save()
-                messages.success(request,"Successfully Created Admin")
-                return HttpResponseRedirect(reverse("show_login"))
+                Perfil.objects.get_or_create(usuario=user)
+                login(request, user)
+                return redirect('coreAdmin:dashboard')
             except:
                 return redirect(ErrorRequest)
         else:

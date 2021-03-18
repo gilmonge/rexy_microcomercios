@@ -1,5 +1,6 @@
 {% extends 'registration/base.html' %}
 {% load static %}
+{% load codeBackEnd_extras %}
 {% block title %}Registro{% endblock %}
 {% block content %}
     <style>
@@ -14,7 +15,7 @@
         <div class="mb-5">
             <h6 class="h3 mb-1">Registro</h6>
         </div>
-        <form action="" method="post">
+        <form action="{% url 'coreAdmin:onRegister' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label class="form-control-label">Usuario</label>
@@ -68,6 +69,11 @@
                 {{form.password2.errors}}
             </div>
             
+            <div class="form-group">
+                {% get_reCAPTCHA_PUBLIC as KEY %}
+                <div class="g-recaptcha" data-sitekey="{{KEY}}"></div>
+            </div>
+            
             <p><input type="submit" class="btn btn-block btn-dark" value="Registrarme"></p>
             
             <div class="row mt-3">
@@ -81,4 +87,19 @@
         </form>
         <!-- Alternative login -->
     </div>
+{% endblock %}
+
+{% block customScript %}
+    <script>
+        {% if 'error' in request.GET %}
+            swal("¡Ha ocurrido un error!", "Inténtelo de nuevo", {
+                icon : "error",
+                buttons: {
+                    confirm: {
+                        className : 'btn btn-danger'
+                    }
+                },
+            });
+        {% endif %}
+    </script>
 {% endblock %}
