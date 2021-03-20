@@ -1,5 +1,6 @@
 import requests
 import json
+import datetime
 from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -404,3 +405,14 @@ def validaReCaptcha(captcha_token):
 
     return cap_json['success']
     """ reCaptcha """
+
+def revision_planes(request):
+    diaConsulta = datetime.datetime.now()
+    comercios = Comercio.objects.filter(fechaVencimiento__lte=diaConsulta, fechaVencimiento__isnull=False)
+
+    for comercio in comercios:
+        comercio.idplan=0
+        comercio.fechaVencimiento=None
+        comercio.save()
+
+    return HttpResponse("Comercios revisados")

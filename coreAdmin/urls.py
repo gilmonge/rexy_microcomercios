@@ -17,4 +17,7 @@ coreAdmin_patterns = ([
     path('pagoRechazado', adminViews.payment_cancelled, name="payment_cancelled"),
     path('verOrden/<pk>', adminViews.mostrarPdf.as_view(), name="ordenPdfVer"),
     path('cancelarSuscripcion', adminViews.VolverPlanGratis, name="cancelarSuscripcion"),
+
+    # cron
+    path('cron_revision_planes', adminViews.revision_planes, name="cron_revision_planes"),
 ], "coreAdmin")
