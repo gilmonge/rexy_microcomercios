@@ -20,7 +20,7 @@ from coreComercios.urls import coreComercios_patterns, coreComerciosAdmin_patter
 
 from django.conf import settings
 
-from coreAdmin.urls import coreAdmin_patterns
+from coreAdmin.urls import coreAdmin_patterns, coreAdminCron_patterns
 
 from codeHome.urls import codeHome_patterns
 
@@ -34,6 +34,9 @@ urlpatterns = [
     path('comerciosAdmin/', include(coreAdmin_patterns)),
     path('comerciosAdmin/', include(coreComerciosAdmin_patterns)),
     
+    #cron
+    path('cron/', include(coreAdminCron_patterns)),
+
     # Paths del auth
     path('comerciosAdmin/', include('django.contrib.auth.urls')),
 
