@@ -49,6 +49,46 @@ def comercio (request, comercio_slug):
 
     return render(request, "codeFrontEnd/comercio.html", datos)
 
+def acercaDe (request, comercio_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    
+    # trae los productos relacionados al comercio
+
+    datos = {
+        'comercio':comercio,
+    }
+
+    return render(request, "codeFrontEnd/acerca_de.html", datos)
+
+def ComercioProductos (request, comercio_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    
+    # trae los productos relacionados al comercio
+    productos = Producto.objects.filter(comercio=comercio.id, estado=True)
+
+    datos = {
+        'comercio':comercio,
+        'productos':productos,
+    }
+
+    return render(request, "codeFrontEnd/productos.html", datos)
+
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
     try:

@@ -235,6 +235,16 @@
                                 <h6 class="text-white">IMAGEN DE LA TIENDA</h6>
                                 <hr>
                                 <div class="form-group">
+                                    <label for="fullName">Logo:</label>
+                                    <input type="file" name="logo" class="form-control" placeholder="" accept="image/x-png" id="id_logo">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fullName">Icono de la página:</label>
+                                    <input type="file" name="favicon" class="form-control" placeholder="" accept="image/x-png" id="id_favicon">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="fullName">Imagen principal:</label>
                                     <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
                                 </div>
@@ -502,6 +512,32 @@
             showRemove: false,
             initialPreview: [
                 "/media/{{ comercio.img_acercade }}",
+            ],
+        });
+        $("#id_logo").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['png', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+            initialPreview: [
+                "/media/{{ comercio.logo }}",
+            ],
+        });
+        $("#id_favicon").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['png', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+            initialPreview: [
+                "/media/{{ comercio.favicon }}",
             ],
         });
         

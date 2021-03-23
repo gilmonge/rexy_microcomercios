@@ -25,6 +25,42 @@ def custom_upload_ComercioSup(instance, filename):
 
     return ruta
 
+def custom_upload_ComercioLogo(instance, filename):
+    # Genera el momento de carga de imagen
+    timestamp = datetime.timestamp(datetime.now())
+
+    # Separa el nombre y la extension, lo invierte para pasarlo de primero
+    datosImagen = filename.split('.')
+    datosImagen.reverse()
+
+    #ruta donde se va a guardar
+    ruta = "comercios/{}.{}".format(timestamp, datosImagen[0])
+
+    # Borra la imagen anterior en caso de que exista
+    if instance.pk is not None:
+        old_instance = Comercio.objects.get(pk=instance.pk)
+        old_instance.img_superior.delete()
+
+    return ruta
+
+def custom_upload_ComercioFavicon(instance, filename):
+    # Genera el momento de carga de imagen
+    timestamp = datetime.timestamp(datetime.now())
+
+    # Separa el nombre y la extension, lo invierte para pasarlo de primero
+    datosImagen = filename.split('.')
+    datosImagen.reverse()
+
+    #ruta donde se va a guardar
+    ruta = "comercios/{}.{}".format(timestamp, datosImagen[0])
+
+    # Borra la imagen anterior en caso de que exista
+    if instance.pk is not None:
+        old_instance = Comercio.objects.get(pk=instance.pk)
+        old_instance.img_superior.delete()
+
+    return ruta
+
 def custom_upload_Comercio(instance, filename):
     # Genera el momento de carga de imagen
     timestamp = datetime.timestamp(datetime.now())
@@ -71,8 +107,10 @@ class Comercio(models.Model):
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     redessociales   = models.TextField(verbose_name="Redes Sociales")
     contacto        = models.TextField(verbose_name="Contácto")
-    img_superior    = ResizedImageField(upload_to=custom_upload_ComercioSup, size=[900, 600], null=False, default="comercios/noimageSup.jpg", verbose_name="Imagen superior")
-    img_acercade    = ResizedImageField(upload_to=custom_upload_Comercio, size=[500, 433], null=False, default="comercios/noimageAbout.jpg", verbose_name="Imagen de acerca de")
+    img_superior    = ResizedImageField(upload_to=custom_upload_ComercioSup, size=[900, 600], quality=100, null=False, default="comercios/noimage.jpg", verbose_name="Imagen superior")
+    img_acercade    = ResizedImageField(upload_to=custom_upload_Comercio, size=[900, 600], null=False, default="comercios/noimage.jpg", verbose_name="Imagen de acerca de")
+    logo            = ResizedImageField(upload_to=custom_upload_ComercioLogo, size=[400, 144], force_format='PNG', null=False, default="comercios/noimage.jpg", verbose_name="Logo")
+    favicon         = ResizedImageField(upload_to=custom_upload_ComercioFavicon, size=[50, 50], force_format='PNG', null=False, default="comercios/noimage.jpg", verbose_name="Favicon")
     idplan          = models.IntegerField(verbose_name="Plan", default="0")
     fechaVencimiento= models.DateField(verbose_name="Fecha vencimiento", blank=True, null=True)
     
@@ -102,7 +140,7 @@ class Producto(models.Model):
 
 class ImagenesProducto(models.Model):
     producto    = models.ForeignKey(Producto, verbose_name="Producto asociado", on_delete=models.CASCADE)
-    imagen      = ResizedImageField(upload_to=custom_upload_Producto, size=[600, 600], null=False, default="productos/noimageProd.jpg", verbose_name="Imagen del producto")
+    imagen      = ResizedImageField(upload_to=custom_upload_Producto, size=[600, 600], null=False, default="productos/noimage.jpg", verbose_name="Imagen del producto")
     principal   = models.BooleanField(verbose_name="Imagen principal", default=False)
     estado      = models.BooleanField(verbose_name="Estado", default=False)
     

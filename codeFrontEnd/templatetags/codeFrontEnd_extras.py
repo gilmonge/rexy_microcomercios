@@ -28,13 +28,13 @@ def get_Imagenes(pkProducto):
     return imagenesArray
 
 @register.simple_tag
-def Def_theme(idTheme):
+def Def_theme(idPlan):
     theme = ''
 
-    if(idTheme == 1):
+    if(idPlan == 0):
         theme = 'base'
-    elif(idTheme == 2):
-        theme = 'dark'
+    elif(idPlan == 1):
+        theme = 'malefashion'
     else:
         pass
 

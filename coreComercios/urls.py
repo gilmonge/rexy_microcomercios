@@ -8,6 +8,8 @@ from coreComercios.views import comercioUpdateView, comercioCreateView, \
 
 coreComercios_patterns = ([
     path('<slug:comercio_slug>/', views.comercio, name='comercio'),
+    path('<slug:comercio_slug>/acerca-de', views.acercaDe, name='acercaDe'),
+    path('<slug:comercio_slug>/productos', views.ComercioProductos, name='productos'),
     path(r'<slug:comercio_slug>/p/<pk>/<slug:prod_slug>/', views.producto, name="producto"),
 ], "comercio")
     

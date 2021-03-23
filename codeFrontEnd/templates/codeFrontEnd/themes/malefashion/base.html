@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}{% endblock %} | Micro Comercios</title>
+        <meta name="description" content="{{comercio.eslogan}}"/>
+        <link rel="icon" href="{{comercio.favicon.url}}" type="image/x-icon"/>
+        
+        {% block customHead %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="index, follow">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="revisit-after" content="7 days">
+        <meta name="rating" content="General">
+        <meta name="keywords" content="shop,ecommerce,micro,negocio,comercio">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/bootstrap.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/elegant-icons.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/magnific-popup.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/nice-select.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/owl.carousel.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/slicknav.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'codeFrontEnd/themes/malefashion/css/style.css' %}" type="text/css">
+
+        
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/0265b153d4.js" ></script>
+        
+        {% block customcss %}{% endblock %}
+    </head>
+
+    <body>
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Offcanvas Menu Begin -->
+        <div class="offcanvas-menu-overlay"></div>
+        <div class="offcanvas-menu-wrapper">
+            <div class="offcanvas__option">
+                <div class="offcanvas__links">
+                    <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class="">
+                        <i class="fas fa-store"></i>
+                    </a>
+                    {% if comercio.redessociales.facebook.activo %}
+                        <a href="{{comercio.redessociales.facebook.url}}" target="_blank" class="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    {% endif %}
+                    {% if comercio.redessociales.instagram.activo %}
+                        <a href="{{comercio.redessociales.instagram.url}}" target="_blank" class="">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    {% endif %}
+                    {% if comercio.redessociales.twitter.activo %}
+                        <a href="{{comercio.redessociales.twitter.url}}" target="_blank" class="">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    {% endif %}
+                    {% if comercio.redessociales.twitch.activo %}
+                        <a href="{{comercio.redessociales.twitch.url}}" target="_blank" class="">
+                            <i class="fab fa-twitch"></i>
+                        </a>
+                    {% endif %}
+                    {% if comercio.redessociales.tiktok.activo %}
+                        <a href="{{comercio.redessociales.tiktok.url}}" target="_blank" class="">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="offcanvas__links">
+                    {% if comercio.contacto.telefono != '' %}
+                        <a href="tel://{{comercio.contacto.telefono}}"> 
+                            <i class="fas fa-phone-alt"></i>
+                            <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.telefono}}</span>
+                        </a>
+                    {% endif %}
+                    {% if comercio.contacto.email != '' %}
+                        <a href="mailto:{{comercio.contacto.email}}">
+                            <i class="far fa-envelope"></i>
+                            <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.email}}</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="offcanvas__nav__option">
+                <a href="#" class="search-switch"><img src="{% static 'codeFrontEnd/themes/malefashion/img/icon/search.png' %}" alt=""></a>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+        <!-- Offcanvas Menu End -->
+
+        <!-- Header Section Begin -->
+        <header class="header">
+            <div class="header__top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-7">
+                            <div class="header__top__left">
+                                <div class="header__top__links">
+                                    <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class="">
+                                        <i class="fas fa-store"></i>
+                                    </a>
+                                    {% if comercio.redessociales.facebook.activo %}
+                                        <a href="{{comercio.redessociales.facebook.url}}" target="_blank" class="">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.redessociales.instagram.activo %}
+                                        <a href="{{comercio.redessociales.instagram.url}}" target="_blank" class="">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.redessociales.twitter.activo %}
+                                        <a href="{{comercio.redessociales.twitter.url}}" target="_blank" class="">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.redessociales.twitch.activo %}
+                                        <a href="{{comercio.redessociales.twitch.url}}" target="_blank" class="">
+                                            <i class="fab fa-twitch"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.redessociales.tiktok.activo %}
+                                        <a href="{{comercio.redessociales.tiktok.url}}" target="_blank" class="">
+                                            <i class="fab fa-tiktok"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5">
+                            <div class="header__top__right">
+                                <div class="header__top__links">
+                                    {% if comercio.contacto.telefono != '' %}
+                                        <a href="tel://{{comercio.contacto.telefono}}"> 
+                                            <i class="fas fa-phone-alt"></i>
+                                            <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.telefono}}</span>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.contacto.email != '' %}
+                                        <a href="mailto:{{comercio.contacto.email}}">
+                                            <i class="far fa-envelope"></i>
+                                            <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.email}}</span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="header__logo">
+                            <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}">
+                                <img src="{{comercio.logo.url}}" style="max-width: 120px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li class="active"><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}">Inicio</a></li>
+                                <li><a href="{% url 'comercio:acercaDe' comercio_slug=comercio.slug|slugify %}">Nosotros</a></li>
+                                <li><a href="{% url 'comercio:productos' comercio_slug=comercio.slug|slugify %}">Productos</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <div class="header__nav__option">
+                            <a href="#" class="search-switch"><img src="{% static 'codeFrontEnd/themes/malefashion/img/icon/search.png' %}" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas__open"><i class="fa fa-bars"></i></div>
+            </div>
+        </header>
+        <!-- Header Section End -->
+
+        {% block customContent %}{% endblock %}
+
+        <!-- Footer Section Begin -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer__about">
+                            <div class="footer__logo">
+                                <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}">
+                                    <img src="{{comercio.logo.url}}" style="max-width: 160px;">
+                                </a>
+                            </div>
+                            <p>{{comercio.eslogan}}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                        <div class="footer__widget">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+                        <div class="footer__widget">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                        <div class="footer__widget">
+                            <h6>Información</h6>
+                            <ul>
+                                <li><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}">Inicio</a></li>
+                                <li><a href="{% url 'comercio:acercaDe' comercio_slug=comercio.slug|slugify %}">Nosotros</a></li>
+                                <li><a href="{% url 'comercio:productos' comercio_slug=comercio.slug|slugify %}">Productos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="footer__copyright__text">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            <p>
+                                &copy; Derechos reservados <script>document.write(new Date().getFullYear());</script> <a href="https://microcomercios.com/" target="_blank" >Micro Comercios</a> | <a href="https://rexystudios.com/" target="_blank" >Rexy Studios</a>
+                            </p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer Section End -->
+
+        <!-- Search Begin -->
+        <div class="search-model">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="search-close-switch">+</div>
+                <form class="search-model-form">
+                    <input type="text" id="search-input" placeholder="Buscar producto">
+                </form>
+            </div>
+        </div>
+        <!-- Search End -->
+
+        <!-- Js Plugins -->
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/jquery.nicescroll.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/jquery.countdown.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/jquery.slicknav.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/mixitup.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'codeFrontEnd/themes/malefashion/js/main.js' %}"></script>
+
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f9a3364b5d47081"></script>
+        
+        {% block customjs %}{% endblock %}
+    </body>
+
+</html>

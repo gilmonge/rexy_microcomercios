@@ -4,7 +4,7 @@ from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 class ComercioForm(forms.ModelForm):
     class Meta:
         model = Comercio
-        fields = ['owner', 'nombre', 'slug', 'eslogan', 'descripcion', 'redessociales', 'contacto', 'img_superior', 'img_acercade', 'idplan',]
+        fields = ['owner', 'nombre', 'slug', 'eslogan', 'descripcion', 'redessociales', 'contacto', 'img_superior', 'img_acercade', 'logo', 'favicon', 'idplan',]
         
         widgets = {
             'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
@@ -15,11 +15,15 @@ class ComercioForm(forms.ModelForm):
             'contacto'      : forms.Textarea(attrs={'class': 'form-control', 'placeholder': ''}),
             'img_superior'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
             'img_acercade'  : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
+            'logo'          : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
+            'favicon'       : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
         }
         
         labels = {
-            'img_superior': 'Imagen superior ',
-            'img_acercade': 'Imagen "Acerca de" '
+            'img_superior'  : 'Imagen superior ',
+            'img_acercade'  : 'Imagen "Acerca de" ',
+            'logo'          : 'Logo ',
+            'favicon'       : 'Favicon ',
         }
 
 class ProductoForm(forms.ModelForm):
