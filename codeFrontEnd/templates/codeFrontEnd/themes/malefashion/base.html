@@ -170,9 +170,9 @@
                     <div class="col-lg-6 col-md-6">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li class="active"><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}">Inicio</a></li>
-                                <li><a href="{% url 'comercio:acercaDe' comercio_slug=comercio.slug|slugify %}">Nosotros</a></li>
-                                <li><a href="{% url 'comercio:productos' comercio_slug=comercio.slug|slugify %}">Productos</a></li>
+                                <li class="{% if "/acerca-de" not in request.path and "/productos" not in request.path and "/p/" not in request.path  %}active{% endif %}"><a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}">Inicio</a></li>
+                                <li class="{% if "/acerca-de" in request.path %}active{% endif %}"><a href="{% url 'comercio:acercaDe' comercio_slug=comercio.slug|slugify %}">Nosotros</a></li>
+                                <li class="{% if "/productos" in request.path or "/p/" in request.path %}active{% endif %}"><a href="{% url 'comercio:productos' comercio_slug=comercio.slug|slugify %}">Productos</a></li>
                             </ul>
                         </nav>
                     </div>

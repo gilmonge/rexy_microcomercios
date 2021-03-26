@@ -39,8 +39,12 @@ def comercio (request, comercio_slug):
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
 
+    limite = 9 
+    if comercio.idplan is not 0:
+        limite = 12
+
     # trae los productos relacionados al comercio
-    productos = Producto.objects.filter(comercio=comercio.id, estado=True)
+    productos = Producto.objects.filter(comercio=comercio.id, estado=True).order_by('-visualizaciones')[:limite]
 
     datos = {
         'comercio':comercio,
@@ -114,7 +118,7 @@ def producto(request, comercio_slug, pk, prod_slug):
     comercio.contacto      = json.loads(comercio.contacto)
 
     # trae los productos relacionados al comercio
-    productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = Desencryptado)
+    productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = Desencryptado).order_by('-visualizaciones')[:4]
 
     datos = {
         'producto':producto,
