@@ -1,8 +1,9 @@
 import json
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-#from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy, reverse
 from django.http import Http404, JsonResponse
@@ -40,7 +41,7 @@ def comercio (request, comercio_slug):
     comercio.contacto      = json.loads(comercio.contacto)
 
     limite = 9 
-    if comercio.idplan is not 0:
+    if comercio.idplan != 0:
         limite = 12
 
     # trae los productos relacionados al comercio
@@ -84,11 +85,95 @@ def ComercioProductos (request, comercio_slug):
     comercio.contacto      = json.loads(comercio.contacto)
     
     # trae los productos relacionados al comercio
-    productos = Producto.objects.filter(comercio=comercio.id, estado=True)
+    productos_list = Producto.objects.filter(comercio=comercio.id, estado=True)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos_list, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
 
     datos = {
         'comercio':comercio,
         'productos':productos,
+        'totalProductos': paginator.count,
+    }
+
+    return render(request, "codeFrontEnd/productos.html", datos)
+
+def ProductosColeccion (request, comercio_slug, pk, coleccion_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+
+    Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+
+    # trae los productos relacionados al comercio
+    productos_list = Producto.objects.filter(comercio=comercio.id, estado=True, colecciones__id=Desencryptado)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos_list, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    datos = {
+        'comercio':comercio,
+        'productos':productos,
+        'totalProductos': paginator.count,
+    }
+
+    return render(request, "codeFrontEnd/productos.html", datos)
+
+def ComercioProductosBuscar (request, comercio_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    
+    # trae los productos relacionados al comercio
+    productos_list = []
+
+    productoSearch = request.GET.get('product', 'sinproducto')
+
+    if productoSearch != '':
+        productos_list = Producto.objects.filter(comercio=comercio.id, estado=True, nombre__icontains=productoSearch)
+    else:
+        return redirect('comercio:productos', comercio_slug = comercio.slug)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos_list, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    datos = {
+        'comercio':comercio,
+        'productos':productos,
+        'totalProductos': paginator.count,
     }
 
     return render(request, "codeFrontEnd/productos.html", datos)

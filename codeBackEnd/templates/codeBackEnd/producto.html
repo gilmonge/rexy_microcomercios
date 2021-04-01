@@ -371,10 +371,20 @@
     <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
     <script>
         {% if 'ok' in request.GET %}
-            $("#msgInfo").html(`
-                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el producto correctamente</p>
-            `)
-            $("#Modal_informacion").modal("show")
+            swal({
+                title: "Realizado",
+                text: "Se ha actualizado el producto correctamente",
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "OK",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true
+                    }
+                }
+            });
         {% endif %}
 
         tinymce.init({

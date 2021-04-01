@@ -1,5 +1,5 @@
 from django import template
-from coreComercios.models import Comercio, Producto, ImagenesProducto
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
 
 register = template.Library()
 
@@ -20,12 +20,18 @@ def get_Imagenes(pkProducto):
     imagenes = ImagenesProducto.objects.filter(producto=pkProducto, estado=True)
     for img in imagenes:
         if img.producto_id is pkProducto:
-            imagenesArray.append(img.imagen.url)
+            imagenesArray.append(img)
 
     if not imagenesArray:
         imagenesArray.append(imagen)
 
     return imagenesArray
+
+@register.simple_tag
+def get_Colecciones(pkComercio):
+    collecciones = Coleccion.objects.filter(comercio=pkComercio, estado=True)
+
+    return collecciones
 
 @register.simple_tag
 def Def_theme(idPlan):

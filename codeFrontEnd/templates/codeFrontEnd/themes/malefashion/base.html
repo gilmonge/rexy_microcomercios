@@ -50,27 +50,27 @@
                     <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class="">
                         <i class="fas fa-store"></i>
                     </a>
-                    {% if comercio.redessociales.facebook.activo %}
+                    {% if comercio.redessociales.facebook.activo and comercio.redessociales.facebook.url != '' %}
                         <a href="{{comercio.redessociales.facebook.url}}" target="_blank" class="">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     {% endif %}
-                    {% if comercio.redessociales.instagram.activo %}
+                    {% if comercio.redessociales.instagram.activo and comercio.redessociales.instagram.url != '' %}
                         <a href="{{comercio.redessociales.instagram.url}}" target="_blank" class="">
                             <i class="fab fa-instagram"></i>
                         </a>
                     {% endif %}
-                    {% if comercio.redessociales.twitter.activo %}
+                    {% if comercio.redessociales.twitter.activo and comercio.redessociales.twitter.url != '' %}
                         <a href="{{comercio.redessociales.twitter.url}}" target="_blank" class="">
                             <i class="fab fa-twitter"></i>
                         </a>
                     {% endif %}
-                    {% if comercio.redessociales.twitch.activo %}
+                    {% if comercio.redessociales.twitch.activo and comercio.redessociales.twitch.url != '' %}
                         <a href="{{comercio.redessociales.twitch.url}}" target="_blank" class="">
                             <i class="fab fa-twitch"></i>
                         </a>
                     {% endif %}
-                    {% if comercio.redessociales.tiktok.activo %}
+                    {% if comercio.redessociales.tiktok.activo and comercio.redessociales.tiktok.url != '' %}
                         <a href="{{comercio.redessociales.tiktok.url}}" target="_blank" class="">
                             <i class="fab fa-tiktok"></i>
                         </a>
@@ -109,27 +109,27 @@
                                     <a href="{% url 'comercio:comercio' comercio_slug=comercio.slug|slugify %}" class="">
                                         <i class="fas fa-store"></i>
                                     </a>
-                                    {% if comercio.redessociales.facebook.activo %}
+                                    {% if comercio.redessociales.facebook.activo and comercio.redessociales.facebook.url != '' %}
                                         <a href="{{comercio.redessociales.facebook.url}}" target="_blank" class="">
                                             <i class="fab fa-facebook-f"></i>
                                         </a>
                                     {% endif %}
-                                    {% if comercio.redessociales.instagram.activo %}
+                                    {% if comercio.redessociales.instagram.activo and comercio.redessociales.instagram.url != '' %}
                                         <a href="{{comercio.redessociales.instagram.url}}" target="_blank" class="">
                                             <i class="fab fa-instagram"></i>
                                         </a>
                                     {% endif %}
-                                    {% if comercio.redessociales.twitter.activo %}
+                                    {% if comercio.redessociales.twitter.activo and comercio.redessociales.twitter.url != '' %}
                                         <a href="{{comercio.redessociales.twitter.url}}" target="_blank" class="">
                                             <i class="fab fa-twitter"></i>
                                         </a>
                                     {% endif %}
-                                    {% if comercio.redessociales.twitch.activo %}
+                                    {% if comercio.redessociales.twitch.activo and comercio.redessociales.twitch.url != '' %}
                                         <a href="{{comercio.redessociales.twitch.url}}" target="_blank" class="">
                                             <i class="fab fa-twitch"></i>
                                         </a>
                                     {% endif %}
-                                    {% if comercio.redessociales.tiktok.activo %}
+                                    {% if comercio.redessociales.tiktok.activo and comercio.redessociales.tiktok.url != '' %}
                                         <a href="{{comercio.redessociales.tiktok.url}}" target="_blank" class="">
                                             <i class="fab fa-tiktok"></i>
                                         </a>
@@ -241,8 +241,12 @@
         <div class="search-model">
             <div class="h-100 d-flex align-items-center justify-content-center">
                 <div class="search-close-switch">+</div>
-                <form class="search-model-form">
-                    <input type="text" id="search-input" placeholder="Buscar producto">
+                <form class="search-model-form" action="{% url 'comercio:productosBuscar' comercio_slug=comercio.slug|slugify %}"  method="get">
+                    {% if 'product' in request.GET %}
+                        <input type="text" id="search-input" name="product" placeholder="Buscar producto" value="{{request.GET.product}}">
+                    {% else %}
+                        <input type="text" id="search-input" name="product" placeholder="Buscar producto">
+                    {% endif %}
                 </form>
             </div>
         </div>
