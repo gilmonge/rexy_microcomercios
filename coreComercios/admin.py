@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Comercio, Producto, ImagenesProducto, Coleccion, OrdenesComercios
+from .models import Comercio, Producto, ImagenesProducto, Coleccion, OrdenesComercios, Slider
 
 # Register your models here.
 
@@ -15,8 +15,12 @@ class ImagenesProductoAdmin(admin.ModelAdmin):
 class OrdenesComerciosAdmin(admin.ModelAdmin):
     list_display = ('comercio', 'ipn', 'plan', 'fechaVencimiento', 'fechaRealizado')
 
+class SliderAdmin(admin.ModelAdmin):
+    list_display = ('comercio', 'titulo', 'url')
+
 admin.site.register(Comercio, ComercioAdmin)
 admin.site.register(Coleccion, ColeccionAdmin)
 admin.site.register(Producto)
 admin.site.register(ImagenesProducto, ImagenesProductoAdmin)
 admin.site.register(OrdenesComercios, OrdenesComerciosAdmin)
+admin.site.register(Slider, SliderAdmin)

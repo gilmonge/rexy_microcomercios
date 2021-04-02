@@ -98,6 +98,26 @@ def custom_upload_Producto(instance, filename):
 
     return ruta
 
+#funcion de carga de imagen de slider
+def custom_upload_slider(instance, filename):
+    # Genera el momento de carga de imagen
+    timestamp = datetime.timestamp(datetime.now())
+
+    # Separa el nombre y la extension, lo invierte para pasarlo de primero
+    datosImagen = filename.split('.')
+    datosImagen.reverse()
+
+    #ruta donde se va a guardar
+    ruta = "slider/{}.{}".format(timestamp, datosImagen[0])
+
+    # Borra la imagen anterior en caso de que exista
+    if instance.pk is not None:
+        old_instance = Slider.objects.get(pk=instance.pk)
+        old_instance.imagen.delete()
+
+    return ruta
+
+
 # Create your models here.
 class Comercio(models.Model):
     owner           = models.ForeignKey(User, verbose_name="Dueño", on_delete=models.CASCADE)
@@ -146,6 +166,20 @@ class ImagenesProducto(models.Model):
     
     def __str__(self):
         return self.imagen.url
+
+class Slider(models.Model):
+    comercio    = models.ForeignKey(Comercio, verbose_name="Comercio", on_delete=models.CASCADE)
+    titulo      = models.CharField(max_length=35, verbose_name="Título")
+    subtitulo   = models.CharField(max_length=35, verbose_name="Sub título")
+    descripcion = models.CharField(max_length=200, verbose_name="Descripción")
+    boton       = models.CharField(max_length=15, verbose_name="Texto del Botón")
+    url         = models.CharField(max_length=150, verbose_name="URL del botón")
+    imagen      = ResizedImageField(upload_to=custom_upload_slider, size=[1920, 800], force_format='PNG', null=False, verbose_name="Imagen")
+    target      = models.BooleanField(verbose_name="Nueva ventana", default=False)
+    estado      = models.BooleanField(verbose_name="Estado", default=False)
+    
+    def __str__(self):
+        return self.titulo
 
 class OrdenesComercios(models.Model):
     comercio        = models.ForeignKey(Comercio, verbose_name="Comercio asociado", on_delete=models.DO_NOTHING)

@@ -1,0 +1,170 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load static %}
+{% load codeBackEnd_extras %}
+{% load codeFrontEnd_extras %}
+{% block title %}Dashboard{% endblock %}
+{% block tituloSeccion %}Listado de sliders{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem .5rem;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        .card-info-custom {
+            background: rgba(255,255,255,0.1) !important;
+            overflow: hidden !important;
+        }
+        .estado-producto .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 0px;
+            padding: .2rem .3rem;
+            color: #fff;
+            font-size: .8rem;
+        }
+
+        .btn-eliminar-producto{
+            color: #fff;
+            padding: .4rem 0.6rem;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        .acceso-producto:hover{
+            cursor: pointer;
+        }
+
+        .labelEditar{
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0,0,0,0.6);
+            width: 100%;
+            text-align: right;
+            padding-right: 8px;
+        }
+
+        .limite{
+            background-color: rgba(255,255,255,.05);
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        
+        .item:hover{
+            -webkit-box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+            -moz-box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+            box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="row">
+                {% for slider in sliders %}
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card card-stats card-info card-info-custom card-round item">
+                            <div class="card-body" style="padding: 0px !important;">
+                                {% encoded_id slider.id as id_encryptado %}
+                                <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:slider' pk=id_encryptado %}';">
+                                    
+                                    <div class="col-5" style="padding: 0px !important; background: url({{ slider.imagen.url }}); background-position: center; background-size: cover;">
+                                        <label class="labelEditar">Click Para editar</label>
+                                    </div>
+                                    <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                        <div class="numbers" style="width: 90%;">
+                                            <h4 class="card-title">{{ slider.titulo }}</h4>
+                                                    
+                                            <div class="card-category estado estado-producto">
+                                                {% if slider.estado is True %}
+                                                    <div class="alert alert-success" role="alert">
+                                                        <span>Activo</span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span>Inactivo</span>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            
+                                            {% encoded_id slider.id as id_encryptado %}
+                                            <a href="{% url 'comercioAdmin:sliderDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor%}
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="card card-stats card-info card-info-custom card-round item">
+                        <div class="card-body" style="padding: 0px !important;">
+                            <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:sliderAdd' %}';">
+                                <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                    <div class="numbers">
+                                        <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                            <i class="flaticon-add text-warning"></i>
+                                            <p class="">Agregar slider</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customJs %}
+    <script>
+        {% if request.session.comercioId is not None %}
+            var barChart = document.getElementById('barChart').getContext('2d')
+
+            var myBarChart = new Chart(barChart, {
+                type: 'bar',
+                data: {
+                    labels: ["Visualizaciones"],
+                    datasets : [
+                        {% get_top10productos request.session.comercioId as Productos %}
+                        {% for Producto in Productos %}
+                        
+                            {% get_colorRandom as color %}
+                            {
+                                label: "{{Producto}}",
+                                backgroundColor: '{{color}}',
+                                borderColor: '{{color}}',
+                                data: [{{Producto.visualizaciones}}],
+                            },
+                        {% endfor%}
+                    ],
+                },
+                options: {
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    },
+                }
+            });
+        {% endif %}
+
+        {% if request.session.comercioId is None %}
+        {% endif %}
+        
+    </script>
+{% endblock %}

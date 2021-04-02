@@ -8,8 +8,8 @@ from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy, reverse
 from django.http import Http404, JsonResponse
 from coreAdmin.models import Parametro, Perfil
-from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
-from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, Slider
+from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm, SliderForm
 from django import forms
 import base64
 
@@ -47,9 +47,13 @@ def comercio (request, comercio_slug):
     # trae los productos relacionados al comercio
     productos = Producto.objects.filter(comercio=comercio.id, estado=True).order_by('-visualizaciones')[:limite]
 
+    # trae los slider relacionados al comercio
+    sliders = Slider.objects.filter(comercio=comercio.id, estado=True)
+
     datos = {
         'comercio':comercio,
         'productos':productos,
+        'sliders':sliders,
     }
 
     return render(request, "codeFrontEnd/comercio.html", datos)
@@ -457,6 +461,69 @@ class coleccionDeleteView(DeleteView):
         Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
         coleccion = Coleccion.objects.filter(id=Desencryptado)[0]
         return coleccion
+
+def sliderList(request):
+    if request.user.is_authenticated:
+        comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+        sliders = Slider.objects.filter(comercio=request.session["comercioId"])
+        datos = {
+            'sliders':sliders,
+            'comercio':comercio,
+        }
+        return render(request, "codeBackEnd/sliders.html", datos)
+    else:
+        return redirect('login')
+
+class sliderCreateView(CreateView):
+    model = Slider
+    form_class = SliderForm
+    template_name = 'codeBackEnd/sliderAdd.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('comercioAdmin:slider', kwargs={ 'pk': encoded_id( self.object.id ) })
+
+class sliderUpdateView(UpdateView):
+    model = Slider
+    form_class = SliderForm
+    template_name = 'codeBackEnd/slider.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        slider = Slider.objects.filter(id=Desencryptado)[0]
+        return slider
+
+    def get_success_url(self):
+        return reverse_lazy('comercioAdmin:slider', args=[encoded_id(self.object.id)]) + '?ok'
+
+class sliderDeleteView(DeleteView):
+    model = Slider
+    template_name = 'codeBackEnd/slider_confirm_delete.html'
+    success_url = reverse_lazy('comercioAdmin:sliders')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        slider = Slider.objects.filter(id=Desencryptado)[0]
+        return slider
 
 # Otras funcionalidades 
 

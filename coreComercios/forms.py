@@ -1,5 +1,5 @@
 from django import forms
-from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, Slider
 
 class ComercioForm(forms.ModelForm):
     class Meta:
@@ -42,6 +42,22 @@ class ImagenProductoForm(forms.ModelForm):
     class Meta:
         model = ImagenesProducto
         fields = [ 'producto', 'imagen', 'principal', 'estado' ]
+
+class SliderForm(forms.ModelForm):
+    class Meta:
+        model = Slider
+        fields = [ 'comercio', 'titulo', 'subtitulo', 'descripcion', 'boton', 'url', 'imagen', 'target', 'estado' ]
+        
+        widgets = {
+            'titulo'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título'}),
+            'subtitulo'     : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sub título'}),
+            'descripcion'   : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
+            'boton'         : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Texto Botón'}),
+            'url'           : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'URL del botón'}),
+            'imagen'        : forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': ''}),
+            'target'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Target'}),
+            'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
+        }
 
 class ColeccionForm(forms.ModelForm):
     class Meta:

@@ -1,0 +1,434 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load static %}
+{% load codeBackEnd_extras %}
+{% load codeFrontEnd_extras %}
+{% block title %}{{ slider.titulo }} | Editar slider{% endblock %}
+{% block tituloSeccion %}Editar slider{% endblock %}
+
+{% block customHead %}
+    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+
+    {% if request.session.comercioId != slider.comercio.id %}
+        <script>
+            window.location.href = "{% url 'comercioAdmin:catalogo' %}";
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem 1rem;
+        }
+        .file-drop-zone { min-height: 300px; }
+
+        div.file-caption.form-control.kv-fileinput-caption.icon-visible > input {
+            color: #fff !important;
+        }
+        .kv-file-remove, .img-block>a{ display: none !important; }
+        
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #1a2035 !important;
+            border-color: #2f374b !important;
+        }
+        
+        .nav-link {
+            color: #4a5568;
+        }
+
+        .gutters-sm {
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+        .gutters-sm>.col, .gutters-sm>[class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+        .mb-3, .my-3 {
+            margin-bottom: 1rem!important;
+        }
+
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+        .h-100 {
+            height: 100%!important;
+        }
+        .shadow-none {
+            box-shadow: none!important;
+        }
+
+        .tab-config a.active, .tab-config a:hover{
+            background: #011128 !important;
+            color: #fff !important;
+            border: 1px #011128 !important;
+            border-radius: 0px !important;
+        }
+        
+        .tab-config a.active .svg-menu, .tab-config a:hover .svg-menu{
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+        }
+
+        .tab-config a {
+            background: #fff !important;
+            color: #011128 !important;
+            border: 1px #fff !important;
+            border-radius: 0px !important;
+        }
+
+        .tab-config-lateral a{
+            text-align: left !important;
+            padding-left: 15px !important;
+        }
+
+        .url-custom .input-group-prepend .input-group-text{
+            background-color: #001737ad;
+            color: #fff;
+            border-color: #003B87 !important;
+            padding-right: 2px;
+        }
+        .url-custom .input-group-prepend .input-group-text:hover{
+            cursor: default;
+        }
+        .url-custom .form-control{
+            border-left: 0;
+            padding-left: 4px;
+        }
+
+        body[data-background-color=dark] .selectgroup-button {
+            border: 1px solid #ffffff;
+            background: #ffffff !important;
+        }
+        .selectgroup-input:checked+.selectgroup-button {
+            border-color: #ffffff;
+            z-index: 1;
+            background: #011128 !important;
+            color: #fff !important;
+        }
+        .selectgroup-input:checked+.selectgroup-button img {
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+        }
+        .selectgroup-input:focus+.selectgroup-button {
+            border-color: #ffffff;
+            z-index: 2;
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <form action="" id="formEditSlider" method="post" enctype="multipart/form-data" class="row ">
+        {% csrf_token %}
+        
+        <div class="container">
+            <div class="row gutters-sm">
+                <div class="col-md-4 d-none d-md-block">
+                    <div class="card">
+                        <div class="card-body" style="padding: 0;">
+                            <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
+                                <a href="#informacion" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                    Información
+                                </a>
+                                <a href="#config-prod" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                    <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones-blue.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
+                                    Configuración
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                
+                    <div class="card">
+                        <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
+                            <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
+                                <li class="nav-item">
+                                    <a href="#informacion" data-toggle="tab" class="nav-link has-icon active">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px;">
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#config-prod" data-toggle="tab" class="nav-link has-icon">
+                                        <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones-blue.svg' %}" class="svg-menu" style="width: 40px;">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
+                        
+                            <div class="tab-pane active" id="informacion">
+                                <h6 class="text-white">INFORMACIÓN DEL SLIDER</h6>
+                                <hr>
+
+                                <div class="form-group">
+                                    {{ form.titulo.label_tag }}
+                                    {{ form.titulo }}
+                                    {{ form.titulo.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.subtitulo.label_tag }}
+                                    {{ form.subtitulo }}
+                                    {{ form.subtitulo.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.descripcion.label_tag }}
+                                    {{ form.descripcion }}
+                                    {{ form.descripcion.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.boton.label_tag }}
+                                    {{ form.boton }}
+                                    {{ form.boton.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.url.label_tag }}
+                                    {{ form.url }}
+                                    {{ form.url.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fullName">Imagen:</label>
+                                    <input type="file" name="imagen" class="form-control" placeholder="" accept="image/x-png" id="id_imagen">
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="config-prod">
+                                <h6 class="text-white">CONFIGURACIÓN</h6>
+                                <hr>
+
+                                <div class="form-group">
+                                    <label>El botón se abre en nueva pestaña</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="target" value="1" class="selectgroup-input" 
+                                                {% if slider.target is True %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">Si</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="target" value="0" class="selectgroup-input" 
+                                                {% if slider.target is False %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">No</span>
+                                        </label>
+                                    </div>
+
+                                    <label>Aparece en la tienda</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="estado" value="1" class="selectgroup-input" 
+                                                {% if slider.estado is True %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">Si</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="estado" value="0" class="selectgroup-input" 
+                                                {% if slider.estado is False %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="comercio" value="{{slider.comercio.id}}" />
+    </form>
+
+    <div class="col-md-12">
+        <hr/>
+    </div>
+
+    <div class="col-md-12">
+        <a href="{% url 'comercioAdmin:sliders' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+    </div>
+
+{% endblock %}
+
+{% block customJs %}
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+    <script>
+        {% if 'ok' in request.GET %}
+            swal({
+                title: "Realizado",
+                text: "Se ha actualizado el slider correctamente",
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "OK",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true
+                    }
+                }
+            });
+        {% endif %}
+
+        $("#id_imagen").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+            initialPreview: [
+                "/media/{{ slider.imagen }}",
+            ],
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            /* formEditSlider*/
+            if ( document.getElementById( "formEditSlider" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formEditSlider'),
+                    {
+                        fields: {
+                            titulo: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            subtitulo: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            descripcion: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            boton: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            url: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
+                        }
+                    }
+                );
+            }
+            /* formEditSlider*/
+
+            /* formAddImagen*/
+            if ( document.getElementById( "formAddImagen" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formAddImagen'),
+                    {
+                        fields: {
+                            imagen: {
+                                validators:{
+                                    notEmpty: { message: 'Debe seleccionar una imagen' },
+                                }
+                            }
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
+                        }
+                    }
+                );
+            }
+            /* formAddImagen*/
+        });
+    </script>
+{% endblock %}
