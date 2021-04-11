@@ -1,0 +1,74 @@
+{% extends 'codeFrontEnd/themes/malefashion/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load codeFrontEnd_extras %}
+
+{% block title %}{{ comercio.nombre }}{% endblock %}
+
+
+{% block customContent %}
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+        
+            {% for slider in sliders %}
+                <div class="hero__items set-bg" data-setbg="{{slider.imagen.url}}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-7 col-md-8">
+                                <div class="hero__text">
+                                    <h6>{{slider.subtitulo}}</h6>
+                                    <h2>{{slider.titulo}}</h2>
+                                    <p>{{slider.descripcion}}</p>
+                                    {% if slider.target %}
+                                        <a href="{{slider.url}}" target="_blank" class="primary-btn">{{slider.boton}} <span class="arrow_right"></span></a>
+                                    {% else %}
+                                        <a href="{{slider.url}}" class="primary-btn">{{slider.boton}} <span class="arrow_right"></span></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor%}
+
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+
+    <!-- Product Section Begin -->
+    <section class="product spad pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="filter__controls">
+                        <li class="active" data-filter="*">Productos</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row product__filter">
+                
+                {% for producto in productos %}
+                    {% encoded_id producto.id as id_encryptado %}
+                    {% get_ImagenPrincipal producto.id as ImagenPrincipal %}
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{{ImagenPrincipal}}">
+                                <ul class="product__hover">
+                                    <li><a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=id_encryptado prod_slug=producto.nombre|slugify  %}"><img src="{% static 'codeFrontEnd/themes/malefashion/img/icon/search.png' %}" alt=""></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6>{{producto.nombre}}</h6>
+                                <a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=id_encryptado prod_slug=producto.nombre|slugify  %}" class="add-cart">Ver Información</a>
+                                <h5>₡{{producto.precio|intcomma}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor%}
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+{% endblock %}

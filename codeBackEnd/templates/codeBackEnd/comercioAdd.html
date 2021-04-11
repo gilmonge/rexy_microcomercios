@@ -243,6 +243,18 @@
                                 <h6 class="text-white">IMAGEN DE LA TIENDA</h6>
                                 <hr>
                                 <div class="form-group">
+                                    <label for="fullName">Logo:</label>
+                                    <input type="file" name="logo" class="form-control" placeholder="" accept="image/x-png" id="id_logo">
+                                    <div id="lblLogo" class="fv-help-block" style="display:none;"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fullName">Icono de la página:</label>
+                                    <input type="file" name="favicon" class="form-control" placeholder="" accept="image/x-png" id="id_favicon">
+                                    <div id="lblFavicon" class="fv-help-block" style="display:none;"></div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="fullName">Imagen principal:</label>
                                     <input type="file" name="img_superior" class="form-control" placeholder="" accept="image/*" id="id_img_superior">
                                     <div id="lblImagenPrinc" class="fv-help-block" style="display:none;"></div>
@@ -514,6 +526,26 @@
             theme: "fas",
             language: 'es',
             'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false
+        });
+        $("#id_logo").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['png', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false
+        });
+        $("#id_favicon").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['png', 'PNG'],
             overwriteInitial: false,
             initialPreviewAsData: true,
             maxFilesNum: 1,
@@ -797,8 +829,26 @@
         function paso4(){
             var siguiente = 1
             var img_superior    = $("input[name='img_superior']").val()
+            var logo            = $("input[name='logo']").val()
+            var favicon         = $("input[name='favicon']").val()
 
+            $("#lblLogo").html('').hide()
+            $("#lblFavicon").html('').hide()
             $("#lblImagenPrinc").html('').hide()
+
+            /* valida logo*/
+                if(!(logo.length > 0)){
+                    siguiente = 0
+                    $("#lblLogo").html("El logo es obligatorio").show()
+                }
+            /* valida logo*/
+
+            /* valida favicon*/
+                if(!(favicon.length > 0)){
+                    siguiente = 0
+                    $("#lblFavicon").html("El favicon es obligatorio").show()
+                }
+            /* valida favicon*/
 
             /* valida img_superior*/
                 if(!(img_superior.length > 0)){

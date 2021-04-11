@@ -1,0 +1,61 @@
+{% extends 'codeFrontEnd/themes/base/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load codeFrontEnd_extras %}
+
+{% block title %}{{ comercio.nombre }}{% endblock %}
+    
+{% block customHead %}{% endblock %}
+
+{% block customcss %}
+    <style>
+        .site-blocks-cover h1 {
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: #fff;
+            font-weight: 900;
+        }
+    </style>
+{% endblock %}
+
+{% block customContent %}
+    <div class="site-section" id="about-section">
+        <div class="container">
+            <div class="row align-items-lg-center">
+                <div class="col-md-12 mb-12 mb-lg-0 position-relative">
+                    <img src="{{comercio.img_acercade.url}}" class="img-fluid w-100" alt="Image">
+                    <div class="experience">
+                    <span class="year">Acerca de nosotros</span>
+                    <span class="caption"></span>
+                    </div>
+                </div>
+                <div class="col-md-12 ml-auto">
+                    <p class="mb-4">{{ comercio.descripcion|safe }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customjs %}
+    <script>
+        function datosVistaRap(id){
+            $("#VR_nombre").html($(`#${id}_nombre`).val())
+            $("#VR_descripcion").html("<p>"+$(`#${id}_descripcion`).val()+"</p>")
+            $("#VR_precio").html("₡"+$(`#${id}_precio`).val())
+            var imagenes = JSON.parse($(`#${id}_imagenes`).val())
+
+            var VR_imagenes = ''
+            imagenes.forEach(function (img, index) {
+                if(img != ''){
+                    console.log(img)
+                    VR_imagenes = `${VR_imagenes}
+                        <img class="owl-lazy" data-src="${img}" alt="">
+                    `
+                }
+            })
+            $("#VR_imagenes").html(VR_imagenes)
+            reiniciarOwlCarrousel()
+        }
+    </script>
+{% endblock %}

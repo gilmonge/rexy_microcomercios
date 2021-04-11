@@ -1,0 +1,247 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load static %}
+{% load codeBackEnd_extras %}
+{% block title %}Agregar slider{% endblock %}
+{% block tituloSeccion %}Nuevo slider{% endblock %}
+
+{% block customHead %}
+    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem 1rem;
+        }
+        .file-drop-zone {
+            min-height: 280px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form action="" id="formAddSlider" method="post" enctype="multipart/form-data" class="row ">
+        {% csrf_token %}
+
+        <h6 class="text-white col-md-12">INFORMACIÓN DEL SLIDER</h6>
+        <hr>
+
+        <div class="form-group col-md-6">
+            {{ form.titulo.label_tag }}
+            {{ form.titulo }}
+            {{ form.titulo.errors }}
+        </div>
+
+        <div class="form-group col-md-6">
+            {{ form.subtitulo.label_tag }}
+            {{ form.subtitulo }}
+            {{ form.subtitulo.errors }}
+        </div>
+
+        <div class="form-group col-md-6">
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
+        </div>
+
+        <div class="form-group col-md-6">
+            {{ form.boton.label_tag }}
+            {{ form.boton }}
+            {{ form.boton.errors }}
+        </div>
+
+        <div class="form-group col-md-12">
+            {{ form.url.label_tag }}
+            {{ form.url }}
+            {{ form.url.errors }}
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="fullName">Imagen:</label>
+            <input type="file" name="imagen" class="form-control" placeholder="" accept="image/x-png" id="id_imagen">
+            <div id="lblImagen" class="fv-help-block" style="display:none;"></div>
+        </div>
+        
+        <div class="form-group col-md-4" style="display: none;">
+            <label>El botón se abre en nueva pestaña</label>
+            <div class="selectgroup w-100">
+                <label class="selectgroup-item">
+                    <input type="radio" name="target" value="1" class="selectgroup-input" >
+                    <span class="selectgroup-button">Si</span>
+                </label>
+                <label class="selectgroup-item">
+                    <input type="radio" name="target" value="0" class="selectgroup-input" checked="" >
+                    <span class="selectgroup-button">No</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" style="display: none;"> {% comment %} Estado {% endcomment %}
+            <label class="form-label">Estado</label>
+            <div class="selectgroup w-100">
+                <label class="selectgroup-item">
+                    <input type="radio" name="estado" value="1" class="selectgroup-input" >
+                    <span class="selectgroup-button">Activo</span>
+                </label>
+                <label class="selectgroup-item">
+                    <input type="radio" name="estado" value="0" class="selectgroup-input" checked="" >
+                    <span class="selectgroup-button">Inactivo</span>
+                </label>
+            </div>
+        </div>
+
+        <input type="hidden" name="comercio" value="{{request.session.comercioId}}" />
+
+        <div class="text-center col-md-12">
+            <button type="submit" class="btn btn-info btn-block">Agregar slider</button>
+        </div>
+    </form>
+
+    <div class="col-md-12">
+        <hr/>
+    </div>
+
+    <div class="col-md-12">
+        <a href="{% url 'comercioAdmin:sliders' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+    </div>
+{% endblock %}
+
+{% block customJs %}
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'codeBackEnd/admin/assets/dataTables/js/dataTables.bootstrap4.js' %}"></script>
+    <script>
+        {% if 'ok' in request.GET %}
+            $("#msgInfo").html(`
+                <p style="color: #212529; font-size: 1.4rem;">Se ha actualizado el comercio correctamente</p>
+            `)
+            $("#Modal_informacion").modal("show")
+        {% endif %}
+
+        $("#id_imagen").fileinput({
+            theme: "fas",
+            language: 'es',
+            'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            maxFilesNum: 1,
+            showUpload: false,
+            showRemove: false,
+        });
+
+        function finalizar(){
+            var siguiente = 1
+            var imagen    = $("input[name='imagen']").val()
+            $("#lblImagen").html('').hide()
+
+            /* valida imagen*/
+                if(!(imagen.length > 0)){
+                    siguiente = 0
+                    $("#lblImagen").html("La imagen es obligatoria").show()
+                }
+            /* valida imagen*/
+
+            if(siguiente == 1){
+                $( "#formAddComercio" ).submit();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            /* formAddSlider*/
+            if ( document.getElementById( "formAddSlider" )) {
+                FormValidation.formValidation(
+                    document.getElementById('formAddSlider'),
+                    {
+                        fields: {
+                            titulo: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            subtitulo: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            descripcion: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            boton: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            url: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            imagen: {
+                                validators:{
+                                    notEmpty: { message: 'La imagen es obligatorio.' },
+                                }
+                            },
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                            icon: new FormValidation.plugins.Icon({
+                                valid: 'fa fa-check',
+                                invalid: 'fa fa-times',
+                                validating: 'fa fa-refresh',
+                            })
+                        }
+                    }
+                );
+            }
+            /* formAddSlider*/
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'codeFrontEnd/themes/malefashion/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load codeFrontEnd_extras %}
+
+{% block title %}{{ comercio.nombre }}{% endblock %}
+
+{% block customContent %}
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="shop__sidebar">
+                        <div class="shop__sidebar__search">
+                            <form action="{% url 'comercio:productosBuscar' comercio_slug=comercio.slug|slugify %}"  method="get">
+                                {% if 'product' in request.GET %}
+                                    <input type="text" name="product" placeholder="Buscar producto" value="{{request.GET.product}}">
+                                {% else %}
+                                    <input type="text" name="product" placeholder="Buscar producto">
+                                {% endif %}
+                                <button type="submit"><span class="icon_search"></span></button>
+                            </form>
+                        </div>
+                        <div class="shop__sidebar__accordion">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseOne">Categorías</a>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__categories">
+                                                <ul class="nice-scroll">
+                                                    <li><a href="{% url 'comercio:productos' comercio_slug=comercio.slug|slugify %}">Todos</a></li>
+                                                    
+                                                    {% get_Colecciones comercio as colecciones %}
+                                                    {% for coleccion in colecciones %}
+                                                        {% encoded_id coleccion.id as id_encryptado %}
+                                                        <li><a href="{% url 'comercio:coleccionesProducto' comercio_slug=comercio.slug|slugify pk=id_encryptado coleccion_slug=coleccion|slugify %}">{{coleccion}}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="shop__product__option">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="shop__product__option__left">
+                                    <p>Mostranto página {{ productos.number }} de {{ productos.paginator.num_pages }}</p>
+                                </div>
+                            </div>
+                            {% comment %} <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="shop__product__option__right">
+                                    <p>Sort by Price:</p>
+                                    <select>
+                                        <option value="">Low To High</option>
+                                        <option value="">$0 - $55</option>
+                                        <option value="">$55 - $100</option>
+                                    </select>
+                                </div>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for producto in productos %}
+                            {% encoded_id producto.id as id_encryptado %}
+                            {% get_ImagenPrincipal producto.id as ImagenPrincipal %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ImagenPrincipal}}">
+                                        <ul class="product__hover">
+                                            <li><a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=id_encryptado prod_slug=producto.nombre|slugify  %}"><img src="{% static 'codeFrontEnd/themes/malefashion/img/icon/search.png' %}" alt=""></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6>{{producto.nombre}}</h6>
+                                        <a href="{% url 'comercio:producto' comercio_slug=comercio.slug|slugify pk=id_encryptado prod_slug=producto.nombre|slugify  %}" class="add-cart">Ver Información</a>
+                                        <h5>₡{{producto.precio|intcomma}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor%}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="product__pagination">
+                                {% if productos.has_other_pages %}
+                                    {% if productos.has_previous %}
+                                        <a href="?page=1"><<</a>
+                                        <a href="?page={{ productos.previous_page_number }}"><</a>
+                                    {% endif %}
+
+                                    {% for i in productos.paginator.page_range %}
+                                        {% if productos.number == i %}
+                                            <a class="active">{{ i }}</a>
+                                        {% else %}
+                                            <a href="?page={{ i }}">{{ i }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if productos.has_next %}
+                                        <a href="?page={{ productos.next_page_number }}">></a>
+                                        <a href="?page={{ productos.paginator.num_pages }}">>></a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+{% endblock %}

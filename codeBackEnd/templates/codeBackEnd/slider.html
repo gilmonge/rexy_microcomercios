@@ -2,13 +2,13 @@
 {% load static %}
 {% load codeBackEnd_extras %}
 {% load codeFrontEnd_extras %}
-{% block title %}{{ producto.nombre }} | Editar producto{% endblock %}
-{% block tituloSeccion %}Editar producto{% endblock %}
+{% block title %}{{ slider.titulo }} | Editar slider{% endblock %}
+{% block tituloSeccion %}Editar slider{% endblock %}
 
 {% block customHead %}
     <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
 
-    {% if request.session.comercioId != producto.comercio.id %}
+    {% if request.session.comercioId != slider.comercio.id %}
         <script>
             window.location.href = "{% url 'comercioAdmin:catalogo' %}";
         </script>
@@ -123,7 +123,7 @@
 
 {% block content %}
 
-    <form action="" id="formEditProducto" method="post" class="row ">
+    <form action="" id="formEditSlider" method="post" enctype="multipart/form-data" class="row ">
         {% csrf_token %}
         
         <div class="container">
@@ -136,17 +136,9 @@
                                     <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
                                     Información
                                 </a>
-                                <a href="#acerca-de" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-                                    <img src="{% static 'codeBackEnd/admin/img/svg/about-us.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
-                                    Descripción
-                                </a>
                                 <a href="#config-prod" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
                                     <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones-blue.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
                                     Configuración
-                                </a>
-                                <a href="#img-prod" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-                                    <img src="{% static 'codeBackEnd/admin/img/svg/image.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
-                                    Imágenes
                                 </a>
                             </nav>
                         </div>
@@ -164,18 +156,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#acerca-de" data-toggle="tab" class="nav-link has-icon">
-                                        <img src="{% static 'codeBackEnd/admin/img/svg/about-us.svg' %}" class="svg-menu" style="width: 40px;">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="#config-prod" data-toggle="tab" class="nav-link has-icon">
                                         <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones-blue.svg' %}" class="svg-menu" style="width: 40px;">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#img-prod" data-toggle="tab" class="nav-link has-icon">
-                                        <img src="{% static 'codeBackEnd/admin/img/svg/image.svg' %}" class="svg-menu" style="width: 40px;">
                                     </a>
                                 </li>
                             </ul>
@@ -184,43 +166,42 @@
                         <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
                         
                             <div class="tab-pane active" id="informacion">
-                                <h6 class="text-white">INFORMACIÓN DEL PRODUCTO</h6>
-                                <hr>
-                                
-                                <div class="form-group">
-                                    {{ form.nombre.label_tag }}
-                                    {{ form.nombre }}
-                                    {{ form.nombre.errors }}
-                                </div>
-                                
-                                <div class="form-group">
-                                    {{ form.precio.label_tag }}
-                                    {{ form.precio }}
-                                    {{ form.precio.errors }}
-                                </div>
-
-                                <div class="form-group">
-                                    {% encoded_id producto.id as id_encryptado %}
-                                    <button type="button" class="btn btn-info btn-block" onclick="window.open('{% url 'comercio:producto' pk=id_encryptado prod_slug=object.nombre|slugify comercio_slug=object.comercio.slug|slugify %}', '_blank');">
-                                        <span class="btn-label">
-                                            <i class="fas fa-external-link-alt"></i>
-                                        </span>
-                                        Ver producto en la tienda
-                                    </button>
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane" id="acerca-de">
-                                <h6 class="text-white">DESCRIPCIÓN DEL PRODUCTO</h6>
+                                <h6 class="text-white">INFORMACIÓN DEL SLIDER</h6>
                                 <hr>
 
                                 <div class="form-group">
+                                    {{ form.titulo.label_tag }}
+                                    {{ form.titulo }}
+                                    {{ form.titulo.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.subtitulo.label_tag }}
+                                    {{ form.subtitulo }}
+                                    {{ form.subtitulo.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.descripcion.label_tag }}
                                     {{ form.descripcion }}
                                     {{ form.descripcion.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.boton.label_tag }}
+                                    {{ form.boton }}
+                                    {{ form.boton.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.url.label_tag }}
+                                    {{ form.url }}
+                                    {{ form.url.errors }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fullName">Imagen:</label>
+                                    <input type="file" name="imagen" class="form-control" placeholder="" accept="image/x-png" id="id_imagen">
                                 </div>
 
                                 <div class="form-group">
@@ -232,24 +213,32 @@
                                 <h6 class="text-white">CONFIGURACIÓN</h6>
                                 <hr>
 
-                                <div class="form-group" style="{% if object.comercio.idplan == 0 %} display:none; {% endif %}">
-                                    <label>Colecciones</label>
-                                    <div class="selectgroup w-100">
-                                        <select id="id_colecciones" name="colecciones" class="selectpicker w-100" multiple data-live-search="true">
-                                            {% get_colecciones request.session.comercioId as Colecciones %}
-                                            {% for Coleccion in Colecciones %}
-                                                <option value="{{ Coleccion.id }}">{{ Coleccion.nombre }}</option> 
-                                            {% endfor%}
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
+                                    <label>El botón se abre en nueva pestaña</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="target" value="1" class="selectgroup-input" 
+                                                {% if slider.target is True %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">Si</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="target" value="0" class="selectgroup-input" 
+                                                {% if slider.target is False %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">No</span>
+                                        </label>
+                                    </div>
+
                                     <label>Aparece en la tienda</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item">
                                             <input type="radio" name="estado" value="1" class="selectgroup-input" 
-                                                {% if producto.estado is True %}
+                                                {% if slider.estado is True %}
                                                     checked=""
                                                 {% endif %}
                                             >
@@ -257,7 +246,7 @@
                                         </label>
                                         <label class="selectgroup-item">
                                             <input type="radio" name="estado" value="0" class="selectgroup-input" 
-                                                {% if producto.estado is False %}
+                                                {% if slider.estado is False %}
                                                     checked=""
                                                 {% endif %}
                                             >
@@ -271,99 +260,22 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="img-prod">
-                                <h6 class="text-white">IMÁGENES</h6>
-                                <hr>
-
-                                <button href="" type="button" class="btn btn-light mb-3 btn-block" data-toggle="modal" data-target="#Modal_Add_Img"><i class="fas fa-plus"></i> Agregar imagen al producto</button>
-
-                                {% get_Imagenes_Producto producto.id as ImagenesProductos %}
-                                {% for ImagenProducto in ImagenesProductos %}
-
-                                    <div class="card flex-row flex-wrap row p-1 m-1 mb-3">
-                                        <div class="p-2 border-0 col-md-4">
-                                            <img src="{{ ImagenProducto.imagen.url }}" class="img-fluid">
-                                        </div>
-                                        <div class="p-2 col-md-8">
-                                            {% if ImagenProducto.principal is True %}
-                                                <div class="alert alert-success mt-3 text-white" role="alert" style="background-color: rgba(255,255,255,0.15);">
-                                                    <span>Es imagen principal</span>
-                                                </div>
-                                            {% else %}
-                                                <div class="alert alert-info mt-3 text-white" role="alert" style="background-color: rgba(255,255,255,0.15);">
-                                                    <span>Solo se muestra en la descripción</span>
-                                                </div>
-                                            {% endif %}
-                                            
-                                            <div class="row col-md-12 p-0 m-0">
-                                                <div class="col-xs-6 col-md-6 p-0 m-0">
-                                                    <button type="button" onclick="$('#img_{{ImagenProducto.id}}_def').submit()" class="btn btn-info btn-block" style="border-radius:0px;"><i class="fas fa-check fa-lg"></i> Principal</button>
-                                                </div>
-                                                <div class="col-xs-6 col-md-6 p-0 m-0">
-                                                    <button type="button" onclick="$('#img_{{ImagenProducto.id}}_del').submit()" class="btn btn-danger btn-block" style="border-radius:0px;"><i class="fas fa-eraser fa-lg"></i> Eliminar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor%}
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <input type="hidden" name="comercio" value="{{producto.comercio.id}}" />
+        <input type="hidden" name="comercio" value="{{slider.comercio.id}}" />
     </form>
-
-
-    {% get_Imagenes_Producto producto.id as ImagenesProductos %}
-    {% for ImagenProducto in ImagenesProductos %}
-        <form id="img_{{ImagenProducto.id}}_def" action="{% url 'comercioAdmin:productoImagenDef' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="pk" value="{{producto.id}}" />
-            <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
-        </form>
-
-        <form id="img_{{ImagenProducto.id}}_del" action="{% url 'comercioAdmin:productoImagenDel' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="pk" value="{{producto.id}}" />
-            <input type="hidden" name="pkImagen" value="{{ImagenProducto.id}}" />
-        </form>
-    {% endfor%}
 
     <div class="col-md-12">
         <hr/>
     </div>
 
     <div class="col-md-12">
-        <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+        <a href="{% url 'comercioAdmin:sliders' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
     </div>
 
-    
-    <form id="formAddImagen" action="{% url 'comercioAdmin:productoImagenAdd' %}" method="post" enctype="multipart/form-data">
-        <div class="modal fade" id="Modal_Add_Img" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="Modal_Add_Img" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content" style="background: #002A61;">
-                    <div class="modal-body">
-                            {% csrf_token %}
-
-                            <div class="form-group col-md-12">
-                                <label for="">Imagen:</label>
-                                <input type="file" name="imagen" class="form-control" placeholder="" accept="image/*" id="id_imagen">
-                            </div>
-                            <input type="hidden" name="producto" value="{{producto.id}}" />
-                            <input type="hidden" name="principal" value="False" />
-                            <input type="hidden" name="estado" value="True" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-info">Agregar imagen</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 {% endblock %}
 
 {% block customJs %}
@@ -373,7 +285,7 @@
         {% if 'ok' in request.GET %}
             swal({
                 title: "Realizado",
-                text: "Se ha actualizado el producto correctamente",
+                text: "Se ha actualizado el slider correctamente",
                 icon: "success",
                 buttons: {
                     confirm: {
@@ -387,58 +299,30 @@
             });
         {% endif %}
 
-        tinymce.init({
-            selector: '#id_descripcion',
-            height: 300,
-            language: 'es',
-            theme: 'modern',
-            relative_urls: false,
-            remove_script_host : false,
-            plugins: [
-                'advlist charmap preview hr anchor pagebreak', 
-                'searchreplace', 
-                'insertdatetime nonbreaking contextmenu directionality', 
-                'emoticons paste textcolor colorpicker textpattern '
-            ],
-            toolbar1: 'preview | insertfile undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | emoticons',
-            toolbar2: '',
-            image_advtab: true,
-        });
-
         $("#id_imagen").fileinput({
             theme: "fas",
             language: 'es',
             'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
             overwriteInitial: false,
-            initialPreviewAsData: false,
+            initialPreviewAsData: true,
             maxFilesNum: 1,
             showUpload: false,
-            showRemove: false
+            showRemove: false,
+            initialPreview: [
+                "/media/{{ slider.imagen }}",
+            ],
         });
 
-        $('#id_colecciones').selectpicker();
-
-        function seleccionarAutomatico(){
-            ListadoSeleccionados = [{% for coleccion in object.colecciones.all %}
-                {{coleccion.id}},
-            {% endfor %}]
-
-            $('#id_colecciones').selectpicker('destroy');
-            $("#id_colecciones").val(ListadoSeleccionados);
-            $('#id_colecciones').selectpicker();
-        }
-        seleccionarAutomatico()
-        
         document.addEventListener('DOMContentLoaded', function() {
-            /* formEditProducto*/
-            if ( document.getElementById( "formEditProducto" )) {
+            /* formEditSlider*/
+            if ( document.getElementById( "formEditSlider" )) {
                 FormValidation.formValidation(
-                    document.getElementById('formEditProducto'),
+                    document.getElementById('formEditSlider'),
                     {
                         fields: {
-                            nombre: {
+                            titulo: {
                                 validators:{
-                                    notEmpty: { message: 'El nombre es obligatorio.' },
+                                    notEmpty: { message: 'El dato es obligatorio.' },
                                     stringLength: {
                                         min: 2,
                                         message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
@@ -449,15 +333,58 @@
                                     }
                                 }
                             },
-                            precio: {
-                                validators: {
-                                    notEmpty: { message: 'Este campo es obligatorio.' },
+                            subtitulo: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
                                     regexp: {
-                                        regexp: /^[0-9]+(\.[0-9]{1,2})+$/,
-                                        message: 'Solo puede contener valores numéricos con dos decimales'
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
                                     }
                                 }
-                            }
+                            },
+                            descripcion: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            boton: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9 /\s/Ñ/ñ/à/è/ì/ò/ù/À/È/Ì/Ò/Ù/á/é/í/ó/ú/ý/Á/É/Í/Ó/Ú/Ý/â/ê/î/ô/û/Â/Ê/Î/Ô/Û/ã/ñ/õ/Ã/Ñ/Õ/ä/ë/ï/ö/ü/ÿ/Ä/Ë/Ï/Ö/Ü/Ÿ/ç/Ç/#/]+$/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
+                            url: {
+                                validators:{
+                                    notEmpty: { message: 'El dato es obligatorio.' },
+                                    stringLength: {
+                                        min: 2,
+                                        message: 'El tamaño del campo debe ser de mínimo 2 caracteres. '
+                                    },
+                                    regexp: {
+                                        regexp: /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+                                        message: 'Solo puede contener valores alfabéticos'
+                                    }
+                                }
+                            },
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),
@@ -473,7 +400,7 @@
                     }
                 );
             }
-            /* formEditProducto*/
+            /* formEditSlider*/
 
             /* formAddImagen*/
             if ( document.getElementById( "formAddImagen" )) {

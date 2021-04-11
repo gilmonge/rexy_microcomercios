@@ -1,14 +1,15 @@
 import json
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-#from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy, reverse
 from django.http import Http404, JsonResponse
 from coreAdmin.models import Parametro, Perfil
-from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion
-from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm
+from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, Slider
+from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm, SliderForm
 from django import forms
 import base64
 
@@ -38,16 +39,153 @@ def comercio (request, comercio_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
+
+    limite = 9 
+    if comercio.idplan != 0:
+        limite = 12
 
     # trae los productos relacionados al comercio
-    productos = Producto.objects.filter(comercio=comercio.id, estado=True)
+    productos = Producto.objects.filter(comercio=comercio.id, estado=True).order_by('-visualizaciones')[:limite]
+
+    # trae los slider relacionados al comercio
+    sliders = Slider.objects.filter(comercio=comercio.id, estado=True)
 
     datos = {
         'comercio':comercio,
         'productos':productos,
+        'sliders':sliders,
     }
 
     return render(request, "codeFrontEnd/comercio.html", datos)
+
+def acercaDe (request, comercio_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
+    
+    # trae los productos relacionados al comercio
+
+    datos = {
+        'comercio':comercio,
+    }
+
+    return render(request, "codeFrontEnd/acerca_de.html", datos)
+
+def ComercioProductos (request, comercio_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
+    
+    # trae los productos relacionados al comercio
+    productos_list = Producto.objects.filter(comercio=comercio.id, estado=True)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos_list, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    datos = {
+        'comercio':comercio,
+        'productos':productos,
+        'totalProductos': paginator.count,
+    }
+
+    return render(request, "codeFrontEnd/productos.html", datos)
+
+def ProductosColeccion (request, comercio_slug, pk, coleccion_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
+
+    Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+
+    # trae los productos relacionados al comercio
+    productos_list = Producto.objects.filter(comercio=comercio.id, estado=True, colecciones__id=Desencryptado)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos_list, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    datos = {
+        'comercio':comercio,
+        'productos':productos,
+        'totalProductos': paginator.count,
+    }
+
+    return render(request, "codeFrontEnd/productos.html", datos)
+
+def ComercioProductosBuscar (request, comercio_slug):
+    #trae el comercio si existe
+    try:
+        comercio = Comercio.objects.filter(slug=comercio_slug)[0]
+    except Comercio.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
+    # convertimos el contenido json en un diccionario python
+    comercio.redessociales = json.loads(comercio.redessociales)
+    comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
+    
+    # trae los productos relacionados al comercio
+    productos_list = []
+
+    productoSearch = request.GET.get('product', 'sinproducto')
+
+    if productoSearch != '':
+        productos_list = Producto.objects.filter(comercio=comercio.id, estado=True, nombre__icontains=productoSearch)
+    else:
+        return redirect('comercio:productos', comercio_slug = comercio.slug)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos_list, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    datos = {
+        'comercio':comercio,
+        'productos':productos,
+        'totalProductos': paginator.count,
+    }
+
+    return render(request, "codeFrontEnd/productos.html", datos)
 
 def producto(request, comercio_slug, pk, prod_slug):
     # trae el producto si existe
@@ -72,9 +210,10 @@ def producto(request, comercio_slug, pk, prod_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
 
     # trae los productos relacionados al comercio
-    productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = Desencryptado)
+    productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = Desencryptado).order_by('-visualizaciones')[:4]
 
     datos = {
         'producto':producto,
@@ -328,6 +467,69 @@ class coleccionDeleteView(DeleteView):
         Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
         coleccion = Coleccion.objects.filter(id=Desencryptado)[0]
         return coleccion
+
+def sliderList(request):
+    if request.user.is_authenticated:
+        comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+        sliders = Slider.objects.filter(comercio=request.session["comercioId"])
+        datos = {
+            'sliders':sliders,
+            'comercio':comercio,
+        }
+        return render(request, "codeBackEnd/sliders.html", datos)
+    else:
+        return redirect('login')
+
+class sliderCreateView(CreateView):
+    model = Slider
+    form_class = SliderForm
+    template_name = 'codeBackEnd/sliderAdd.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('comercioAdmin:slider', kwargs={ 'pk': encoded_id( self.object.id ) })
+
+class sliderUpdateView(UpdateView):
+    model = Slider
+    form_class = SliderForm
+    template_name = 'codeBackEnd/slider.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        slider = Slider.objects.filter(id=Desencryptado)[0]
+        return slider
+
+    def get_success_url(self):
+        return reverse_lazy('comercioAdmin:slider', args=[encoded_id(self.object.id)]) + '?ok'
+
+class sliderDeleteView(DeleteView):
+    model = Slider
+    template_name = 'codeBackEnd/slider_confirm_delete.html'
+    success_url = reverse_lazy('comercioAdmin:sliders')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated == False:
+            return redirect('login')
+        else:
+            return super().dispatch(request, *args, *kwargs)
+    
+    def get_object(self):
+        pk = self.kwargs["pk"]
+        Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        slider = Slider.objects.filter(id=Desencryptado)[0]
+        return slider
 
 # Otras funcionalidades 
 

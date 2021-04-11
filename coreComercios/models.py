@@ -25,6 +25,42 @@ def custom_upload_ComercioSup(instance, filename):
 
     return ruta
 
+def custom_upload_ComercioLogo(instance, filename):
+    # Genera el momento de carga de imagen
+    timestamp = datetime.timestamp(datetime.now())
+
+    # Separa el nombre y la extension, lo invierte para pasarlo de primero
+    datosImagen = filename.split('.')
+    datosImagen.reverse()
+
+    #ruta donde se va a guardar
+    ruta = "comercios/{}.{}".format(timestamp, datosImagen[0])
+
+    # Borra la imagen anterior en caso de que exista
+    if instance.pk is not None:
+        old_instance = Comercio.objects.get(pk=instance.pk)
+        old_instance.img_superior.delete()
+
+    return ruta
+
+def custom_upload_ComercioFavicon(instance, filename):
+    # Genera el momento de carga de imagen
+    timestamp = datetime.timestamp(datetime.now())
+
+    # Separa el nombre y la extension, lo invierte para pasarlo de primero
+    datosImagen = filename.split('.')
+    datosImagen.reverse()
+
+    #ruta donde se va a guardar
+    ruta = "comercios/{}.{}".format(timestamp, datosImagen[0])
+
+    # Borra la imagen anterior en caso de que exista
+    if instance.pk is not None:
+        old_instance = Comercio.objects.get(pk=instance.pk)
+        old_instance.img_superior.delete()
+
+    return ruta
+
 def custom_upload_Comercio(instance, filename):
     # Genera el momento de carga de imagen
     timestamp = datetime.timestamp(datetime.now())
@@ -62,6 +98,26 @@ def custom_upload_Producto(instance, filename):
 
     return ruta
 
+#funcion de carga de imagen de slider
+def custom_upload_slider(instance, filename):
+    # Genera el momento de carga de imagen
+    timestamp = datetime.timestamp(datetime.now())
+
+    # Separa el nombre y la extension, lo invierte para pasarlo de primero
+    datosImagen = filename.split('.')
+    datosImagen.reverse()
+
+    #ruta donde se va a guardar
+    ruta = "slider/{}.{}".format(timestamp, datosImagen[0])
+
+    # Borra la imagen anterior en caso de que exista
+    if instance.pk is not None:
+        old_instance = Slider.objects.get(pk=instance.pk)
+        old_instance.imagen.delete()
+
+    return ruta
+
+
 # Create your models here.
 class Comercio(models.Model):
     owner           = models.ForeignKey(User, verbose_name="Dueño", on_delete=models.CASCADE)
@@ -71,10 +127,13 @@ class Comercio(models.Model):
     descripcion     = models.TextField(verbose_name="Descripción", default="")
     redessociales   = models.TextField(verbose_name="Redes Sociales")
     contacto        = models.TextField(verbose_name="Contácto")
-    img_superior    = ResizedImageField(upload_to=custom_upload_ComercioSup, size=[900, 600], null=False, default="comercios/noimageSup.jpg", verbose_name="Imagen superior")
-    img_acercade    = ResizedImageField(upload_to=custom_upload_Comercio, size=[500, 433], null=False, default="comercios/noimageAbout.jpg", verbose_name="Imagen de acerca de")
+    img_superior    = ResizedImageField(upload_to=custom_upload_ComercioSup, size=[900, 600], quality=100, null=False, default="comercios/noimage.jpg", verbose_name="Imagen superior")
+    img_acercade    = ResizedImageField(upload_to=custom_upload_Comercio, size=[900, 600], null=False, default="comercios/noimage.jpg", verbose_name="Imagen de acerca de")
+    logo            = ResizedImageField(upload_to=custom_upload_ComercioLogo, size=[400, 144], force_format='PNG', null=False, default="comercios/noimage.jpg", verbose_name="Logo")
+    favicon         = ResizedImageField(upload_to=custom_upload_ComercioFavicon, size=[50, 50], force_format='PNG', null=False, default="comercios/noimage.jpg", verbose_name="Favicon")
     idplan          = models.IntegerField(verbose_name="Plan", default="0")
     fechaVencimiento= models.DateField(verbose_name="Fecha vencimiento", blank=True, null=True)
+    ajustes         = models.TextField(verbose_name="Otros ajustes", default="{}")
     
     def __str__(self):
         return self.nombre
@@ -102,12 +161,26 @@ class Producto(models.Model):
 
 class ImagenesProducto(models.Model):
     producto    = models.ForeignKey(Producto, verbose_name="Producto asociado", on_delete=models.CASCADE)
-    imagen      = ResizedImageField(upload_to=custom_upload_Producto, size=[600, 600], null=False, default="productos/noimageProd.jpg", verbose_name="Imagen del producto")
+    imagen      = ResizedImageField(upload_to=custom_upload_Producto, size=[600, 600], null=False, default="productos/noimage.jpg", verbose_name="Imagen del producto")
     principal   = models.BooleanField(verbose_name="Imagen principal", default=False)
     estado      = models.BooleanField(verbose_name="Estado", default=False)
     
     def __str__(self):
         return self.imagen.url
+
+class Slider(models.Model):
+    comercio    = models.ForeignKey(Comercio, verbose_name="Comercio", on_delete=models.CASCADE)
+    titulo      = models.CharField(max_length=35, verbose_name="Título")
+    subtitulo   = models.CharField(max_length=35, verbose_name="Sub título")
+    descripcion = models.CharField(max_length=200, verbose_name="Descripción")
+    boton       = models.CharField(max_length=15, verbose_name="Texto del Botón")
+    url         = models.CharField(max_length=150, verbose_name="URL del botón")
+    imagen      = ResizedImageField(upload_to=custom_upload_slider, size=[1920, 800], force_format='PNG', null=False, verbose_name="Imagen")
+    target      = models.BooleanField(verbose_name="Nueva ventana", default=False)
+    estado      = models.BooleanField(verbose_name="Estado", default=False)
+    
+    def __str__(self):
+        return self.titulo
 
 class OrdenesComercios(models.Model):
     comercio        = models.ForeignKey(Comercio, verbose_name="Comercio asociado", on_delete=models.DO_NOTHING)

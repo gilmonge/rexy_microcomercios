@@ -68,6 +68,15 @@
                                     </a>
                                 </li>
 
+                                {% if request.session.comercio_idplan != 0 %}
+                                    <li class="nav-item">
+                                        <a href="{% url 'comercioAdmin:sliders' %}">
+                                            <img src="{% static 'codeBackEnd/admin/img/svg/slider.svg' %}">
+                                            <p>Slider</p>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
                                 <li class="nav-item">
                                     <a href="{% url 'comercioAdmin:configuracion' %}">
                                         <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones.svg' %}">

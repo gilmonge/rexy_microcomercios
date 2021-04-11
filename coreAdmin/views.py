@@ -35,7 +35,11 @@ def dashboard(request):
 
         if request.session.get('comercioId', None) == "dummy":
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            request.session["comercio_idplan"] = comercio.idplan
             datos["comercio"] = comercio
+        else:
+            comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            request.session["comercio_idplan"] = comercio.idplan
 
         if perfil.primerIngreso is False:
             return redirect('comercioAdmin:comercioAdd')
@@ -52,7 +56,12 @@ def dashboardSeleccion(request, pk):
         datos = {}
         if request.session.get('comercioId', None) == "dummy":
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            request.session["comercio_idplan"] = comercio.idplan
             datos["comercio"] = comercio
+        else:
+            comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            request.session["comercio_idplan"] = comercio.idplan
+            
         
         return render(request, "codeBackEnd/dashboard.html", datos)
     else:
