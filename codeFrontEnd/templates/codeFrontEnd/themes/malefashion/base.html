@@ -77,16 +77,20 @@
                     {% endif %}
                 </div>
                 <div class="offcanvas__links">
-                    {% if comercio.contacto.telefono != '' %}
-                        <a href="tel://{{comercio.contacto.telefono}}"> 
-                            <i class="fas fa-phone-alt"></i>
-                            <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.telefono}}</span>
-                        </a>
-                    {% endif %}
                     {% if comercio.contacto.email != '' %}
                         <a href="mailto:{{comercio.contacto.email}}">
                             <i class="far fa-envelope"></i>
                             <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.email}}</span>
+                        </a>
+                    {% endif %}
+                    {% if comercio.contacto.telefono != '' %}
+                        <a href="tel://{{comercio.contacto.telefono}}"> 
+                            <i class="fas fa-phone-alt"></i>
+                        </a>
+                    {% endif %}
+                    {% if comercio.contacto.whatsapp != '' %}
+                        <a href="https://wa.me/{{comercio.contacto.whatsapp}}" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
                         </a>
                     {% endif %}
                 </div>
@@ -140,16 +144,20 @@
                         <div class="col-lg-6 col-md-5">
                             <div class="header__top__right">
                                 <div class="header__top__links">
-                                    {% if comercio.contacto.telefono != '' %}
-                                        <a href="tel://{{comercio.contacto.telefono}}"> 
-                                            <i class="fas fa-phone-alt"></i>
-                                            <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.telefono}}</span>
-                                        </a>
-                                    {% endif %}
                                     {% if comercio.contacto.email != '' %}
                                         <a href="mailto:{{comercio.contacto.email}}">
                                             <i class="far fa-envelope"></i>
                                             <span class="d-none d-lg-inline-block text-black">{{comercio.contacto.email}}</span>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.contacto.telefono != '' %}
+                                        <a href="tel://{{comercio.contacto.telefono}}"> 
+                                            <i class="fas fa-phone-alt"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if comercio.contacto.whatsapp != '' %}
+                                        <a href="https://wa.me/{{comercio.contacto.whatsapp}}" target="_blank">
+                                            <i class="fab fa-whatsapp"></i>
                                         </a>
                                     {% endif %}
                                 </div>
@@ -267,6 +275,29 @@
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f9a3364b5d47081"></script>
         
         {% block customjs %}{% endblock %}
+
+        {% if comercio.ajustes.google.activo and comercio.ajustes.google.codigo != '' %}
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{comercio.ajustes.google.codigo}}"></script>
+        {% endif %}
+        {% if comercio.ajustes.facebookPixel.activo and comercio.ajustes.facebookPixel.codigo != '' %}
+            <!-- Facebook Pixel Code -->
+                <script>
+                    !function(f,b,e,v,n,t,s)
+                    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                    n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s)}(window,document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
+                    fbq('init', '{{comercio.ajustes.facebookPixel.codigo}}'); fbq('track', 'PageView');
+                </script>
+
+                <noscript>
+                    <img height="1" width="1" src="https://www.facebook.com/tr?id={{comercio.ajustes.facebookPixel.codigo}}&ev=PageView &noscript=1"/>
+                </noscript>
+            <!-- End Facebook Pixel Code -->
+        {% endif %}
     </body>
 
 </html>

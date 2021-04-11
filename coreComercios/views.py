@@ -39,6 +39,7 @@ def comercio (request, comercio_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
 
     limite = 9 
     if comercio.idplan != 0:
@@ -68,6 +69,7 @@ def acercaDe (request, comercio_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
     
     # trae los productos relacionados al comercio
 
@@ -87,6 +89,7 @@ def ComercioProductos (request, comercio_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
     
     # trae los productos relacionados al comercio
     productos_list = Producto.objects.filter(comercio=comercio.id, estado=True)
@@ -119,6 +122,7 @@ def ProductosColeccion (request, comercio_slug, pk, coleccion_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
 
     Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
 
@@ -153,6 +157,7 @@ def ComercioProductosBuscar (request, comercio_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
     
     # trae los productos relacionados al comercio
     productos_list = []
@@ -205,6 +210,7 @@ def producto(request, comercio_slug, pk, prod_slug):
     # convertimos el contenido json en un diccionario python
     comercio.redessociales = json.loads(comercio.redessociales)
     comercio.contacto      = json.loads(comercio.contacto)
+    comercio.ajustes       = json.loads(comercio.ajustes)
 
     # trae los productos relacionados al comercio
     productos = Producto.objects.filter(comercio=comercio.id, estado=True).exclude(id = Desencryptado).order_by('-visualizaciones')[:4]

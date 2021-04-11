@@ -133,6 +133,7 @@ class Comercio(models.Model):
     favicon         = ResizedImageField(upload_to=custom_upload_ComercioFavicon, size=[50, 50], force_format='PNG', null=False, default="comercios/noimage.jpg", verbose_name="Favicon")
     idplan          = models.IntegerField(verbose_name="Plan", default="0")
     fechaVencimiento= models.DateField(verbose_name="Fecha vencimiento", blank=True, null=True)
+    ajustes         = models.TextField(verbose_name="Otros ajustes", default="{}")
     
     def __str__(self):
         return self.nombre
