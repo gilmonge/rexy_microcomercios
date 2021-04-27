@@ -276,24 +276,15 @@ class comercioUpdateView(UpdateView):
 
 def catalogo(request):
     if request.user.is_authenticated:
-        parametroLimiteGratis = int(Parametro.objects.filter(parametro="limiteGratis")[0].valor)
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
         productos = Producto.objects.filter(comercio=comercio.id)
         colecciones = Coleccion.objects.filter(comercio=comercio.id)
         totalProductos = productos.count()
-
-        if comercio.idplan > 0:
-            parametroLimiteGratis = 0
-
-        permiteProductos = 0
-
-        if totalProductos < parametroLimiteGratis and parametroLimiteGratis > 0:
-            permiteProductos = 1
         
         datos = {
             'colecciones':colecciones,
             'comercio':comercio,
-            'permiteProductos':permiteProductos,
+            'permiteProductos':1,
         }
         return render(request, "codeBackEnd/catalogo.html", datos)
     else:
@@ -303,9 +294,6 @@ def configuracion(request):
     if request.user.is_authenticated:
         import datetime
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
-
-        if comercio.idplan > 0:
-            parametroLimiteGratis = 0
 
         """ Calcula el tiempo restante del plan """
         if comercio.idplan != 0:

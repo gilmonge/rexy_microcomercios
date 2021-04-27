@@ -421,6 +421,28 @@
             var id_redessociales = $('#id_redessociales').val()
             var redessociales = JSON.parse(id_redessociales)
 
+            if(redessociales.facebook.activo != undefined){
+                redessociales.facebook.activo = 0
+                redessociales.facebook.url = ""
+            }
+            if(redessociales.instagram.activo != undefined){
+                redessociales.instagram.activo = 0
+                redessociales.instagram.url = ""
+            }
+            if(redessociales.twitter.activo != undefined){
+                redessociales.twitter.activo = 0
+                redessociales.twitter.url = ""
+            }
+            if(redessociales.tiktok.activo != undefined){
+                redessociales.tiktok.activo = 0
+                redessociales.tiktok.url = ""
+            }
+            if(redessociales.twitch.activo != undefined){
+                redessociales.twitch.activo = 0
+                redessociales.twitch.url = ""
+            }
+
+
             if(redessociales.facebook.activo){ 
                 $("#content_Facebook").show()
                 $("#ck_Facebook").attr("checked", "true")
