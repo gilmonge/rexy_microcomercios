@@ -64,6 +64,24 @@
             .header__logo img{
                 max-height: 75px !important;
             }
+
+            @media(max-width: 575px){
+                .header__logo{
+                    width: 50% !important;
+                }
+            }
+
+            @media(min-width: 768px){
+                .logoVertical{
+                    display: none !important;
+                }
+            }
+
+            @media(max-width: 767px){
+                .logoHorizontal{
+                    display: none !important;
+                }
+            }
             @media only screen and (max-width: 767px){
                 .canvas__open {
                     display: block;
@@ -100,7 +118,7 @@
                 <span class="fa fa-times-circle-o"></span>
             </div>
             <div class="offcanvas__logo">
-                <a href="{% url 'codeHome:inicio'%}"><img src="{% static 'codeHome/img/logo.png' %}" alt=""></a>
+                <a href="{% url 'codeHome:inicio'%}"><img src="{% static 'codeHome/img/logoHorizontal.png' %}" alt=""></a>
             </div>
             <nav class="offcanvas__menu mobile-menu">
                 <ul>
@@ -155,7 +173,8 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
                         <div class="header__logo">
-                            <a href="{% url 'codeHome:inicio'%}"><img style="max-height: 50px;" src="{% static 'codeHome/img/logo.png' %}" alt=""></a>
+                            <a class="logoHorizontal" href="{% url 'codeHome:inicio'%}"><img style="max-height: 50px;" src="{% static 'codeHome/img/logoHorizontal.png' %}" alt=""></a>
+                            <a class="logoVertical" href="{% url 'codeHome:inicio'%}"><img style="max-height: 50px;" src="{% static 'codeHome/img/logo.png' %}" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-9">

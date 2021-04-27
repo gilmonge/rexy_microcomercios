@@ -37,9 +37,6 @@ def dashboard(request):
             comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
             request.session["comercio_idplan"] = comercio.idplan
             datos["comercio"] = comercio
-        else:
-            comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
-            request.session["comercio_idplan"] = comercio.idplan
 
         if perfil.primerIngreso is False:
             return redirect('comercioAdmin:comercioAdd')
@@ -95,11 +92,7 @@ class SingUpView(CreateView):
 
 def verPlanes(request):
     if request.user.is_authenticated:
-        parametroLimiteGratis = Parametro.objects.filter(parametro="limiteGratis")[0].valor
-        
-        datos = {
-            'MaximosProductos':parametroLimiteGratis,
-        }
+        datos = {}
 
         return render(request, "codeBackEnd/planes.html", datos)
     else:
@@ -112,9 +105,8 @@ def pagarPlan(request):
             form = {}
 
             if idPlan == '0':
-                parametroLimiteGratis = Parametro.objects.filter(parametro="limiteGratis")[0].valor
                 datosPlan = {
-                    "{limite} productos máximo".format(limite = parametroLimiteGratis),
+                    "Productos ilimitados",
                     "Plantilla básica",
                 }
                 nombrePlan = "Gratis"
