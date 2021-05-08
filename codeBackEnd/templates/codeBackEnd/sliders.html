@@ -76,7 +76,7 @@
                                 <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:slider' pk=id_encryptado %}';">
                                     
                                     <div class="col-5" style="padding: 0px !important; background: url({{ slider.imagen.url }}); background-position: center; background-size: cover;">
-                                        <label class="labelEditar">Click Para editar</label>
+                                        <label class="labelEditar">Click para editar</label>
                                     </div>
                                     <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                         <div class="numbers" style="width: 90%;">
@@ -85,17 +85,17 @@
                                             <div class="card-category estado estado-producto">
                                                 {% if slider.estado is True %}
                                                     <div class="alert alert-success" role="alert">
-                                                        <span>Activo</span>
+                                                        <span>Mostrando en la tienda</span>
                                                     </div>
                                                 {% else %}
                                                     <div class="alert alert-danger" role="alert">
-                                                        <span>Inactivo</span>
+                                                        <span>Oculto en la tienda</span>
                                                     </div>
                                                 {% endif %}
                                             </div>
                                             
                                             {% encoded_id slider.id as id_encryptado %}
-                                            <a href="{% url 'comercioAdmin:sliderDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Eliminar</a>
+                                            <a href="{% url 'comercioAdmin:sliderDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Borrar</a>
                                         </div>
                                     </div>
                                 </div>
