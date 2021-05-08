@@ -47,17 +47,17 @@
                         <td class="estado">
                             {% if producto.estado is True %}
                                 <div class="alert alert-success" role="alert">
-                                    <span>Activo</span>
+                                    <span>Mostrando en la tienda</span>
                                 </div>
                             {% else %}
                                 
                                 <div class="alert alert-danger" role="alert">
-                                    <span>Inactivo</span>
+                                    <span>Oculto en la tienda</span>
                                 </div>
                             {% endif %}
                         </td>
                         <td style="text-align: center;"><a href="{% url 'comercioAdmin:producto' pk=producto.id %}" class="btn btn-secondary"><i class="fas fa-pencil-alt fa-lg"></i> Editar</a></td>
-                        <td style="text-align: center;"><a href="{% url 'comercioAdmin:productoDelete' pk=producto.id %}" class="btn btn-danger"><i class="fas fa-eraser fa-lg"></i> Eliminar</a></td>
+                        <td style="text-align: center;"><a href="{% url 'comercioAdmin:productoDelete' pk=producto.id %}" class="btn btn-danger"><i class="fas fa-eraser fa-lg"></i> Borrar</a></td>
                     </tr>
                 {% endfor%}
             </tbody>

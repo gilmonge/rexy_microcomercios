@@ -3,6 +3,8 @@ Explicación de instalar Python con anaconda (miniconda) para el control de ento
 
     conda create -n django3 python=3.8
     conda activate django3
+    conda info --envs
+    conda env remove --name pruebaEnv
     conda deactivate
 
 Documentacion de tags 

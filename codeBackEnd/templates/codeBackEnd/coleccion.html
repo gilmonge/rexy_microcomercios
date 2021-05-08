@@ -46,7 +46,7 @@
                             checked=""
                         {% endif %}
                     >
-                    <span class="selectgroup-button">Activo</span>
+                    <span class="selectgroup-button">Mostrando en la tienda</span>
                 </label>
                 <label class="selectgroup-item">
                     <input type="radio" name="estado" value="0" class="selectgroup-input" 
@@ -54,7 +54,7 @@
                             checked=""
                         {% endif %}
                     >
-                    <span class="selectgroup-button">Inactivo</span>
+                    <span class="selectgroup-button">Oculto en la tienda</span>
                 </label>
             </div>
         </div>
@@ -66,7 +66,7 @@
         </div>
         <div class="text-center col-md-4">
             {% encoded_id coleccion.id as id_encryptado %}
-            <input type="button" onclick="window.location = '{% url 'comercioAdmin:coleccionDelete' pk=id_encryptado %}';" class="btn btn-danger btn-block" value="Eliminar" />
+            <input type="button" onclick="window.location = '{% url 'comercioAdmin:coleccionDelete' pk=id_encryptado %}';" class="btn btn-danger btn-block" value="Borrar" />
         </div>
     </form>
     <div class="col-md-12">
