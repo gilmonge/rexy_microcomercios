@@ -95,7 +95,7 @@ def ComercioProductos (request, comercio_slug):
     productos_list = Producto.objects.filter(comercio=comercio.id, estado=True)
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(productos_list, 10)
+    paginator = Paginator(productos_list, 12)
 
     try:
         productos = paginator.page(page)
@@ -130,7 +130,7 @@ def ProductosColeccion (request, comercio_slug, pk, coleccion_slug):
     productos_list = Producto.objects.filter(comercio=comercio.id, estado=True, colecciones__id=Desencryptado)
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(productos_list, 10)
+    paginator = Paginator(productos_list, 12)
 
     try:
         productos = paginator.page(page)

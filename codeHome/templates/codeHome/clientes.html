@@ -8,6 +8,11 @@
             font-size: 30px;
             color: #002E6B;
         }
+        .set-bg-comercios {
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: bottom;
+        }
     </style>
 {% endblock %}
 
@@ -28,7 +33,7 @@
                 {% for comercio in comercios %}
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="blog__item">
-                            <div class="blog__pic set-bg" data-setbg="{{comercio.img_superior.url}}" style="background-image: url('{{comercio.img_superior.url}}');">
+                            <div class="blog__pic set-bg set-bg-comercios" data-setbg="{{comercio.logo.url}}" style="background-image: url('{{comercio.logo.url}}');">
                                 {% comment %} <div class="label">Hosting</div> {% endcomment %}
                             </div>
                             <div class="blog__text">
