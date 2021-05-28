@@ -324,6 +324,10 @@
                     margin:10
                 });
             }
+
+            if ( navigator.serviceWorker ) {
+                navigator.serviceWorker.register("{% static 'codeFrontEnd/assets/base/swBaseTheme.js' %}");
+            }
         </script>
         {% block customjs %}{% endblock %}
     </body>

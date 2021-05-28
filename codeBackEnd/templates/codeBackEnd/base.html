@@ -183,6 +183,10 @@
 
         <script>
             $('#button').click(function () { $.ajax({ type: 'POST' }); /* arregla error de no submit */ });
+
+            if ( navigator.serviceWorker ) {
+                navigator.serviceWorker.register("{% static 'codeBackEnd/admin/assets/rexy/swcodeBackEnd.js' %}");
+            }
         </script>
         
     </body>

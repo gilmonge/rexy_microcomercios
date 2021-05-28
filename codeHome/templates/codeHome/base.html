@@ -280,6 +280,12 @@
         <script src="{% static 'codeHome/js/jquery.slicknav.js' %}"></script>
         <script src="{% static 'codeHome/js/owl.carousel.min.js' %}"></script>
         <script src="{% static 'codeHome/js/main.js' %}"></script>
+
+        <script>
+            if ( navigator.serviceWorker ) {
+                navigator.serviceWorker.register("{% static 'codeHome/js/swHome.js' %}");
+            }
+        </script>
     </body>
 
 </html>
