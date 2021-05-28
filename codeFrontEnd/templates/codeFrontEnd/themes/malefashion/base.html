@@ -303,6 +303,11 @@
                 </noscript>
             <!-- End Facebook Pixel Code -->
         {% endif %}
-    </body>
 
+        <script>
+            if ( navigator.serviceWorker ) {
+                navigator.serviceWorker.register("{% static 'codeFrontEnd/themes/malefashion/js/swmalefashion.js' %}");
+            }
+        </script>
+    </body>
 </html>
