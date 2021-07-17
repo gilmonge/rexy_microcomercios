@@ -1,0 +1,205 @@
+{% extends 'codeBackEnd/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load codeBackEnd_extras %}
+{% load codeFrontEnd_extras %}
+{% block title %}Mis productos | {{ comercio.nombre }}{% endblock %}
+{% block tituloSeccion %}Cátalogo del comercio {{ comercio.nombre }}{% endblock %}
+
+{% block customHead %}
+    <link href="{% static 'codeBackEnd/admin/assets/dataTables/css/dataTables.bootstrap4.css' %}" rel="stylesheet"  type="text/css"/>
+{% endblock %}
+
+{% block customCss %}
+    <style>
+        tbody tr td{ color: #ffffff; }
+        tbody tr td a{ color: #5C9FF1; padding-left: 10px; }
+        .estado .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 10px;
+            padding: .8rem .5rem;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        .card-info-custom {
+            background: rgba(255,255,255,0.1) !important;
+            overflow: hidden !important;
+        }
+        .estado-producto .alert{
+            background-color: rgba(255,255,255,.05);
+            margin-top: 0px;
+            padding: .2rem .3rem;
+            color: #fff;
+            font-size: .8rem;
+        }
+
+        .btn-eliminar-producto{
+            color: #fff;
+            padding: .4rem 0.6rem;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        .acceso-producto, .acceso-producto:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .acceso-producto:hover{
+            cursor: pointer;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .labelEditar, .labelEditar:focus{
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0,0,0,0.5);
+            width: 100%;
+            text-align: right;
+            padding-right: 8px;
+            color: #fff;
+            height: 100%;
+            padding-top: 50%;
+        }
+
+        .labelEditar:hover{
+            cursor: pointer;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0,0,0,0.8);
+            width: 100%;
+            text-align: right;
+            padding-right: 8px;
+            color: #fff;
+            height: 100%;
+            padding-top: 50%;
+            text-decoration: none;
+        }
+
+        .limite{
+            background-color: rgba(255,255,255,.05);
+            color: #fff;
+            font-size: 1.1rem;
+        }
+    </style>
+    
+    <style>
+        .owl-theme .owl-nav [class*=owl-]{
+            padding: 4px 0px !important;
+        }
+
+        .owl-carousel .nav-button {
+            width:      40px !important;
+            cursor:     pointer !important;
+            position:   absolute !important;
+            top:        -213px !important;
+            line-height:155px !important;
+            background: rgba(26, 32, 53, 0.3) !important;
+            color:      #ffffff !important;
+            padding:    4px 0px !important;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .owl-carousel .nav-button:hover {
+            background: #ffffff !important;
+            color:      rgba(26, 32, 53, 1) !important;
+        }
+
+        .owl-carousel .owl-prev.disabled,
+        .owl-carousel .owl-next.disabled {
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .owl-carousel .owl-prev {
+            left: -0.28rem !important;
+            border-radius: .25rem 0px 0px .25rem !important;
+        }
+
+        .owl-carousel .owl-next {
+            right: -5px !important;
+            border-radius: 0px .25rem .25rem 0px !important;
+        }
+
+        .item:hover{
+            -webkit-box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+            -moz-box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+            box-shadow: 6px 6px 15px -5px rgba(0,0,0,0.57);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12 m-0 row estado">
+        {% for ProductoColeccion in productos %}
+            <div class="col-12 col-md-6 col-lg-4 mx-2 px-0">
+                <div class="card card-stats card-info card-info-custom card-round">
+                    <div class="card-body" style="padding: 0px !important;">
+                        {% encoded_id ProductoColeccion.id as id_encryptado %}
+                        <div class="row">
+                            {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
+
+                            <span class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                <a class="labelEditar" style="" href="{% url 'comercioAdmin:producto' pk=id_encryptado %}" target="_blank">Click para editar</a>
+                            </span>
+
+                            <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
+                                <div class="numbers" style="width: 90%;">
+                                    <p class="card-category">{{ ProductoColeccion.nombre }}</p>
+                                    <h4 class="card-title">{{ ProductoColeccion.precio|intcomma }}</h4>
+                                            
+                                    <div class="card-category estado estado-producto">
+                                        {% if ProductoColeccion.estado is True %}
+                                            <div class="alert alert-success" role="alert">
+                                                <span>Mostrando en la tienda</span>
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-danger" role="alert">
+                                                <span>Oculto en la tienda</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    {% encoded_id ProductoColeccion.id as id_encryptado %}
+                                    <a href="{% url 'comercioAdmin:productoDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Borrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor%}
+
+        {% if permiteProductos == 1 %}
+            <div class="col-12 col-md-6 col-lg-4 mx-2 px-0">
+                <div class="card card-stats card-info card-info-custom card-round">
+                    <div class="card-body" style="padding: 0px !important;">
+                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
+                            <div class="col-12" style="min-height: 163px;max-height: 163px;">
+                                <div class="numbers">
+                                    <div class="icon-big text-center" style="padding: 2.6rem 0px; display: block;">
+                                        <i class="flaticon-add text-warning"></i>
+                                        <p class="">Agregar producto</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-md-12 px-0 row">
+        </div>
+    </div>
+    <div class="col-md-12">
+        <a href="{% url 'comercioAdmin:catalogo' %}" type="button" class="btn btn-light"><i class="fas fa-chevron-left"></i> Volver al listado</a>
+    </div>
+{% endblock %}
+
+{% block customJs %}
+    <script>
+    </script>
+{% endblock %}

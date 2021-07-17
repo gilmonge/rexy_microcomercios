@@ -290,6 +290,32 @@ def catalogo(request):
     else:
         return redirect('login')
 
+def catalogoCategoria(request, pk):
+    try:
+        try:
+            Desencryptado = int(base64.b64decode(pk).decode('utf-8'))
+        except:
+            return render(request, "codeFrontEnd/404.html")
+
+        if request.user.is_authenticated:
+            comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
+            productos = Producto.objects.filter(colecciones__id = Desencryptado, comercio=comercio.id)
+            colecciones = Coleccion.objects.filter(comercio=comercio.id)
+            totalProductos = productos.count()
+            
+            datos = {
+                'colecciones':colecciones,
+                'productos':productos,
+                'comercio':comercio,
+                'permiteProductos':1,
+            }
+            return render(request, "codeBackEnd/catalogo-categoria.html", datos)
+        else:
+            return redirect('login')
+
+    except Producto.DoesNotExist:
+        return render(request, "codeFrontEnd/404.html")
+
 def configuracion(request):
     if request.user.is_authenticated:
         import datetime

@@ -40,18 +40,43 @@
             font-size: 0.85rem;
         }
 
-        .acceso-producto:hover{
-            cursor: pointer;
+        .acceso-producto, .acceso-producto:focus {
+            color: #fff;
+            text-decoration: none;
         }
 
-        .labelEditar{
+        .acceso-producto:hover{
+            cursor: pointer;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .labelEditar, .labelEditar:focus{
             position: absolute;
             bottom: 0px;
             right: 0px;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.5);
             width: 100%;
             text-align: right;
             padding-right: 8px;
+            color: #fff;
+            height: 100%;
+            padding-top: 50%;
+        }
+
+        .labelEditar:hover{
+            cursor: pointer;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0,0,0,0.8);
+            width: 100%;
+            text-align: right;
+            padding-right: 8px;
+            color: #fff;
+            height: 100%;
+            padding-top: 50%;
+            text-decoration: none;
         }
 
         .limite{
@@ -127,12 +152,13 @@
                             <div class="card card-stats card-info card-info-custom card-round">
                                 <div class="card-body" style="padding: 0px !important;">
                                     {% encoded_id ProductoColeccion.id as id_encryptado %}
-                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=id_encryptado %}';">
+                                    <a class="row">
                                         {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
-                                        
-                                        <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
-                                            <label class="labelEditar">Click para editar</label>
-                                        </div>
+
+                                        <span class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                            <a class="labelEditar" style="" href="{% url 'comercioAdmin:producto' pk=id_encryptado %}">Click para editar</a>
+                                        </span>
+
                                         <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                             <div class="numbers" style="width: 90%;">
                                                 <p class="card-category">{{ ProductoColeccion.nombre }}</p>
@@ -154,7 +180,7 @@
                                                 <a href="{% url 'comercioAdmin:productoDelete' pk=id_encryptado %}" class="btn btn-danger btn-eliminar-producto" style="width: 100%;"><i class="fas fa-eraser fa-lg"></i> Borrar</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -193,6 +219,9 @@
                         <button type="button" class="float-right btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=id_encryptado %}';">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
+                        <button type="button" class="float-right btn btn-icon btn-round btn-info ml-2" onclick="window.location.href = '{% url 'comercioAdmin:catalogoCategoria' pk=id_encryptado %}';">
+                            <i class="fas fa-th"></i>
+                        </button>
                     </div>
                 {% else %}
                     <div class="col-sm-12 alert alert-danger" role="alert">
@@ -201,6 +230,9 @@
                         {% encoded_id coleccion.id as id_encryptado %}
                         <button type="button" class="float-right btn btn-icon btn-round btn-default ml-2" onclick="window.location.href = '{% url 'comercioAdmin:coleccionEdit' pk=id_encryptado %}';">
                             <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button type="button" class="float-right btn btn-icon btn-round btn-info ml-2" onclick="window.location.href = '{% url 'comercioAdmin:catalogoCategoria' pk=id_encryptado %}';">
+                            <i class="fas fa-th"></i>
                         </button>
                     </div>
                 {% endif %}
@@ -213,12 +245,12 @@
                                 <div class="card card-stats card-info card-info-custom card-round">
                                     <div class="card-body" style="padding: 0px !important;">
                                         {% encoded_id ProductoColeccion.id as id_encryptado %}
-                                        <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=id_encryptado %}';">
+                                        <div class="row">
                                             {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
                                             
-                                            <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
-                                                <label class="labelEditar">Click para editar</label>
-                                            </div>
+                                            <span class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                                <a class="labelEditar" style="" href="{% url 'comercioAdmin:producto' pk=id_encryptado %}">Click para editar</a>
+                                            </span>
                                             <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                                 <div class="numbers" style="width: 90%;">
                                                     <p class="card-category">{{ ProductoColeccion.nombre }}</p>
@@ -286,12 +318,13 @@
                             <div class="card card-stats card-info card-info-custom card-round">
                                 <div class="card-body" style="padding: 0px !important;">
                                     {% encoded_id ProductoColeccion.id as id_encryptado %}
-                                    <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:producto' pk=id_encryptado %}';">
+                                    <div class="row">
                                         {% get_ImagenPrincipalProd ProductoColeccion.id as ImagenPrincipal %}
-                                        
-                                        <div class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
-                                            <label class="labelEditar">Click para editar</label>
-                                        </div>
+
+                                        <span class="col-5" style="padding: 0px !important; background: url({{ ImagenPrincipal }}); background-position: center; background-size: cover;">
+                                            <a class="labelEditar" style="" href="{% url 'comercioAdmin:producto' pk=id_encryptado %}">Click para editar</a>
+                                        </span>
+
                                         <div class="col-7 col-stats" style="min-height: 163px;max-height: 163px;">
                                             <div class="numbers" style="width: 90%;">
                                                 <p class="card-category">{{ ProductoColeccion.nombre }}</p>
