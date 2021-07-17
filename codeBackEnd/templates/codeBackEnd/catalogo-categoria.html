@@ -135,7 +135,7 @@
 {% block content %}
     <div class="col-md-12 m-0 row estado">
         {% for ProductoColeccion in productos %}
-            <div class="col-12 col-md-6 col-lg-4 mx-2 px-0">
+            <div class="col-12 col-md-6 col-lg-4">
                 <div class="card card-stats card-info card-info-custom card-round">
                     <div class="card-body" style="padding: 0px !important;">
                         {% encoded_id ProductoColeccion.id as id_encryptado %}
@@ -174,7 +174,7 @@
         {% endfor%}
 
         {% if permiteProductos == 1 %}
-            <div class="col-12 col-md-6 col-lg-4 mx-2 px-0">
+            <div class="col-12 col-md-6 col-lg-4">
                 <div class="card card-stats card-info card-info-custom card-round">
                     <div class="card-body" style="padding: 0px !important;">
                         <div class="row acceso-producto" onclick="window.location.href = '{% url 'comercioAdmin:productosAdd' %}';">
