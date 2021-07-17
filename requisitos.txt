@@ -8,3 +8,4 @@ Pillow==8.0.1
 pytz==2020.4
 sqlparse==0.4.1
 xhtml2pdf==0.2.5
+pylint-django==2.4.4

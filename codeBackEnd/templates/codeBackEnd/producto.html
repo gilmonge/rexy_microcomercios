@@ -198,6 +198,37 @@
                                     {{ form.precio }}
                                     {{ form.precio.errors }}
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label>¿El producto posee inventario?</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="stock" value="1" class="selectgroup-input" 
+                                                {% if producto.stock is True %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">Si</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="stock" value="0" class="selectgroup-input" 
+                                                {% if producto.stock is False %}
+                                                    checked=""
+                                                {% endif %}
+                                            >
+                                            <span class="selectgroup-button">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {% if producto.stock is True %}
+                                    <div class="form-group">
+                                        {{ form.inventario.label_tag }}
+                                        {{ form.inventario }}
+                                        {{ form.inventario.errors }}
+                                    </div>
+                                {% endif %}
+
 
                                 <div class="form-group">
                                     {% encoded_id producto.id as id_encryptado %}

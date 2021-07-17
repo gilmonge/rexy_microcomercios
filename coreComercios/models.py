@@ -155,6 +155,8 @@ class Producto(models.Model):
     precio          = models.DecimalField(verbose_name="Precio", max_digits=12, decimal_places=2)
     colecciones     = models.ManyToManyField(Coleccion, verbose_name="Colecciones", blank=True)
     visualizaciones = models.IntegerField(verbose_name="Visualizaciones", default="0")
+    stock           = models.BooleanField(verbose_name="Posee inventario", default=False)
+    inventario      = models.IntegerField(verbose_name="Cantidad de inventario", default="0")
     
     def __str__(self):
         return self.nombre

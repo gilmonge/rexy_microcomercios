@@ -30,13 +30,15 @@ class ComercioForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = [ 'comercio', 'nombre', 'descripcion', 'estado', 'precio', 'colecciones']
+        fields = [ 'comercio', 'nombre', 'descripcion', 'estado', 'precio', 'colecciones', 'stock', 'inventario']
 
         widgets = {
             'nombre'        : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre'}),
             'descripcion'   : forms.Textarea(attrs={'class': 'form-control' , 'placeholder': 'Descripción', 'required': 'true'}),
             'estado'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Estado'}),
             'precio'        : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Precio'}),
+            'stock'         : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Stock'}),
+            'inventario'    : forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Inventario'}),
         }
 
 class ImagenProductoForm(forms.ModelForm):
