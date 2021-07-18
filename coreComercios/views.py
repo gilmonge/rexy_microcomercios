@@ -277,10 +277,10 @@ class comercioUpdateView(UpdateView):
 def catalogo(request):
     if request.user.is_authenticated:
         comercio = Comercio.objects.filter(id=request.session["comercioId"])[0]
-        productos = Producto.objects.filter(comercio=comercio.id)
         colecciones = Coleccion.objects.filter(comercio=comercio.id)
-        totalProductos = productos.count()
-        
+        #productos = Producto.objects.filter(comercio=comercio.id)
+        #totalProductos = productos.count()
+
         datos = {
             'colecciones':colecciones,
             'comercio':comercio,
