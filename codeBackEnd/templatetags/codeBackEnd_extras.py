@@ -38,7 +38,7 @@ def get_ProductosColeccionTotales(pkcomercio, pk):
     productos = Producto.objects.filter(
         colecciones__id = pk,
         comercio = pkcomercio
-    )[:10]
+    )
     totalProductos = productos.count()
     return totalProductos
 
