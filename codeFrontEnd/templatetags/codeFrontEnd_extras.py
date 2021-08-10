@@ -19,7 +19,7 @@ def get_Imagenes(pkProducto):
     
     imagenes = ImagenesProducto.objects.filter(producto=pkProducto, estado=True)
     for img in imagenes:
-        if img.producto_id is pkProducto:
+        if img.producto_id == pkProducto:
             imagenesArray.append(img)
 
     if not imagenesArray:
