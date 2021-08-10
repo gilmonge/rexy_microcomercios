@@ -56,7 +56,7 @@ def get_ImagenPrincipalProd(pkProducto):
     ImagenesDelProducto = ImagenesProducto.objects.filter(producto=pkProducto)
     
     for img in ImagenesDelProducto:
-        if img.principal is True and img.producto_id is pkProducto:
+        if img.principal is True and img.producto_id == pkProducto:
             imagen = img.imagen.url
 
     return imagen
