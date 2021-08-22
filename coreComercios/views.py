@@ -405,7 +405,6 @@ def add_image(request):
         pk = request.POST['producto']
         form = ImagenProductoForm(request.POST, request.FILES)
         if form.is_valid():
-            """ form.save() """
             producto = Producto.objects.filter(id=pk)[0]
 
             for f in request.FILES.getlist('imagen'):
@@ -413,7 +412,7 @@ def add_image(request):
                     producto=producto,
                     imagen=f,
                     principal=False,
-                    estado=False
+                    estado=True
                 )
     return HttpResponseRedirect(reverse_lazy('comercioAdmin:producto', args=[encoded_id(producto.id)]) + '?oki')
 
