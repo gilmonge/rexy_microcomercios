@@ -132,7 +132,11 @@
                     <div class="card">
                         <div class="card-body" style="padding: 0;">
                             <nav class="nav flex-column nav-pills nav-gap-y-1 tab-config tab-config-lateral">
-                                <a href="#informacion" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                                {% if 'oki' in request.GET %}
+                                    <a href="#informacion" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+                                {% else %}
+                                    <a href="#informacion" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+                                {% endif %}
                                     <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
                                     Información
                                 </a>
@@ -144,7 +148,12 @@
                                     <img src="{% static 'codeBackEnd/admin/img/svg/configuraciones-blue.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
                                     Configuración
                                 </a>
-                                <a href="#img-prod" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+
+                                {% if 'oki' in request.GET %}
+                                    <a href="#img-prod" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active ">
+                                {% else %}
+                                    <a href="#img-prod" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded ">
+                                {% endif %}
                                     <img src="{% static 'codeBackEnd/admin/img/svg/image.svg' %}" class="svg-menu" style="width: 40px; margin-right: 15px;">
                                     Imágenes
                                 </a>
@@ -159,7 +168,11 @@
                         <div class="card-header border-bottom mb-3 d-flex d-md-none" style="padding: 1rem 0.6rem; border: 0px !important;">
                             <ul class="nav nav-tabs card-header-tabs nav-gap-x-1 tab-config" role="tablist">
                                 <li class="nav-item">
-                                    <a href="#informacion" data-toggle="tab" class="nav-link has-icon active">
+                                    {% if 'oki' in request.GET %}
+                                        <a href="#informacion" data-toggle="tab" class="nav-link has-icon">
+                                    {% else %}
+                                        <a href="#informacion" data-toggle="tab" class="nav-link has-icon active">
+                                    {% endif %}
                                         <img src="{% static 'codeBackEnd/admin/img/svg/comercio-informacion.svg' %}" class="svg-menu" style="width: 40px;">
                                     </a>
                                 </li>
@@ -174,7 +187,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#img-prod" data-toggle="tab" class="nav-link has-icon">
+                                    {% if 'oki' in request.GET %}
+                                        <a href="#img-prod" data-toggle="tab" class="nav-link has-icon active">
+                                    {% else %}
+                                        <a href="#img-prod" data-toggle="tab" class="nav-link has-icon">
+                                    {% endif %}
                                         <img src="{% static 'codeBackEnd/admin/img/svg/image.svg' %}" class="svg-menu" style="width: 40px;">
                                     </a>
                                 </li>
@@ -182,8 +199,12 @@
                         </div>
 
                         <div class="card-body tab-content" style="background: rgba(255,255,255,.07);">
-                        
-                            <div class="tab-pane active" id="informacion">
+
+                            {% if 'oki' in request.GET %}
+                                <div class="tab-pane" id="informacion">
+                            {% else %}
+                                <div class="tab-pane active" id="informacion">
+                            {% endif %}
                                 <h6 class="text-white">INFORMACIÓN DEL PRODUCTO</h6>
                                 <hr>
                                 
@@ -271,7 +292,11 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="img-prod">
+                            {% if 'oki' in request.GET %}
+                                <div class="tab-pane active" id="img-prod">
+                            {% else %}
+                                <div class="tab-pane" id="img-prod">
+                            {% endif %}
                                 <h6 class="text-white">IMÁGENES</h6>
                                 <span class="badge badge-primary">Guarde los cambios que ha realizado en las otras pestañas antes de guardar imágenes</span>
                                 <hr>
@@ -349,16 +374,16 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" style="background: #002A61;">
                     <div class="modal-body">
-                            {% csrf_token %}
+                        {% csrf_token %}
 
-                            <div class="form-group col-md-12">
-                                <label for="">Imagen:</label>
-                                <input type="file" name="imagen" class="form-control" placeholder="" accept="image/*" id="id_imagen">
-                                <span class="float-right badge badge-light mt-2" style="font-size: 14px!important">Tamaño recomendado: 600px x 600px</span>
-                            </div>
-                            <input type="hidden" name="producto" value="{{producto.id}}" />
-                            <input type="hidden" name="principal" value="False" />
-                            <input type="hidden" name="estado" value="True" />
+                        <div class="form-group col-md-12">
+                            <label for="">Imagen:</label>
+                            <input type="file" name="imagen" class="form-control" placeholder="" accept="image/*" id="id_imagen" multiple>
+                            <span class="float-right badge badge-light mt-2" style="font-size: 14px!important">Tamaño recomendado: 600px x 600px</span>
+                        </div>
+                        <input type="hidden" name="producto" value="{{producto.id}}" />
+                        <input type="hidden" name="principal" value="False" />
+                        <input type="hidden" name="estado" value="True" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
@@ -378,6 +403,23 @@
             swal({
                 title: "Realizado",
                 text: "Se ha actualizado el producto correctamente",
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "OK",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true
+                    }
+                }
+            });
+        {% endif %}
+
+        {% if 'oki' in request.GET %}
+            swal({
+                title: "Realizado",
+                text: "Cambios realizados en imágenes",
                 icon: "success",
                 buttons: {
                     confirm: {
@@ -415,7 +457,6 @@
             'allowedFileExtensions': ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'],
             overwriteInitial: false,
             initialPreviewAsData: false,
-            maxFilesNum: 1,
             showUpload: false,
             showRemove: false
         });

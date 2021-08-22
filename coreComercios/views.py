@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy, reverse
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 from coreAdmin.models import Parametro, Perfil
 from coreComercios.models import Comercio, Producto, ImagenesProducto, Coleccion, Slider
 from .forms import ComercioForm, ProductoForm, ImagenProductoForm, ColeccionForm, SliderForm
@@ -405,9 +405,17 @@ def add_image(request):
         pk = request.POST['producto']
         form = ImagenProductoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            producto = get_object_or_404(Producto, id=pk)
-    return redirect('comercioAdmin:producto', pk = encoded_id(producto.id))
+            """ form.save() """
+            producto = Producto.objects.filter(id=pk)[0]
+
+            for f in request.FILES.getlist('imagen'):
+                ImagenesProducto.objects.create(
+                    producto=producto,
+                    imagen=f,
+                    principal=False,
+                    estado=False
+                )
+    return HttpResponseRedirect(reverse_lazy('comercioAdmin:producto', args=[encoded_id(producto.id)]) + '?oki')
 
 def del_image(request):
     if request.method == 'POST':
@@ -415,7 +423,7 @@ def del_image(request):
         pkImagen = request.POST['pkImagen']
         ImagenesProducto.objects.get(id=pkImagen).imagen.delete(save=True)
         ImagenesProducto.objects.filter(id=pkImagen).delete()
-    return redirect('comercioAdmin:producto', pk = encoded_id(pk))
+    return HttpResponseRedirect(reverse_lazy('comercioAdmin:producto', args=[encoded_id(pk)]) + '?oki')
 
 def default_image(request):
     if request.method == 'POST':
@@ -431,7 +439,7 @@ def default_image(request):
         imagen.principal = 1
         imagen.save()
         
-    return redirect('comercioAdmin:producto', pk = encoded_id(pk))
+    return HttpResponseRedirect(reverse_lazy('comercioAdmin:producto', args=[encoded_id(pk)]) + '?oki')
 
 class coleccionCreateView(CreateView):
     model = Coleccion
