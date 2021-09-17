@@ -95,7 +95,7 @@ def ComercioProductos (request, comercio_slug):
     productos_list = Producto.objects.filter(comercio=comercio.id, estado=True)
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(productos_list, 12)
+    paginator = Paginator(productos_list, 36)
 
     try:
         productos = paginator.page(page)
